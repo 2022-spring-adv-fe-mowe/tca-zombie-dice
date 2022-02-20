@@ -2,6 +2,7 @@
   "name": "tca-zombie-dice",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://2022-spring-adv-fe-mowe.github.io/tca-zombie-dice",
   "dependencies": {
     "@fluentui/react": "^8.55.3",
     "@testing-library/jest-dom": "^5.16.2",
