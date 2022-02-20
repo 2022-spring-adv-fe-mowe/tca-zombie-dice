@@ -7,32 +7,33 @@ import { CommandBar } from '@fluentui/react';
 export const Home = () => {
     const nav = useNavigate();
 
-    return(
+    return (
 
         <Stack>
+
+
             <Stack.Item align='stretch'>
-                <CommandBar 
-                    items={[{
-                        key: 'play'
-                        , text: 'Play Zombie Dice'
-                    }]}
+                <CommandBar
+                    items={[
+                        {
+                            key: 'play'
+                            , text: 'Play Zombie Dice'
+                            , iconProps: {
+                                iconName: 'Add'
+                            }
+                        }
+                    ]}
+                    farItems={[
+                        {
+                            key: 'other'
+                            , iconProps: {
+                                iconName: 'More'
+                            }
+                        }
+                    ]}
                 >
                 </CommandBar>
             </Stack.Item>
-
-
-            <Text
-                variant='xxLarge'
-            >
-                Home
-            </Text>
-            <CompoundButton
-                primary
-                secondaryText='Grab your game & play' 
-                onClick={() => nav('/setup-game')}
-            >
-                Play
-            </CompoundButton>
         </Stack>
     );
 }

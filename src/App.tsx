@@ -5,6 +5,7 @@ import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './Home';
 import { loadTheme } from '@fluentui/react';
+import { initializeIcons } from '@fluentui/react';
 
 const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
 const stackTokens: IStackTokens = { childrenGap: 15 };
@@ -40,8 +41,10 @@ export const App: React.FunctionComponent = () => {
       white: '#f5f1f0',
     }});
 
+    initializeIcons();
+
   return (
-    <Stack horizontalAlign="stretch" verticalAlign="start" verticalFill tokens={stackTokens}>
+    <Stack horizontalAlign="stretch" verticalAlign="stretch" verticalFill tokens={stackTokens}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="setup-game" element={<SetupGame />} />
