@@ -19,7 +19,7 @@ export const Home = () => {
                             key: 'play'
                             , text: 'Play Zombie Dice'
                             , iconProps: {
-                                iconName: 'Add'
+                                iconName: 'People'
                             }
                         }
                     ]}
