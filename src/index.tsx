@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import { mergeStyles } from '@fluentui/react';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 // Inject some global styles
 mergeStyles({
@@ -15,9 +15,9 @@ mergeStyles({
 });
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>
+  </HashRouter>
   , document.getElementById('root')
 );
 
