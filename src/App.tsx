@@ -41,7 +41,7 @@ export const App: React.FunctionComponent = () => {
     }});
 
   return (
-    <Stack horizontalAlign="center" verticalAlign="start" verticalFill tokens={stackTokens}>
+    <Stack horizontalAlign="stretch" verticalAlign="start" verticalFill tokens={stackTokens}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="setup-game" element={<SetupGame />} />
