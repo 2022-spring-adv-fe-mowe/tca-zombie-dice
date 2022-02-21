@@ -4,13 +4,13 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './Home';
+import { SetupGame } from './SetupGame';
 import { loadTheme } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react';
 
 const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
 const stackTokens: IStackTokens = { childrenGap: 15 };
 
-const SetupGame = () => <h2>Setup Game</h2>;
 const PlayGame = () => <h2>Play Game</h2>;
 
 export const App: React.FunctionComponent = () => {
