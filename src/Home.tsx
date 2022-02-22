@@ -5,6 +5,7 @@ import { Stack, StackItem } from '@fluentui/react/lib/Stack';
 import { CommandBar } from '@fluentui/react';
 
 export const Home = () => {
+
     const nav = useNavigate();
 
     return (
@@ -18,6 +19,7 @@ export const Home = () => {
                         {
                             key: 'play'
                             , text: 'Play Zombie Dice'
+                            , onClick: () => nav("/setup")
                             , iconProps: {
                                 iconName: 'People'
                             }

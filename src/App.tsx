@@ -7,11 +7,10 @@ import { Home } from './Home';
 import { SetupGame } from './SetupGame';
 import { loadTheme } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react';
+import { PlayGame } from './PlayGame';
 
 const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
 const stackTokens: IStackTokens = { childrenGap: 15 };
-
-const PlayGame = () => <h2>Play Game</h2>;
 
 export const App: React.FunctionComponent = () => {
 
@@ -47,8 +46,8 @@ export const App: React.FunctionComponent = () => {
     <Stack horizontalAlign="stretch" verticalAlign="stretch" verticalFill tokens={stackTokens}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="setup-game" element={<SetupGame />} />
-        <Route path="play-game" element={<PlayGame />} />
+        <Route path="setup" element={<SetupGame />} />
+        <Route path="play" element={<PlayGame />} />
       </Routes>
     </Stack>
   );
