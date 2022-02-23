@@ -13,6 +13,7 @@ import {
     IDocumentCardActivityPerson,
     IDocumentCardStyles,
   } from '@fluentui/react/lib/DocumentCard';
+import { DefaultPalette } from '@fluentui/theme';
 
 const itemStyles = { 
     root: { 
@@ -80,7 +81,12 @@ export const Home = () => {
                     styles={itemStyles}
                     onClick={() => nav("/setup")}
                 >
-                    Play Zombie Dice
+                    <Text
+                        variant='large'
+                        styles={{ root: { color: DefaultPalette.white}}}
+                    >
+                        Play Zombie Dice
+                    </Text>
                 </PrimaryButton>
             </Stack.Item>
             <Stack.Item
