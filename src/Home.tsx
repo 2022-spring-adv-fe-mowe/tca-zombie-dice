@@ -14,9 +14,9 @@ import {
     IDocumentCardStyles,
   } from '@fluentui/react/lib/DocumentCard';
 
-const cardStyles = { 
+const itemStyles = { 
     root: { 
-        width: '95%'
+        width: '100%'
         , maxWidth: '100%' 
     }
 };
@@ -36,11 +36,12 @@ export const Home = () => {
 
         <Stack
             tokens={{
-                childrenGap: 10
+                padding: 10
+                , childrenGap: 10
             }}
         >
 
-            <Stack.Item align='stretch'>
+            {/* <Stack.Item align='stretch'>
                 <CommandBar
                     items={[
                         {
@@ -61,14 +62,33 @@ export const Home = () => {
                         }
                     ]}
                 />
-            </Stack.Item>
+            </Stack.Item> */}
 
             <Stack.Item
                 align='stretch'
                 styles={stackItemStyles}
             >
+                {/* <CompoundButton
+                    primary
+                    secondaryText='The real game ! ! !'
+                    styles={itemStyles}
+                    onClick={() => nav("/setup")}
+                >
+                    Play Zombie Dice
+                </CompoundButton> */}
+                <PrimaryButton
+                    styles={itemStyles}
+                    onClick={() => nav("/setup")}
+                >
+                    Play Zombie Dice
+                </PrimaryButton>
+            </Stack.Item>
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -86,7 +106,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -104,7 +124,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -122,7 +142,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -140,7 +160,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -158,7 +178,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -176,7 +196,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -194,7 +214,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -212,7 +232,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -230,7 +250,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
@@ -248,7 +268,7 @@ export const Home = () => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={cardStyles}
+                    styles={itemStyles}
                 >
                     <DocumentCardTitle
                         title='Zombie Dice Lifetime'
