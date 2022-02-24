@@ -15,6 +15,13 @@ import {
   } from '@fluentui/react/lib/DocumentCard';
 import { DefaultPalette } from '@fluentui/theme';
 
+const buttonStyles = {
+    root: {
+        padding: 40
+        , width: '100%'
+        , maxWidth: '100%'     }
+};
+
 const itemStyles = { 
     root: { 
         width: '100%'
@@ -78,11 +85,11 @@ export const Home = () => {
                     Play Zombie Dice
                 </CompoundButton> */}
                 <PrimaryButton
-                    styles={itemStyles}
+                    styles={buttonStyles}
                     onClick={() => nav("/setup")}
                 >
                     <Text
-                        variant='large'
+                        variant='xxLarge'
                         styles={{ root: { color: DefaultPalette.white}}}
                     >
                         Play Zombie Dice
