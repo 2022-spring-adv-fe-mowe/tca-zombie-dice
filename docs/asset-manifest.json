@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/tca-zombie-dice/static/css/main.abd64e84.css",
-    "main.js": "/tca-zombie-dice/static/js/main.c141f137.js",
+    "main.js": "/tca-zombie-dice/static/js/main.ad0c7835.js",
     "static/js/787.edfa2d7d.chunk.js": "/tca-zombie-dice/static/js/787.edfa2d7d.chunk.js",
     "index.html": "/tca-zombie-dice/index.html",
     "main.abd64e84.css.map": "/tca-zombie-dice/static/css/main.abd64e84.css.map",
-    "main.c141f137.js.map": "/tca-zombie-dice/static/js/main.c141f137.js.map",
+    "main.ad0c7835.js.map": "/tca-zombie-dice/static/js/main.ad0c7835.js.map",
     "787.edfa2d7d.chunk.js.map": "/tca-zombie-dice/static/js/787.edfa2d7d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.abd64e84.css",
-    "static/js/main.c141f137.js"
+    "static/js/main.ad0c7835.js"
   ]
 }
