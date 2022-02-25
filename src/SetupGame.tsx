@@ -1,37 +1,86 @@
-import { Toggle } from '@fluentui/react/lib/Toggle';
-import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { Stack } from '@fluentui/react';
-import { Separator } from '@fluentui/react/lib/Separator';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { DefaultPalette, Stack } from '@fluentui/react';
 import { useNavigate } from 'react-router-dom';
+import { buttonStyles, buttonTextStyles, cardStyles } from './App';
+import { Text } from '@fluentui/react/lib/Text';
+import { useState } from 'react';
+import { DocumentCard } from '@fluentui/react';
 
 export const SetupGame = () => {
 
     const nav = useNavigate();
 
+    const [santaChosen, setSantaChosen] = useState(false);
+    const [hunkHottieChosen, setHunkHottieChosen] = useState(false);
+
     return (
-        <Stack style={{padding: 30}}>
-            <Separator 
-                alignContent="start"
+        <Stack style={{padding: 30}} tokens={{childrenGap: 10}}>
+            <Stack horizontal tokens={{childrenGap: 10}}>
+                <Text variant="xLarge">
+                    Choose Expansions
+                </Text>
+                <Text variant="medium" styles={{ root: { marginTop: 5}}}>
+                    (tap to use)
+                </Text>
+
+            </Stack>
+            <DefaultButton
+                styles={buttonStyles}
+                primary={santaChosen}
+                onClick={() => setSantaChosen(!santaChosen)}
             >
-                Choose expansions
-            </Separator>
-            <Toggle 
-                label="Santa (remove standard 'green' die)" 
-                inlineLabel 
-            />
-            <Toggle 
-                label="Hunk/Hottie (remove two standard 'yellow' dice)" 
-                inlineLabel 
-            />
-            <Separator 
-                alignContent="start"
+                <Stack>
+                    <Text variant='xLarge' styles={{root: { color: santaChosen ? DefaultPalette.white : DefaultPalette.themeDark}}}>
+                        Santa
+                    </Text>
+                    {santaChosen && 
+                        <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
+                            Swap with standard yellow
+                        </Text>
+                    }                 
+                </Stack>
+            </DefaultButton>
+
+            <DefaultButton
+                styles={buttonStyles}
+                primary={hunkHottieChosen}
+                onClick={() => setHunkHottieChosen(!hunkHottieChosen)}
             >
-                Choose players
-            </Separator>
+                <Stack>
+                    <Text variant='xLarge' styles={{root: { color: hunkHottieChosen ? DefaultPalette.white : DefaultPalette.themeDark}}}>
+                        Hunk/Hottie
+                    </Text>
+                    {hunkHottieChosen && 
+                        <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
+                            Swap with 2 standard green
+                        </Text>
+                    }                 
+                </Stack>
+            </DefaultButton>
+
+            <Text variant="xLarge">
+                Choose Players
+            </Text>
+
+            <Text variant='mega'>
+                ...
+            </Text>
+            {/* <Stack.Item
+                align='stretch'
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                </DocumentCard>
+            </Stack.Item> */}
+
             <PrimaryButton
+                styles={buttonStyles}
                 onClick={() => nav("/play")}
             >
-                Start Playing
+                <Text variant='xLarge' styles={buttonTextStyles}>
+                    Start Playing
+                </Text>
             </PrimaryButton>
         </Stack>
 

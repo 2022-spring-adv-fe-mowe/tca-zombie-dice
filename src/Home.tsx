@@ -14,25 +14,10 @@ import {
     IDocumentCardStyles,
   } from '@fluentui/react/lib/DocumentCard';
 import { DefaultPalette } from '@fluentui/theme';
-import { GameResult } from "./App";
+import { GameResult, buttonStyles, buttonTextStyles, cardStyles } from "./App";
 
 interface HomeProps {
     gameResults: GameResult[];
-};
-
-const buttonStyles = {
-    root: {
-        padding: 40
-        , width: '100%'
-        , maxWidth: '100%'     }
-};
-
-const itemStyles = { 
-    root: { 
-        width: '100%'
-        , maxWidth: '100%' 
-        , padding: 20
-    }
 };
 
 const stackItemStyles = { 
@@ -82,21 +67,13 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 align='stretch'
                 styles={stackItemStyles}
             >
-                {/* <CompoundButton
-                    primary
-                    secondaryText='The real game ! ! !'
-                    styles={itemStyles}
-                    onClick={() => nav("/setup")}
-                >
-                    Play Zombie Dice
-                </CompoundButton> */}
                 <PrimaryButton
                     styles={buttonStyles}
                     onClick={() => nav("/setup")}
                 >
                     <Text
                         variant='xxLarge'
-                        styles={{ root: { color: DefaultPalette.white}}}
+                        styles={buttonTextStyles}
                     >
                         Play Zombie Dice
                     </Text>
@@ -108,7 +85,7 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={itemStyles}
+                    styles={cardStyles}
                 >
 
                     <Stack tokens={{ childrenGap: 10}}>
@@ -139,7 +116,7 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={itemStyles}
+                    styles={cardStyles}
                 >
                     <Stack tokens={{ childrenGap: 10}}>
                         <Text variant="large">Games Played</Text>
@@ -157,7 +134,7 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 styles={stackItemStyles}
             >
                 <DocumentCard
-                    styles={itemStyles}
+                    styles={cardStyles}
                 >
                     <Stack
                         horizontal

@@ -8,6 +8,25 @@ import { SetupGame } from './SetupGame';
 import { loadTheme } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react';
 import { PlayGame } from './PlayGame';
+import { DefaultPalette } from '@fluentui/theme';
+
+export const buttonStyles = {
+  root: {
+      padding: 40
+      , width: '100%'
+      , maxWidth: '100%'     
+    }
+};
+
+export const buttonTextStyles = { root: { color: DefaultPalette.white}};
+
+export const cardStyles = { 
+  root: { 
+      width: '100%'
+      , maxWidth: '100%' 
+      , padding: 20
+  }
+};
 
 const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
 const stackTokens: IStackTokens = { childrenGap: 15 };
