@@ -110,23 +110,45 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 <DocumentCard
                     styles={itemStyles}
                 >
-                    <Text
-                        variant="large"
-                    >
-                        Last played 
-                    </Text>
-                    &nbsp;&nbsp;
-                    <Text
-                        variant="mega"
-                    >
-                        7
-                    </Text>
-                    &nbsp;&nbsp;
-                    <Text
-                        variant="xxLarge"
-                    >
-                        days ago
-                    </Text>
+
+                    <Stack tokens={{ childrenGap: 10}}>
+                        <Text variant="large">Last Played</Text>
+
+                        <Stack horizontal tokens={{ childrenGap: 10}} styles={{root: {justifyContent: "start", alignItems: "end"}}}>
+                            <Text
+                                variant="mega"
+                            >
+                                7
+                            </Text>
+                            <Text
+                                variant="xLarge"
+                                styles={{root: { marginBottom: 13}}}
+                            >
+                                days ago
+                            </Text>
+
+                        </Stack>
+                    </Stack>
+
+
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={itemStyles}
+                >
+                    <Stack tokens={{ childrenGap: 10}}>
+                        <Text variant="large">Games Played</Text>
+                        <Text
+                            variant="mega"
+                        >
+                            {gameResults.length}
+                        </Text>
+                    </Stack>
                 </DocumentCard>
             </Stack.Item>
 
@@ -140,26 +162,13 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                     <Stack
                         horizontal
                     >
-                        <div>
-                            <Text
-                                variant="mega"
-                            >
-                                {gameResults.length}
-                            </Text>
-                            &nbsp;&nbsp;
-                            <Text
-                                variant="small"
-                            >
-                                Total Games Played
-                            </Text>
-                        </div>
-                        <div>
-                            
-                        </div>
+                        <Stack tokens={{ childrenGap: 10}}>
+                            <Text variant="large">Time Played</Text>
+                            <Text variant="xxLarge">0h 27m 03s</Text>
+                        </Stack>
                     </Stack>
                 </DocumentCard>
             </Stack.Item>
-
 
         </Stack>
     );
