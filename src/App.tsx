@@ -12,6 +12,77 @@ import { PlayGame } from './PlayGame';
 const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
 const stackTokens: IStackTokens = { childrenGap: 15 };
 
+export interface Player {
+  name: string;
+  order: number;
+}
+
+export interface SpecialAction {
+  die: string;
+  action: string;
+  value: number;
+}
+
+export interface GameResult {
+  start: string;
+  end: string;
+  winner: string;
+  players: Player[];
+
+  // tca-zombie-specific...
+  expansions?: string[];
+  gameTurns?: any[];
+}
+
+const game1: GameResult = {
+  start: "2022-02-14T15:14:30"
+  , end: "2022-02-14T15:20:00"
+  , winner: "Me"
+  , players: [{ name: "Me", order: 1}, { name: "Taylor", order: 2}, {name: "Jack", order: 3}]
+  , expansions: ["Santa", "Hunk/Hottie"]
+  , gameTurns: [
+      {
+          turnNumber: 1
+          , playerTurn: [
+              {
+                  player: "Me"
+                  , start: "2022-02-14T15:14:30"
+                  , end: "2022-02-14T15:15:22" 
+                  , startingTotalScore: 0
+                  , brains: 3
+                  , endingShotgunCount: 2 // Maybe, data entry ? ? ?
+                  , endingTotalScore: 3
+                  , specialActions: [
+                      {die: "Santa", action: "Helmet", value: 0}
+                      , {die: "Hunk", action: "Double Brains", value: 2}
+                      , {die: "Hottie", action: "Rescue", value: -2}
+                  ]
+              }
+          ]
+      }
+      , {
+          turnNumber: 2
+          , playerTurn: []
+      }
+  ]
+};
+
+// console.log(new Date().toLocaleString());
+
+const game2: GameResult = {
+  start: "2022-02-14T21:00:30"
+  , end: "2022-02-14T21:30:30"
+  , winner: "Stephanie"
+  , players: [{ name: "Me", order: 1}, { name: "Stephanie", order: 2}, {name: "Jack", order: 3}]
+};
+
+
+let gameResults = [
+  game1
+  , game2
+];
+
+
 export const App: React.FunctionComponent = () => {
 
   loadTheme({
@@ -45,7 +116,7 @@ export const App: React.FunctionComponent = () => {
   return (
     <Stack horizontalAlign="stretch" verticalAlign="stretch" verticalFill tokens={stackTokens}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home gameResults={gameResults}/>} />
         <Route path="setup" element={<SetupGame />} />
         <Route path="play" element={<PlayGame />} />
       </Routes>

@@ -14,6 +14,11 @@ import {
     IDocumentCardStyles,
   } from '@fluentui/react/lib/DocumentCard';
 import { DefaultPalette } from '@fluentui/theme';
+import { GameResult } from "./App";
+
+interface HomeProps {
+    gameResults: GameResult[];
+};
 
 const buttonStyles = {
     root: {
@@ -26,6 +31,7 @@ const itemStyles = {
     root: { 
         width: '100%'
         , maxWidth: '100%' 
+        , padding: 20
     }
 };
 
@@ -36,7 +42,7 @@ const stackItemStyles = {
     }
 };
 
-export const Home = () => {
+export const Home: React.FC<HomeProps> = ({gameResults}) => {
 
     const nav = useNavigate();
 
@@ -96,6 +102,7 @@ export const Home = () => {
                     </Text>
                 </PrimaryButton>
             </Stack.Item>
+
             <Stack.Item
                 align='stretch'
                 styles={stackItemStyles}
@@ -103,14 +110,23 @@ export const Home = () => {
                 <DocumentCard
                     styles={itemStyles}
                 >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
+                    <Text
+                        variant="large"
+                    >
+                        Last played 
+                    </Text>
+                    &nbsp;&nbsp;
+                    <Text
+                        variant="mega"
+                    >
+                        7
+                    </Text>
+                    &nbsp;&nbsp;
+                    <Text
+                        variant="xxLarge"
+                    >
+                        days ago
+                    </Text>
                 </DocumentCard>
             </Stack.Item>
 
@@ -121,178 +137,29 @@ export const Home = () => {
                 <DocumentCard
                     styles={itemStyles}
                 >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
+                    <Stack
+                        horizontal
+                    >
+                        <div>
+                            <Text
+                                variant="mega"
+                            >
+                                {gameResults.length}
+                            </Text>
+                            &nbsp;&nbsp;
+                            <Text
+                                variant="small"
+                            >
+                                Total Games Played
+                            </Text>
+                        </div>
+                        <div>
+                            
+                        </div>
                     </Stack>
                 </DocumentCard>
             </Stack.Item>
 
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={itemStyles}
-                >
-                    <DocumentCardTitle
-                        title='Zombie Dice Lifetime'
-                    />
-                    <Stack>
-                        <p>Foo</p>
-                        <p>Bar</p>
-                        <p>Cat</p>
-                    </Stack>
-                </DocumentCard>
-            </Stack.Item>
 
         </Stack>
     );
