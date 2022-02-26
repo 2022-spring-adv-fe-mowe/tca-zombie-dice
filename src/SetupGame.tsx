@@ -1,17 +1,23 @@
 import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
-import { DefaultPalette, Stack, Icon } from '@fluentui/react';
+import { DefaultPalette, Stack, Icon, Checkbox } from '@fluentui/react';
 import { useNavigate } from 'react-router-dom';
 import { buttonStyles, buttonTextStyles, cardStyles } from './App';
 import { Text } from '@fluentui/react/lib/Text';
 import { useState } from 'react';
 import { DocumentCard } from '@fluentui/react';
 
-export const SetupGame = () => {
+interface SetupGameProps {
+    uniquePlayers: string[];
+}
+
+export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers}) => {
 
     const nav = useNavigate();
 
     const [santaChosen, setSantaChosen] = useState(false);
     const [hunkHottieChosen, setHunkHottieChosen] = useState(false);
+
+    const sortedPlayers =  [...uniquePlayers].sort();
 
     return (
         <Stack style={{padding: 30}} tokens={{childrenGap: 10}}>
@@ -62,21 +68,12 @@ export const SetupGame = () => {
                 Choose Players
             </Text>
 
-            <Text variant='xLarge' styles={{root: {marginBottom: 150}}}>
-                ...
-            </Text>
-            {/* <Stack.Item
-                align='stretch'
-            >
-                <DocumentCard
-                    styles={cardStyles}
-                >
-                </DocumentCard>
-            </Stack.Item> */}
+            {sortedPlayers.map(x => <Checkbox key={x} label={x} />)}
 
             <PrimaryButton
                 styles={buttonStyles}
                 onClick={() => nav("/play")}
+                style={{ marginTop: 50}}
             >
                 <Text variant='xLarge' styles={buttonTextStyles}>
                     Start Playing

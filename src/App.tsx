@@ -101,6 +101,9 @@ let gameResults = [
   , game2
 ];
 
+const getUniquePlayers = (results: GameResult[]) => (
+  [... new Set(results.flatMap(x => x.players.map(y => y.name)))]
+);
 
 export const App: React.FunctionComponent = () => {
 
@@ -136,7 +139,7 @@ export const App: React.FunctionComponent = () => {
     <Stack horizontalAlign="stretch" verticalAlign="stretch" verticalFill tokens={stackTokens}>
       <Routes>
         <Route path="/" element={<Home gameResults={gameResults}/>} />
-        <Route path="setup" element={<SetupGame />} />
+        <Route path="setup" element={<SetupGame uniquePlayers={getUniquePlayers(gameResults)}/>} />
         <Route path="play" element={<PlayGame />} />
       </Routes>
     </Stack>
