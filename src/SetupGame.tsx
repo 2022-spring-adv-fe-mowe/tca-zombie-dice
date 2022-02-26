@@ -68,7 +68,12 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers}) => {
                 Choose Players
             </Text>
 
-            {sortedPlayers.map(x => <Checkbox key={x} label={x} />)}
+            {sortedPlayers.map(x => (
+                <Checkbox 
+                    key={x} 
+                    label={x}
+                />
+            ))}
 
             <PrimaryButton
                 styles={buttonStyles}
