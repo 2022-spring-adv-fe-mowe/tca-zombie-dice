@@ -1,5 +1,5 @@
 import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
-import { DefaultPalette, Stack } from '@fluentui/react';
+import { DefaultPalette, Stack, Icon } from '@fluentui/react';
 import { useNavigate } from 'react-router-dom';
 import { buttonStyles, buttonTextStyles, cardStyles } from './App';
 import { Text } from '@fluentui/react/lib/Text';
@@ -35,7 +35,7 @@ export const SetupGame = () => {
                     </Text>
                     {santaChosen && 
                         <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
-                            Swap with standard yellow
+                            Swap with standard &nbsp;<span style={{color: "darkgreen", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, fontWeight: "bold"}}>green</span>
                         </Text>
                     }                 
                 </Stack>
@@ -48,11 +48,11 @@ export const SetupGame = () => {
             >
                 <Stack>
                     <Text variant='xLarge' styles={{root: { color: hunkHottieChosen ? DefaultPalette.white : DefaultPalette.themeDark}}}>
-                        Hunk/Hottie
+                        Hunk &amp; Hottie
                     </Text>
                     {hunkHottieChosen && 
                         <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
-                            Swap with 2 standard green
+                            Swap with 2 standard &nbsp;<span style={{color: "gold", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, fontWeight: "bold"}}>yellow</span>
                         </Text>
                     }                 
                 </Stack>
