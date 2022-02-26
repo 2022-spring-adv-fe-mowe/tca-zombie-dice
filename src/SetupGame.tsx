@@ -58,11 +58,11 @@ export const SetupGame = () => {
                 </Stack>
             </DefaultButton>
 
-            <Text variant="xLarge">
+            <Text variant="xLarge" styles={{root: {paddingTop: 30}}}>
                 Choose Players
             </Text>
 
-            <Text variant='mega'>
+            <Text variant='xLarge' styles={{root: {marginBottom: 150}}}>
                 ...
             </Text>
             {/* <Stack.Item
