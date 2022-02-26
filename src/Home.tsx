@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { DefaultButton, PrimaryButton, CompoundButton } from '@fluentui/react/lib/Button';
 import { Text } from '@fluentui/react/lib/Text';
 import { Stack, StackItem } from '@fluentui/react/lib/Stack';
-import { CommandBar } from '@fluentui/react';
+import { CommandBar, Icon } from '@fluentui/react';
 import {
     DocumentCard,
     DocumentCardActivity,
@@ -39,30 +39,6 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 , childrenGap: 10
             }}
         >
-
-            {/* <Stack.Item align='stretch'>
-                <CommandBar
-                    items={[
-                        {
-                            key: 'play'
-                            , text: 'Play Zombie Dice'
-                            , onClick: () => nav("/setup")
-                            , iconProps: {
-                                iconName: 'People'
-                            }
-                        }
-                    ]}
-                    farItems={[
-                        {
-                            key: 'other'
-                            , iconProps: {
-                                iconName: 'More'
-                            }
-                        }
-                    ]}
-                />
-            </Stack.Item> */}
-
             <Stack.Item
                 align='stretch'
                 styles={stackItemStyles}
@@ -75,6 +51,8 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                         variant='xxLarge'
                         styles={buttonTextStyles}
                     >
+                        <Icon iconName='People' />
+                        &nbsp;
                         Play Zombie Dice
                     </Text>
                 </PrimaryButton>
@@ -118,13 +96,13 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 <DocumentCard
                     styles={cardStyles}
                 >
-                    <Stack tokens={{ childrenGap: 10}}>
-                        <Text variant="large">Games Played</Text>
-                        <Text
-                            variant="mega"
-                        >
-                            {gameResults.length}
-                        </Text>
+                    <Stack
+                        horizontal
+                    >
+                        <Stack tokens={{ childrenGap: 10}}>
+                            <Text variant="large">Time Played</Text>
+                            <Text variant="xxLarge">0h 27m 03s</Text>
+                        </Stack>
                     </Stack>
                 </DocumentCard>
             </Stack.Item>
@@ -136,13 +114,13 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 <DocumentCard
                     styles={cardStyles}
                 >
-                    <Stack
-                        horizontal
-                    >
-                        <Stack tokens={{ childrenGap: 10}}>
-                            <Text variant="large">Time Played</Text>
-                            <Text variant="xxLarge">0h 27m 03s</Text>
-                        </Stack>
+                    <Stack tokens={{ childrenGap: 10}}>
+                        <Text variant="large">Games Played</Text>
+                        <Text
+                            variant="mega"
+                        >
+                            {gameResults.length}
+                        </Text>
                     </Stack>
                 </DocumentCard>
             </Stack.Item>
