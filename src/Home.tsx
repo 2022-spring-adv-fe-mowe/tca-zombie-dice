@@ -47,14 +47,20 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                     styles={buttonStyles}
                     onClick={() => nav("/setup")}
                 >
-                    <Text
-                        variant='xxLarge'
-                        styles={buttonTextStyles}
-                    >
-                        <Icon iconName='People' />
-                        &nbsp;
-                        Play Zombie Dice
-                    </Text>
+                    <Stack>
+                        <Text
+                            variant='xxLarge'
+                            styles={buttonTextStyles}
+                        >
+                            Play Zombie Dice
+                        </Text>
+                        <Text 
+                            variant="medium"
+                            styles={buttonTextStyles}
+                        >
+                            And track your stats...
+                        </Text>
+                    </Stack>
                 </PrimaryButton>
             </Stack.Item>
 
