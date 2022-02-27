@@ -159,7 +159,7 @@ const darkTheme = createTheme({
 
 export const App: React.FunctionComponent = () => {
 
-  const [darkThemeChosen, setDarkThemeChosen] = useState(true);
+  const [darkThemeChosen, setDarkThemeChosen] = useState(false);
 
   initializeIcons();
 

@@ -51,14 +51,14 @@ export const Home: React.FC<HomeProps> = ({
             >
                 <PrimaryButton
                     // onMenuClick={(e) => console.log(e)}
-                    split
-                    menuProps={{ items: [
-                        {
-                            key: "theme"
-                            , text: darkMode ? "Light Mode" : "Dark Mode"
-                            , onClick: () => setDarkMode(!darkMode)
-                        }
-                    ]}}
+                    // split
+                    // menuProps={{ items: [
+                    //     {
+                    //         key: "theme"
+                    //         , text: darkMode ? "Light Mode" : "Dark Mode"
+                    //         , onClick: () => setDarkMode(!darkMode)
+                    //     }
+                    // ]}}
                     onClick={() => nav("/setup")}
                     styles={buttonStyles}
                 >
@@ -143,6 +143,24 @@ export const Home: React.FC<HomeProps> = ({
                             {gameResults.length}
                         </Text>
                     </Stack>
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <DefaultButton
+                        styles={buttonStyles}
+                        onClick={() => setDarkMode(!darkMode)}
+                    >
+                        <Text variant='large'>
+                            Try {darkMode ? "Light" : "Dark"} Mode
+                        </Text>
+                    </DefaultButton>                
                 </DocumentCard>
             </Stack.Item>
 
