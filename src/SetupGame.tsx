@@ -8,9 +8,10 @@ import { DocumentCard } from '@fluentui/react';
 
 interface SetupGameProps {
     uniquePlayers: string[];
+    darkTheme: boolean;
 }
 
-export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers}) => {
+export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = false}) => {
 
     const nav = useNavigate();
 
@@ -28,7 +29,6 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers}) => {
                 <Text variant="medium" styles={{ root: { marginTop: 5}}}>
                     (tap to use)
                 </Text>
-
             </Stack>
             <DefaultButton
                 styles={buttonStyles}
@@ -36,12 +36,18 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers}) => {
                 onClick={() => setSantaChosen(!santaChosen)}
             >
                 <Stack>
-                    <Text variant='xLarge' styles={{root: { color: santaChosen ? DefaultPalette.white : DefaultPalette.themeDark}}}>
+                    <Text 
+                        variant='xLarge'
+                        styles={{ root: {
+                                color: darkTheme ? "#fefefd" : santaChosen ? DefaultPalette.white : "#0f0c35"
+                            }
+                        }} 
+                    >
                         Santa
                     </Text>
                     {santaChosen && 
                         <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
-                            Swap with standard &nbsp;<span style={{color: "darkgreen", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, fontWeight: "bold"}}>green</span>
+                            Swap with standard &nbsp;<span style={{color: "darkgreen", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, paddingBottom: 3, marginTop: -2, fontWeight: "bold"}}>green</span>
                         </Text>
                     }                 
                 </Stack>
@@ -53,20 +59,31 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers}) => {
                 onClick={() => setHunkHottieChosen(!hunkHottieChosen)}
             >
                 <Stack>
-                    <Text variant='xLarge' styles={{root: { color: hunkHottieChosen ? DefaultPalette.white : DefaultPalette.themeDark}}}>
+                    <Text 
+                        variant='xLarge' 
+                        styles={{ root: {
+                            color: darkTheme ? "#fefefd" : hunkHottieChosen ? DefaultPalette.white : "#0f0c35"
+                        }
+                    }}                         
+                    >
                         Hunk &amp; Hottie
                     </Text>
                     {hunkHottieChosen && 
                         <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
-                            Swap with 2 standard &nbsp;<span style={{color: "gold", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, fontWeight: "bold"}}>yellow</span>
+                            Swap with 2 standard &nbsp;<span style={{color: "gold", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, paddingBottom: 3, marginTop: -2, fontWeight: "bold"}}>yellow</span>
                         </Text>
                     }                 
                 </Stack>
             </DefaultButton>
 
-            <Text variant="xLarge" styles={{root: {paddingTop: 30}}}>
-                Choose Players
-            </Text>
+            <Stack horizontal tokens={{childrenGap: 10}}>
+                <Text variant="xLarge">
+                    Choose Players
+                </Text>
+                <Text variant="medium" styles={{ root: { marginTop: 5}}}>
+                    (player order on next screen)
+                </Text>
+            </Stack>
 
             {sortedPlayers.map(x => (
                 <Checkbox 

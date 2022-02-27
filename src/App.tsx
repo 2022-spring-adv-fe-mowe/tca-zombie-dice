@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Stack, Text, FontWeights, IStackTokens, IStackStyles, ITextStyles } from '@fluentui/react';
 import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './Home';
 import { SetupGame } from './SetupGame';
-import { loadTheme } from '@fluentui/react';
+import { loadTheme, ThemeProvider } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react';
 import { PlayGame } from './PlayGame';
-import { DefaultPalette } from '@fluentui/theme';
+import { DefaultPalette, createTheme } from '@fluentui/theme';
 
 export const buttonStyles = {
   root: {
@@ -105,43 +105,82 @@ const getUniquePlayers = (results: GameResult[]) => (
   [... new Set(results.flatMap(x => x.players.map(y => y.name)))]
 );
 
+const lightTheme = {
+palette: {
+  themePrimary: '#8c1833',
+  themeLighterAlt: '#faf2f4',
+  themeLighter: '#edcdd5',
+  themeLight: '#dda6b2',
+  themeTertiary: '#ba5d73',
+  themeSecondary: '#9a2a44',
+  themeDarkAlt: '#7e152e',
+  themeDark: '#6b1227',
+  themeDarker: '#4f0d1d',
+  neutralLighterAlt: '#eeebe9',
+  neutralLighter: '#eae7e6',
+  neutralLight: '#e1dedc',
+  neutralQuaternaryAlt: '#d1cecd',
+  neutralQuaternary: '#c8c5c4',
+  neutralTertiaryAlt: '#c0bdbc',
+  neutralTertiary: '#a29ecf',
+  neutralSecondary: '#5b549f',
+  neutralPrimaryAlt: '#2a2472',
+  neutralPrimary: '#1b155e',
+  neutralDark: '#141048',
+  black: '#0f0c35',
+  white: '#f5f1f0',
+}};
+
+const darkTheme = createTheme({
+  palette: {
+    themePrimary: '#8f0a0a',
+    themeLighterAlt: '#060000',
+    themeLighter: '#170202',
+    themeLight: '#2b0303',
+    themeTertiary: '#560606',
+    themeSecondary: '#7e0909',
+    themeDarkAlt: '#9a1919',
+    themeDark: '#aa3232',
+    themeDarker: '#c05c5c',
+    neutralLighterAlt: '#060c2d',
+    neutralLighter: '#091036',
+    neutralLight: '#101743',
+    neutralQuaternaryAlt: '#141d4c',
+    neutralQuaternary: '#182153',
+    neutralTertiaryAlt: '#2e3870',
+    neutralTertiary: '#fcf8f1',
+    neutralSecondary: '#fcf9f4',
+    neutralPrimaryAlt: '#fdfaf6',
+    neutralPrimary: '#faf5eb',
+    neutralDark: '#fefdfa',
+    black: '#fefefd',
+    white: '#040824',
+  }});
+
 export const App: React.FunctionComponent = () => {
 
-  loadTheme({
-    palette: {
-      themePrimary: '#8c1833',
-      themeLighterAlt: '#faf2f4',
-      themeLighter: '#edcdd5',
-      themeLight: '#dda6b2',
-      themeTertiary: '#ba5d73',
-      themeSecondary: '#9a2a44',
-      themeDarkAlt: '#7e152e',
-      themeDark: '#6b1227',
-      themeDarker: '#4f0d1d',
-      neutralLighterAlt: '#eeebe9',
-      neutralLighter: '#eae7e6',
-      neutralLight: '#e1dedc',
-      neutralQuaternaryAlt: '#d1cecd',
-      neutralQuaternary: '#c8c5c4',
-      neutralTertiaryAlt: '#c0bdbc',
-      neutralTertiary: '#a29ecf',
-      neutralSecondary: '#5b549f',
-      neutralPrimaryAlt: '#2a2472',
-      neutralPrimary: '#1b155e',
-      neutralDark: '#141048',
-      black: '#0f0c35',
-      white: '#f5f1f0',
-    }});
+  const [darkThemeChosen, setDarkThemeChosen] = useState(false);
 
-    initializeIcons();
+  initializeIcons();
 
   return (
-    <Stack horizontalAlign="stretch" verticalAlign="stretch" verticalFill tokens={stackTokens}>
-      <Routes>
-        <Route path="/" element={<Home gameResults={gameResults}/>} />
-        <Route path="setup" element={<SetupGame uniquePlayers={getUniquePlayers(gameResults)}/>} />
-        <Route path="play" element={<PlayGame />} />
-      </Routes>
-    </Stack>
+    <ThemeProvider
+      applyTo="body"
+      theme={darkThemeChosen ? darkTheme : lightTheme}
+    >
+      <Stack horizontalAlign="stretch" verticalAlign="stretch" verticalFill tokens={stackTokens}>
+        <Routes>
+          <Route path="/" element={
+            <Home 
+              gameResults={gameResults}
+              darkMode={darkThemeChosen}
+              setDarkMode={setDarkThemeChosen}
+            />} 
+          />
+          <Route path="setup" element={<SetupGame uniquePlayers={getUniquePlayers(gameResults)} darkTheme={darkThemeChosen}/>} />
+          <Route path="play" element={<PlayGame />} />
+        </Routes>
+      </Stack>
+    </ThemeProvider>
   );
 };

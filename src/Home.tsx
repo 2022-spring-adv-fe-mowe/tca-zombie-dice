@@ -18,6 +18,8 @@ import { GameResult, buttonStyles, buttonTextStyles, cardStyles } from "./App";
 
 interface HomeProps {
     gameResults: GameResult[];
+    darkMode: boolean;
+    setDarkMode: any;
 };
 
 const stackItemStyles = { 
@@ -27,7 +29,11 @@ const stackItemStyles = {
     }
 };
 
-export const Home: React.FC<HomeProps> = ({gameResults}) => {
+export const Home: React.FC<HomeProps> = ({
+    gameResults
+    , darkMode
+    , setDarkMode
+}) => {
 
     const nav = useNavigate();
 
@@ -46,6 +52,14 @@ export const Home: React.FC<HomeProps> = ({gameResults}) => {
                 <PrimaryButton
                     styles={buttonStyles}
                     onClick={() => nav("/setup")}
+                    onMenuClick={(e) => console.log(e)}
+                    split
+                    menuProps={{ items: [
+                        {
+                            key: "theme"
+                            , text: darkMode ? "Light Mode" : "Dark Mode"
+                        }
+                    ]}}
                 >
                     <Stack>
                         <Text
