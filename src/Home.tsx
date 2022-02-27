@@ -50,16 +50,17 @@ export const Home: React.FC<HomeProps> = ({
                 styles={stackItemStyles}
             >
                 <PrimaryButton
-                    styles={buttonStyles}
-                    onClick={() => nav("/setup")}
-                    onMenuClick={(e) => console.log(e)}
+                    // onMenuClick={(e) => console.log(e)}
                     split
                     menuProps={{ items: [
                         {
                             key: "theme"
                             , text: darkMode ? "Light Mode" : "Dark Mode"
+                            , onClick: () => setDarkMode(!darkMode)
                         }
                     ]}}
+                    onClick={() => nav("/setup")}
+                    styles={buttonStyles}
                 >
                     <Stack>
                         <Text
