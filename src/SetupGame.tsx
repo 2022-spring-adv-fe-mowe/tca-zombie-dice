@@ -19,7 +19,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
     const [santaChosen, setSantaChosen] = useState(false);
     const [hunkHottieChosen, setHunkHottieChosen] = useState(false);
 
-    const [sortedPlayers, setSortedPlayers] = useState([...uniquePlayers].sort());
+    const [sortedPlayers, setSortedPlayers] = useState([...uniquePlayers].sort().map(x => ({name: x, checked: false})));
 
     const [newPlayerName, setNewPlayerName] = useState("");
 
@@ -27,9 +27,16 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
         setSortedPlayers(
             [
                 ...sortedPlayers
-                , newPlayerName
-            ].sort()
+                , {
+                    name: newPlayerName
+                    , checked: true
+                }
+            ]
         );
+    };
+
+    const togglePlayer = (e: any) => {
+        setSortedPlayers(sortedPlayers.map(x => ({...x, checked: !x.checked})));
     };
 
     return (
@@ -120,8 +127,10 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
             </Stack>
             {sortedPlayers.map(x => (
                 <Checkbox 
-                    key={x} 
-                    label={x}
+                    key={x.name} 
+                    label={x.name}
+                    checked={x.checked}
+                    onChange={togglePlayer}
                 />
             ))}
 
