@@ -31,7 +31,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
                     name: newPlayerName
                     , checked: true
                 }
-            ]
+            ].sort((a, b) => a.name.localeCompare(b.name))
         );
     };
 
