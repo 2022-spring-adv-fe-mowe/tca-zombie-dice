@@ -35,8 +35,11 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
         );
     };
 
-    const togglePlayer = (e: any) => {
-        setSortedPlayers(sortedPlayers.map(x => ({...x, checked: !x.checked})));
+    const togglePlayer = (key: string) => {
+        setSortedPlayers(sortedPlayers.map(x => ({
+            ...x
+            , checked: x.name === key ? !x.checked : x.checked
+        })));
     };
 
     return (
@@ -130,7 +133,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
                     key={x.name} 
                     label={x.name}
                     checked={x.checked}
-                    onChange={togglePlayer}
+                    onChange={() => togglePlayer(x.name)}
                 />
             ))}
 

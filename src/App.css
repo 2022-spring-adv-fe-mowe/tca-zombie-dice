@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.ms-Checkbox:hover:not(.is-checked) .ms-Checkbox-checkmark {
+  opacity: 0;
+}
