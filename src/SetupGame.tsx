@@ -24,6 +24,12 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
     const [newPlayerName, setNewPlayerName] = useState("");
 
     const addNewPlayer = () => {
+        
+        // Prevent dupes.
+        if (sortedPlayers.some(x => x.name.toUpperCase().localeCompare(newPlayerName.toUpperCase()) === 0)) {
+            return;
+        }
+
         setSortedPlayers(
             [
                 ...sortedPlayers
@@ -33,6 +39,9 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
                 }
             ].sort((a, b) => a.name.localeCompare(b.name))
         );
+
+        // Clear the text box.
+        setNewPlayerName("");
     };
 
     const togglePlayer = (key: string) => {
@@ -115,6 +124,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
                     >
                         <TextField 
                             placeholder="Enter name"
+                            value={newPlayerName}
                             onChange={(e) => setNewPlayerName((e.target as any).value)} 
                         />
                     </Stack.Item>
