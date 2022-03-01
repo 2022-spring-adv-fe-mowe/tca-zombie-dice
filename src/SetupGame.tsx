@@ -5,6 +5,7 @@ import { buttonStyles, buttonTextStyles, cardStyles } from './App';
 import { Text } from '@fluentui/react/lib/Text';
 import { useState } from 'react';
 import { DocumentCard } from '@fluentui/react';
+import { TextField} from '@fluentui/react/lib/TextField';
 
 interface SetupGameProps {
     uniquePlayers: string[];
@@ -18,7 +19,18 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
     const [santaChosen, setSantaChosen] = useState(false);
     const [hunkHottieChosen, setHunkHottieChosen] = useState(false);
 
-    const sortedPlayers =  [...uniquePlayers].sort();
+    const [sortedPlayers, setSortedPlayers] = useState([...uniquePlayers].sort());
+
+    const [newPlayerName, setNewPlayerName] = useState("");
+
+    const addNewPlayer = () => {
+        setSortedPlayers(
+            [
+                ...sortedPlayers
+                , newPlayerName
+            ].sort()
+        );
+    };
 
     return (
         <Stack style={{padding: 30}} tokens={{childrenGap: 10}}>
@@ -76,15 +88,36 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
                 </Stack>
             </DefaultButton>
 
-            <Stack horizontal tokens={{childrenGap: 10}}>
-                <Text variant="xLarge">
-                    Choose Players
-                </Text>
-                <Text variant="medium" styles={{ root: { marginTop: 5}}}>
-                    (player order on next screen)
-                </Text>
-            </Stack>
+            <Text 
+                variant="xLarge"
+                styles={{root : {paddingTop: 20}}}
+            >
+                Choose Players
+            </Text>
 
+            <Stack 
+                horizontal
+                tokens={{ childrenGap: 10}}
+                styles={{root: { marginBottom: 20}}}
+            >
+                    <Stack.Item
+                        grow={true}
+                    >
+                        <TextField 
+                            placeholder="Enter name"
+                            onChange={(e) => setNewPlayerName((e.target as any).value)} 
+                        />
+                    </Stack.Item>
+                    <Stack.Item
+                        align='end'
+                    >
+                        <DefaultButton
+                            onClick={addNewPlayer}
+                        >
+                            Add
+                        </DefaultButton>
+                    </Stack.Item>
+            </Stack>
             {sortedPlayers.map(x => (
                 <Checkbox 
                     key={x} 
