@@ -15,7 +15,19 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
     return (
         <Stack style={{padding: 30}}>
             <Text variant='large'>
+                Started: {currentGame.start}
+            </Text>
+            <br />
+            <br />
+            <br />
+            <Text variant='large'>
                 Expansions: {currentGame.expansions.length > 0 ? currentGame.expansions.join(", ") : "None"}
+            </Text>
+            <br />
+            <br />
+            <br />
+            <Text variant='large'>
+                Players: {currentGame.players.length > 0 ? currentGame.players.map(x => x.name).join(", ") : "None"}
             </Text>
             <br />
             <br />

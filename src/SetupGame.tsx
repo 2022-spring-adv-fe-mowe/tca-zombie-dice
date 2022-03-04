@@ -63,7 +63,12 @@ export const SetupGame: React.FC<SetupGameProps> = ({
                     ...(hunkHottieChosen ? ["Huck & Hottie"] : [])
                     , ...(santaChosen ? ["Santa"] : [])
                 ]
-                , players: []
+                , players: [
+                    ...sortedPlayers.filter(x => x.checked).map((x, i) => ({
+                        name: x.name
+                        , order: i
+                    }))
+                ]
                 , start: (new Date()).toISOString()
             }
         );
