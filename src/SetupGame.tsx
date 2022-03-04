@@ -1,7 +1,7 @@
 import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { DefaultPalette, Stack, Icon, Checkbox } from '@fluentui/react';
 import { useNavigate } from 'react-router-dom';
-import { buttonStyles, buttonTextStyles, cardStyles } from './App';
+import { buttonStyles, buttonTextStyles, cardStyles, CurrentGame } from './App';
 import { Text } from '@fluentui/react/lib/Text';
 import { useState } from 'react';
 import { DocumentCard } from '@fluentui/react';
@@ -10,9 +10,14 @@ import { TextField} from '@fluentui/react/lib/TextField';
 interface SetupGameProps {
     uniquePlayers: string[];
     darkTheme: boolean;
+    setCurrentGame: (g: CurrentGame) => void;
 }
 
-export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = false}) => {
+export const SetupGame: React.FC<SetupGameProps> = ({
+    uniquePlayers
+    , darkTheme = false
+    , setCurrentGame
+}) => {
 
     const nav = useNavigate();
 
@@ -49,6 +54,20 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
             ...x
             , checked: x.name === key ? !x.checked : x.checked
         })));
+    };
+
+    const startGame = () => {
+        setCurrentGame(
+            {
+                expansions: [
+                    ...(hunkHottieChosen ? ["Huck & Hottie"] : [])
+                    , ...(santaChosen ? ["Santa"] : [])
+                ]
+                , players: []
+                , start: (new Date()).toISOString()
+            }
+        );
+        nav("/play");
     };
 
     return (
@@ -149,7 +168,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({uniquePlayers, darkTheme = 
 
             <PrimaryButton
                 styles={buttonStyles}
-                onClick={() => nav("/play")}
+                onClick={startGame}
                 style={{ marginTop: 50}}
             >
                 <Text variant='xLarge' styles={buttonTextStyles}>

@@ -53,6 +53,12 @@ export interface GameResult {
   gameTurns?: any[];
 }
 
+export interface CurrentGame {
+  expansions: string[];
+  players: Player[];
+  start: string;
+}
+
 const game1: GameResult = {
   start: "2022-02-14T15:14:30"
   , end: "2022-02-14T15:20:00"
@@ -159,7 +165,14 @@ const darkTheme = createTheme({
 
 export const App: React.FunctionComponent = () => {
 
+  // State as useState() until it gets unbearable ! ! !
   const [darkThemeChosen, setDarkThemeChosen] = useState(false);
+  const [results, setResults] = useState<GameResult[]>(gameResults);
+  const [currentGame, setCurrentGame] = useState<CurrentGame>({
+    expansions: []
+    , players: []
+    , start: ""
+  });
 
   initializeIcons();
 
@@ -172,13 +185,23 @@ export const App: React.FunctionComponent = () => {
         <Routes>
           <Route path="/" element={
             <Home 
-              gameResults={gameResults}
+              gameResults={results}
               darkMode={darkThemeChosen}
               setDarkMode={setDarkThemeChosen}
             />} 
           />
-          <Route path="setup" element={<SetupGame uniquePlayers={getUniquePlayers(gameResults)} darkTheme={darkThemeChosen}/>} />
-          <Route path="play" element={<PlayGame />} />
+          <Route path="setup" element={
+            <SetupGame 
+              uniquePlayers={getUniquePlayers(gameResults)} 
+              darkTheme={darkThemeChosen}
+              setCurrentGame={setCurrentGame}
+            />} 
+          />
+          <Route path="play" element={
+            <PlayGame
+              currentGame={currentGame} 
+            />} 
+          />
         </Routes>
       </Stack>
     </ThemeProvider>
