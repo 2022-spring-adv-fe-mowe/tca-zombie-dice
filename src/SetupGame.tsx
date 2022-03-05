@@ -60,7 +60,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({
         setCurrentGame(
             {
                 expansions: [
-                    ...(hunkHottieChosen ? ["Huck & Hottie"] : [])
+                    ...(hunkHottieChosen ? ["Hunk & Hottie"] : [])
                     , ...(santaChosen ? ["Santa"] : [])
                 ]
                 , players: [
