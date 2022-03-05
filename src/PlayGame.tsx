@@ -2,8 +2,8 @@ import { Stack } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
-import { CurrentGame } from './App';
-import { useState, useEffect } from 'react';
+import { CurrentGame, GameTurn } from './App';
+import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
 interface PlayGameProps {
@@ -14,34 +14,41 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
     const nav = useNavigate();
 
+    const [turns, setTurns] = useState<GameTurn[]>([]);
+    const [activePlayerName, setActivePlayerName] = useState<string | undefined>(undefined);
+
+
     const [playerOrderChosenCount, setPlayerOrderChosenCount] = useState(0);
 
-    // Use effect to pop panel for choosing player turn ? ? ?
-    useEffect(
-        () => {
-            console.log('here');
-        }
-        , []
-    );
+    const showChoosePlayerPanel =
+        !activePlayerName
+        // && !!turns.find(x => x.turnNumber === 1)
+    ;
+
+    const playerChosen = (player: string) => {
+        setActivePlayerName(player);
+    };
 
     return (
         <Stack style={{padding: 30}}>
             <Panel
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
-                isOpen={true}
-                headerText="Player 1"
+                isOpen={showChoosePlayerPanel}
+                headerText="Choose Player 1"
             >
                 <Stack
                     tokens={{ childrenGap: 30}}
+                    styles={{root: {marginTop: 40}}}
                 >
                     {
                         currentGame.players.map(x =>(
                             <DefaultButton
-                                styles={{root: {paddingTop: 20, paddingBottom: 20, marginTop: 40}}}
+                                styles={{root: {paddingTop: 30, paddingBottom: 30}}}
                             >
                                 <Text
                                     variant='large'
+                                    onClick={() => playerChosen(x.name)}
                                 >
                                     {x.name}
                                 </Text>
@@ -73,6 +80,24 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             >
                 Record Interesting Things Here
             </Text>
+            <br />
+            <br />
+            <br />
+            {
+                activePlayerName
+                && (
+                    <DefaultButton
+                        styles={{root: {paddingTop: 30, paddingBottom: 30}}}
+                    >
+                        <Text
+                            variant='large'
+                            onClick={() => setActivePlayerName(undefined)}
+                        >
+                            {activePlayerName}'s Turn Done
+                        </Text>
+                    </DefaultButton>
+                )
+            }
             <br />
             <br />
             <br />

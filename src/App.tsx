@@ -50,13 +50,27 @@ export interface GameResult {
 
   // tca-zombie-specific...
   expansions?: string[];
-  gameTurns?: any[];
+  gameTurns?: GameTurn[];
 }
 
 export interface CurrentGame {
   expansions: string[];
   players: Player[];
   start: string;
+}
+
+export interface PlayerTurn {
+  player?: string;
+  start?: string;
+  end?: string;
+  startingTotalScore?: number;
+  brainsThisTurn?: number;
+  endingTotalScore?: number;
+  specialActions?: any[];
+}
+export interface GameTurn {
+  turnNumber: number;
+  playerTurns: PlayerTurn[];
 }
 
 const game1: GameResult = {
@@ -68,14 +82,13 @@ const game1: GameResult = {
   , gameTurns: [
       {
           turnNumber: 1
-          , playerTurn: [
+          , playerTurns: [
               {
                   player: "Me"
                   , start: "2022-02-14T15:14:30"
                   , end: "2022-02-14T15:15:22" 
                   , startingTotalScore: 0
-                  , brains: 3
-                  , endingShotgunCount: 2 // Maybe, data entry ? ? ?
+                  , brainsThisTurn: 3
                   , endingTotalScore: 3
                   , specialActions: [
                       {die: "Santa", action: "Helmet", value: 0}
@@ -87,7 +100,7 @@ const game1: GameResult = {
       }
       , {
           turnNumber: 2
-          , playerTurn: []
+          , playerTurns: []
       }
   ]
 };
