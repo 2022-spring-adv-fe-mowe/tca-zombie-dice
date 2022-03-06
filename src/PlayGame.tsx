@@ -80,12 +80,41 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                 tokens={{childrenGap: 20}}
             >
                 {playersInOrder.map(x => (
-                    <Persona
+                    <Stack
                         key={x.name}
-                        text={x.name}
-                        secondaryText={"0"}
-                        size={PersonaSize.size72}
-                    />
+                        tokens={{childrenGap: 0}}
+                    >
+                        <Text
+                            variant='large'
+                        >
+                            {x.name}
+                        </Text>
+                        <Stack
+                            horizontal
+                            tokens={{childrenGap: 15}}
+                        >
+                            <Text
+                                variant='xLarge'
+                                styles={{root: {textDecoration: "line-through"}}}
+                            >
+                                0
+                            </Text>
+                            <Text
+                                variant='xLarge'
+                                styles={{root: {textDecoration: "line-through"}}}
+                            >
+                                0
+                            </Text>
+                            { x.name !== "Me" &&
+                                <Text
+                                    variant='xLarge'
+                                >
+                                    4
+                                </Text>
+                            }
+                        </Stack>
+
+                    </Stack>
                 ))}
             </Stack>
             <br />
