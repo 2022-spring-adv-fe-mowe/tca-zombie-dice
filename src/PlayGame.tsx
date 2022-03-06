@@ -1,4 +1,4 @@
-import { DefaultPalette, Stack } from '@fluentui/react';
+import { DefaultPalette, Persona, PersonaSize, Stack } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
@@ -53,6 +53,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                             .filter(x => playersInOrder.findIndex(y => y.name === x.name) === -1)
                             .map(x =>(
                                 <PrimaryButton
+                                    key={x.name}
                                     styles={{
                                         root: {
                                             padding: 30
@@ -75,6 +76,21 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                     }
                 </Stack>
             </Panel>
+            <Stack
+                tokens={{childrenGap: 20}}
+            >
+                {playersInOrder.map(x => (
+                    <Persona
+                        key={x.name}
+                        text={x.name}
+                        secondaryText={"0"}
+                        size={PersonaSize.size72}
+                    />
+                ))}
+            </Stack>
+            <br />
+            <br />
+            <br />
             <Text variant='large'>
                 Started: {currentGame.start}
             </Text>
