@@ -2,7 +2,7 @@ import { Stack } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
-import { CurrentGame, GameTurn } from './App';
+import { CurrentGame, GameTurn, Player } from './App';
 import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
@@ -18,15 +18,22 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
     const [activePlayerName, setActivePlayerName] = useState<string | undefined>(undefined);
 
 
-    const [playerOrderChosenCount, setPlayerOrderChosenCount] = useState(0);
+    const [playersInOrder, setPlayersInOrder] = useState<Player[]>([]);
 
     const showChoosePlayerPanel =
         !activePlayerName
-        // && !!turns.find(x => x.turnNumber === 1)
+        && playersInOrder.length < currentGame.players.length
     ;
 
     const playerChosen = (player: string) => {
         setActivePlayerName(player);
+        setPlayersInOrder([
+            ...playersInOrder 
+            , {
+                name: player
+                , order: playersInOrder.length + 1
+            }
+        ]);
     };
 
     return (
@@ -35,24 +42,26 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
                 isOpen={showChoosePlayerPanel}
-                headerText="Choose Player 1"
+                headerText={`Choose Player ${playersInOrder.length + 1}`}
             >
                 <Stack
                     tokens={{ childrenGap: 30}}
                     styles={{root: {marginTop: 40}}}
                 >
                     {
-                        currentGame.players.map(x =>(
-                            <DefaultButton
-                                styles={{root: {paddingTop: 30, paddingBottom: 30}}}
-                            >
-                                <Text
-                                    variant='large'
-                                    onClick={() => playerChosen(x.name)}
+                        currentGame.players
+                            .filter(x => playersInOrder.findIndex(y => y.name === x.name) === -1)
+                            .map(x =>(
+                                <DefaultButton
+                                    styles={{root: {paddingTop: 30, paddingBottom: 30}}}
                                 >
-                                    {x.name}
-                                </Text>
-                            </DefaultButton>
+                                    <Text
+                                        variant='large'
+                                        onClick={() => playerChosen(x.name)}
+                                    >
+                                        {x.name}
+                                    </Text>
+                                </DefaultButton>
                         ))
                     }
                 </Stack>
