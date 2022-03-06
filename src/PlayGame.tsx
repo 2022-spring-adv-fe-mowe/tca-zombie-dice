@@ -1,4 +1,4 @@
-import { Stack } from '@fluentui/react';
+import { DefaultPalette, Stack } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
@@ -52,16 +52,25 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                         currentGame.players
                             .filter(x => playersInOrder.findIndex(y => y.name === x.name) === -1)
                             .map(x =>(
-                                <DefaultButton
-                                    styles={{root: {paddingTop: 30, paddingBottom: 30}}}
+                                <PrimaryButton
+                                    styles={{
+                                        root: {
+                                            padding: 30
+                                        }
+                                    }}
+                                    onClick={() => playerChosen(x.name)}
                                 >
                                     <Text
                                         variant='large'
-                                        onClick={() => playerChosen(x.name)}
+                                        styles={{
+                                            root: {
+                                                color: DefaultPalette.white
+                                            }
+                                        }}
                                     >
                                         {x.name}
                                     </Text>
-                                </DefaultButton>
+                                </PrimaryButton>
                         ))
                     }
                 </Stack>
@@ -95,16 +104,25 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             {
                 activePlayerName
                 && (
-                    <DefaultButton
-                        styles={{root: {paddingTop: 30, paddingBottom: 30}}}
+                    <PrimaryButton
+                        styles={{
+                            root: {
+                                padding: 30
+                            }
+                        }}
+                        onClick={() => setActivePlayerName(undefined)}
                     >
                         <Text
                             variant='large'
-                            onClick={() => setActivePlayerName(undefined)}
+                            styles={{
+                                root: {
+                                    color: DefaultPalette.white
+                                }
+                            }}
                         >
                             {activePlayerName}'s Turn Done
                         </Text>
-                    </DefaultButton>
+                    </PrimaryButton>
                 )
             }
             <br />
@@ -118,11 +136,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                 >
                     Quit
                 </DefaultButton>
-                <PrimaryButton
+                {/* <PrimaryButton
                     onClick={() => nav("/")}
                 >
                     Done
-                </PrimaryButton>
+                </PrimaryButton> */}
             </Stack>
         </Stack>
     );
