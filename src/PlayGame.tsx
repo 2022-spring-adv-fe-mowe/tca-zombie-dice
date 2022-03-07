@@ -36,6 +36,20 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
         ]);
     };
 
+    const endPlayerTurn = (player: string) => {
+
+        // Trigger choose player number if not all chosen.
+        if (playersInOrder.length < currentGame.players.length) {
+            setActivePlayerName(undefined);
+        }
+
+        // Otherwise, next player until game ends.
+        else {
+            const indexOfActivePlayer = playersInOrder.findIndex(x => x.name === player);
+            setActivePlayerName(indexOfActivePlayer + 1 < playersInOrder.length ? playersInOrder[indexOfActivePlayer + 1].name : playersInOrder[0].name);
+        }
+    };
+
     return (
         <Stack style={{padding: 30}}>
             <Panel
@@ -150,7 +164,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                 padding: 10
                                             }
                                         }}
-                                        onClick={() => setActivePlayerName(undefined)}
+                                        onClick={() => endPlayerTurn(x.name)}
                                     >
                                         <Text
                                             variant='large'
