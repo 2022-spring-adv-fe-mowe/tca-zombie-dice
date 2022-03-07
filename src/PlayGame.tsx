@@ -1,4 +1,4 @@
-import { DefaultPalette, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { DefaultPalette, Persona, PersonaSize, Stack, Icon } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
@@ -81,40 +81,55 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             >
                 {playersInOrder.map(x => (
                     <Stack
-                        key={x.name}
-                        tokens={{childrenGap: 0}}
+                        horizontal
+                        tokens={{childrenGap: 10}}
                     >
-                        <Text
-                            variant='large'
-                        >
-                            {x.name}
-                        </Text>
+                        <Icon 
+                            iconName='CubeShape' 
+                            styles={{root: {
+                                    fontSize: 40
+                                    , color: DefaultPalette.redDark
+                                    , opacity: x.name === "Me" ? 1 : 0
+                                }
+                            }}
+                        />
                         <Stack
-                            horizontal
-                            tokens={{childrenGap: 15}}
+                            key={x.name}
+                            tokens={{childrenGap: 0}}
                         >
                             <Text
-                                variant='xLarge'
-                                styles={{root: {textDecoration: "line-through"}}}
+                                variant='large'
                             >
-                                0
+                                {x.name}
                             </Text>
-                            <Text
-                                variant='xLarge'
-                                styles={{root: {textDecoration: "line-through"}}}
+                            <Stack
+                                horizontal
+                                tokens={{childrenGap: 15}}
                             >
-                                0
-                            </Text>
-                            { x.name !== "Me" &&
                                 <Text
                                     variant='xLarge'
+                                    styles={{root: {textDecoration: "line-through"}}}
                                 >
-                                    4
+                                    0
                                 </Text>
-                            }
-                        </Stack>
+                                <Text
+                                    variant='xLarge'
+                                    styles={{root: {textDecoration: "line-through"}}}
+                                >
+                                    0
+                                </Text>
+                                { x.name !== "Me" &&
+                                    <Text
+                                        variant='xLarge'
+                                    >
+                                        4
+                                    </Text>
+                                }
+                            </Stack>
 
+                        </Stack>
                     </Stack>
+
                 ))}
             </Stack>
             <br />
