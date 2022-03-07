@@ -5,10 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import { CurrentGame, GameTurn, Player } from './App';
 import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react/lib/ChoiceGroup';
 
 interface PlayGameProps {
     currentGame: CurrentGame
 }
+
+const brainsScored: IChoiceGroupOption[] = [
+    { key: 'zero', text: '0' },
+    { key: 'one', text: '1' },
+    { key: 'two', text: '2' },
+    { key: 'three', text: '3' },
+    { key: 'four', text: '4' },
+  ];
 
 export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
@@ -82,14 +91,15 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                 {playersInOrder.map(x => (
                     <Stack
                         horizontal
-                        tokens={{childrenGap: 10}}
+                        tokens={{childrenGap: 20}}
+                        styles={{ root: { alignItems: "center"}}}
                     >
                         <Icon 
                             iconName='CubeShape' 
                             styles={{root: {
                                     fontSize: 40
                                     , color: DefaultPalette.redDark
-                                    , opacity: x.name === "Me" ? 1 : 0
+                                    , opacity: activePlayerName === x.name ? 1 : 0
                                 }
                             }}
                         />
@@ -132,7 +142,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
                 ))}
             </Stack>
-            <br />
+            <ChoiceGroup 
+                defaultSelectedKey="zero" 
+                options={brainsScored} 
+            
+            />
+            {/* <br />
             <br />
             <br />
             <Text variant='large'>
@@ -157,7 +172,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                 variant='large'
             >
                 Record Interesting Things Here
-            </Text>
+            </Text> */}
             <br />
             <br />
             <br />
