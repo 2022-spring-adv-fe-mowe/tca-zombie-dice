@@ -81,61 +81,98 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             >
                 {playersInOrder.map(x => (
                     <Stack
-                        horizontal
-                        tokens={{childrenGap: 10}}
+                        tokens={{childrenGap: 20}}
                     >
-                        <Icon 
-                            iconName='CubeShape' 
-                            styles={{root: {
-                                    fontSize: 40
-                                    , color: DefaultPalette.redDark
-                                    , opacity: x.name === "Me" ? 1 : 0
-                                }
-                            }}
-                        />
                         <Stack
-                            key={x.name}
-                            tokens={{childrenGap: 0}}
+                            horizontal
+                            tokens={{childrenGap: 20}}
+                            styles={{root: { alignItems: "center"}}}
                         >
-                            <Text
-                                variant='large'
-                            >
-                                {x.name}
-                            </Text>
+                            <Icon 
+                                iconName='CubeShape' 
+                                styles={{root: {
+                                        fontSize: 40
+                                        , color: DefaultPalette.redDark
+                                        , opacity: activePlayerName === x.name ? 1 : 0
+                                    }
+                                }}
+                            />
                             <Stack
-                                horizontal
-                                tokens={{childrenGap: 15}}
+                                key={x.name}
+                                tokens={{childrenGap: 0}}
                             >
                                 <Text
-                                    variant='xLarge'
-                                    styles={{root: {textDecoration: "line-through"}}}
+                                    variant='large'
                                 >
-                                    0
+                                    {x.name}
                                 </Text>
-                                <Text
-                                    variant='xLarge'
-                                    styles={{root: {textDecoration: "line-through"}}}
+                                <Stack
+                                    horizontal
+                                    tokens={{childrenGap: 15}}
                                 >
-                                    0
-                                </Text>
-                                { x.name !== "Me" &&
                                     <Text
                                         variant='xLarge'
+                                        styles={{root: {textDecoration: "line-through"}}}
                                     >
-                                        4
+                                        0
                                     </Text>
-                                }
+                                    <Text
+                                        variant='xLarge'
+                                        styles={{root: {textDecoration: "line-through"}}}
+                                    >
+                                        0
+                                    </Text>
+                                    { x.name !== "Me" &&
+                                        <Text
+                                            variant='xLarge'
+                                        >
+                                            4
+                                        </Text>
+                                    }
+                                </Stack>
+
                             </Stack>
-
                         </Stack>
+                        {
+                            activePlayerName === x.name && (
+                                <Stack
+                                    styles={{root: {marginLeft: 60}}}
+                                >
+                                    <Text
+                                        variant='large'
+                                    >
+                                        Record Interesting Things Here
+                                    </Text>
+                                    <br />
+                                    <PrimaryButton
+                                        styles={{
+                                            root: {
+                                                padding: 10
+                                            }
+                                        }}
+                                        onClick={() => setActivePlayerName(undefined)}
+                                    >
+                                        <Text
+                                            variant='large'
+                                            styles={{
+                                                root: {
+                                                    color: DefaultPalette.white
+                                                }
+                                            }}
+                                        >
+                                            End Turn
+                                        </Text>
+                                    </PrimaryButton>
+                                </Stack>                               
+                            )
+                        }
                     </Stack>
-
                 ))}
             </Stack>
             <br />
             <br />
             <br />
-            <Text variant='large'>
+            {/* <Text variant='large'>
                 Started: {currentGame.start}
             </Text>
             <br />
@@ -187,7 +224,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             }
             <br />
             <br />
-            <br />
+            <br /> */}
             <Stack 
                 horizontal
             >
