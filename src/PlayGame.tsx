@@ -17,6 +17,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
     const [turns, setTurns] = useState<GameTurn[]>([]);
     const [activePlayerName, setActivePlayerName] = useState<string | undefined>(undefined);
 
+    const [turnFirstRoll, setTurnFirstRoll] = useState(false);
 
     const [playersInOrder, setPlayersInOrder] = useState<Player[]>([]);
 
@@ -48,6 +49,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             const indexOfActivePlayer = playersInOrder.findIndex(x => x.name === player);
             setActivePlayerName(indexOfActivePlayer + 1 < playersInOrder.length ? playersInOrder[indexOfActivePlayer + 1].name : playersInOrder[0].name);
         }
+
+        setTurnFirstRoll(false);
     };
 
     return (
@@ -151,32 +154,79 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                             activePlayerName === x.name && (
                                 <Stack
                                     styles={{root: {marginLeft: 60}}}
+                                    tokens={{ childrenGap: 20}}
                                 >
-                                    <Text
-                                        variant='large'
-                                    >
-                                        Record Interesting Things Here
-                                    </Text>
-                                    <br />
-                                    <PrimaryButton
-                                        styles={{
-                                            root: {
-                                                padding: 10
-                                            }
+                                    <Stack
+                                        horizontal
+                                        tokens={{ 
+                                            childrenGap: 5
                                         }}
-                                        onClick={() => endPlayerTurn(x.name)}
+
+                                        styles={{root: { justifyContent: "between"}}}
                                     >
-                                        <Text
-                                            variant='large'
+                                        <DefaultButton
                                             styles={{
                                                 root: {
-                                                    color: DefaultPalette.white
+                                                    padding: 10
                                                 }
                                             }}
+                                            onClick={() => setTurnFirstRoll(true)}
                                         >
-                                            End Turn
-                                        </Text>
-                                    </PrimaryButton>
+                                            <Text
+                                                variant='large'
+                                            >
+                                                Roll
+                                            </Text>
+                                        </DefaultButton>                                        
+                                        {
+                                            turnFirstRoll && (
+                                            <PrimaryButton
+                                                styles={{
+                                                    root: {
+                                                        padding: 10
+                                                    }
+                                                }}
+                                                onClick={() => endPlayerTurn(x.name)}
+                                            >
+                                                <Text
+                                                    variant='large'
+                                                    styles={{
+                                                        root: {
+                                                            color: DefaultPalette.white
+                                                        }
+                                                    }}
+                                                >
+                                                    Died
+                                                </Text>
+                                            </PrimaryButton>
+    
+                                            )
+                                        }
+                                        {
+                                            turnFirstRoll && (
+                                            <PrimaryButton
+                                                styles={{
+                                                    root: {
+                                                        padding: 10
+                                                    }
+                                                }}
+                                                onClick={() => endPlayerTurn(x.name)}
+                                            >
+                                                <Text
+                                                    variant='large'
+                                                    styles={{
+                                                        root: {
+                                                            color: DefaultPalette.white
+                                                        }
+                                                    }}
+                                                >
+                                                    Score
+                                                </Text>
+                                            </PrimaryButton>
+    
+                                            )
+                                        }
+                                    </Stack>
                                 </Stack>                               
                             )
                         }

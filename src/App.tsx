@@ -67,6 +67,8 @@ export interface PlayerTurn {
   brainsThisTurn?: number;
   endingTotalScore?: number;
   specialActions?: any[];
+
+  rolls?: any[];
 }
 export interface GameTurn {
   turnNumber: number;
@@ -90,10 +92,28 @@ const game1: GameResult = {
                   , startingTotalScore: 0
                   , brainsThisTurn: 3
                   , endingTotalScore: 3
+
                   , specialActions: [
                       {die: "Santa", action: "Helmet", value: 0}
                       , {die: "Hunk", action: "Double Brains", value: 2}
                       , {die: "Hottie", action: "Rescue", value: -2}
+                  ]
+
+                  , rolls:  [
+                    {
+                      naturalBrains: 3
+                      , rescues: -2
+                      , santaEnergyBrains: 1
+                      , netBrains: 2
+                      , santaHelmet: true
+                    }
+                    , {
+                      naturalBrains: 0
+                      , rescues: 0
+                      , santaEnergyBrains: 0
+                      , netBrains: 0
+                      , santaHelmet: true
+                    }
                   ]
               }
           ]
