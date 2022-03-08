@@ -1,4 +1,4 @@
-import { DefaultPalette, Persona, PersonaSize, Stack, Icon } from '@fluentui/react';
+import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
@@ -232,10 +232,16 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                         }
                     </Stack>
                 ))}
+
+                <Stack.Item>
+                    <Text
+                        variant='large'
+                    >
+                        Keep taking turns until somebody wins, or <Link onClick={() => nav("/")}>Quit</Link>
+                    </Text>
+                </Stack.Item>
             </Stack>
-            <br />
-            <br />
-            <br />
+
             {/* <Text variant='large'>
                 Started: {currentGame.start}
             </Text>
@@ -289,20 +295,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
             <br />
             <br />
             <br /> */}
-            <Stack 
-                horizontal
-            >
-                <DefaultButton
-                    onClick={() => nav("/")}
-                >
-                    Quit
-                </DefaultButton>
-                {/* <PrimaryButton
-                    onClick={() => nav("/")}
-                >
-                    Done
-                </PrimaryButton> */}
-            </Stack>
         </Stack>
     );
 };
