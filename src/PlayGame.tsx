@@ -156,13 +156,35 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                     styles={{root: {marginLeft: 60}}}
                                     tokens={{ childrenGap: 20}}
                                 >
+                                    { turnFirstRoll && 
+                                        <Text 
+                                            variant='medium'
+                                            styles={{root: {marginBottom: -15}}}
+                                        >
+                                            Brains Rolled
+                                        </Text>
+                                    }
+                                    { turnFirstRoll && <Stack
+                                        horizontal
+                                        styles={{root: { justifyContent: "space-between"}}}
+                                    >
+                                        <DefaultButton>
+                                            <Text variant='large'>+ 1</Text>
+                                        </DefaultButton>
+                                        <DefaultButton>
+                                            <Text variant='large'>+ 2</Text>                                
+                                        </DefaultButton>
+                                        <DefaultButton>
+                                            <Text variant='large'>+ 3</Text>
+                                        </DefaultButton>
+                                    </Stack>}
                                     <Stack
                                         horizontal
                                         tokens={{ 
                                             childrenGap: 5
                                         }}
 
-                                        styles={{root: { justifyContent: "between"}}}
+                                        styles={{root: { justifyContent: "space-between"}}}
                                     >
                                         <DefaultButton
                                             styles={{
@@ -198,34 +220,33 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                 >
                                                     Died
                                                 </Text>
-                                            </PrimaryButton>
-    
-                                            )
+                                            </PrimaryButton>)
                                         }
-                                        {
-                                            turnFirstRoll && (
-                                            <PrimaryButton
+                                                                            {
+                                        turnFirstRoll && (
+                                        <PrimaryButton
+                                            styles={{
+                                                root: {
+                                                    padding: 10
+                                                }
+                                            }}
+                                            onClick={() => endPlayerTurn(x.name)}
+                                        >
+                                            <Text
+                                                variant='large'
                                                 styles={{
                                                     root: {
-                                                        padding: 10
+                                                        color: DefaultPalette.white
                                                     }
                                                 }}
-                                                onClick={() => endPlayerTurn(x.name)}
                                             >
-                                                <Text
-                                                    variant='large'
-                                                    styles={{
-                                                        root: {
-                                                            color: DefaultPalette.white
-                                                        }
-                                                    }}
-                                                >
-                                                    Score
-                                                </Text>
-                                            </PrimaryButton>
-    
-                                            )
+                                                Score
+                                            </Text>
+                                        </PrimaryButton>
+
+                                        )
                                         }
+
                                     </Stack>
                                 </Stack>                               
                             )
