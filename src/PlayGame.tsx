@@ -23,7 +23,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
     const [turnFirstRoll, setTurnFirstRoll] = useState(false);
     const [currentTurnPoints, setCurrentTurnPoints] = useState(0);
-    const [currentPlayerTotalPoints, setCurrentPlayerTotalPoints] = useState(0);
 
 
     const [playersInOrder, setPlayersInOrder] = useState<PlayerInGame[]>([]);
@@ -152,7 +151,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                 tokens={{childrenGap: 0}}
                             >
                                 <Text
-                                    variant='large'
+                                    variant='xLarge'
                                 >
                                     {x.name}
                                 </Text>
@@ -161,17 +160,17 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                     tokens={{childrenGap: 15}}
                                 >
                                     <Text
-                                        variant='xLarge'
+                                        variant='xLargePlus'
                                     >
-                                        {activePlayer?.currentBrainTotal}
+                                        {x.currentBrainTotal}
                                         {
                                             currentTurnPoints > 0 && 
                                             activePlayer === x && (
                                                 <Text
-                                                    variant='xLarge'
+                                                    variant="xLargePlus"
                                                     styles={{root: {color: DefaultPalette.redDark}}}
                                                 >
-                                                    {` + ${currentTurnPoints} = ${currentPlayerTotalPoints + currentTurnPoints}`}
+                                                    {` + ${currentTurnPoints} = ${x.currentBrainTotal + currentTurnPoints}`}
                                                 </Text>
                                             )
                                         }
