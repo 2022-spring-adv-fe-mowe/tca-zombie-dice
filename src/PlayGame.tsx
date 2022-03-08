@@ -166,16 +166,17 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                     }
                                     { turnFirstRoll && <Stack
                                         horizontal
-                                        styles={{root: { justifyContent: "space-between"}}}
+                                        styles={{root: { justifyContent: "begin"}}}
+                                        tokens={{childrenGap: 5}}
                                     >
                                         <DefaultButton>
-                                            <Text variant='large'>+ 1</Text>
+                                            <Text variant='large'>+1</Text>
                                         </DefaultButton>
                                         <DefaultButton>
-                                            <Text variant='large'>+ 2</Text>                                
+                                            <Text variant='large'>+2</Text>                                
                                         </DefaultButton>
                                         <DefaultButton>
-                                            <Text variant='large'>+ 3</Text>
+                                            <Text variant='large'>+3</Text>
                                         </DefaultButton>
                                     </Stack>}
                                     <Stack
@@ -184,7 +185,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                             childrenGap: 5
                                         }}
 
-                                        styles={{root: { justifyContent: "space-between"}}}
+                                        styles={{root: { justifyContent: "begin"}}}
                                     >
                                         <DefaultButton
                                             styles={{
