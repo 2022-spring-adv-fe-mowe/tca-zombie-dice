@@ -52,6 +52,18 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
     const endPlayerTurn = (player: PlayerInGame, died: boolean) => {
         
         const previousActivePlayer = activePlayer;
+        
+        // If not dead, update current player points.
+        if (!died) {
+            
+            player.currentBrainTotal += currentTurnPoints;
+
+            // setPlayersInOrder(playersInOrder.map(x => ({
+            //     ...x 
+            //     , currentBrainTotal: x === previousActivePlayer ? x.currentBrainTotal + currentTurnPoints : x.currentBrainTotal
+            // })));
+        }
+
 
         // Trigger choose player number if not all chosen.
         if (playersInOrder.length < currentGame.players.length) {
@@ -62,14 +74,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
         else {
             const indexOfActivePlayer = playersInOrder.findIndex(x => x === player);
             setActivePlayer(indexOfActivePlayer + 1 < playersInOrder.length ? playersInOrder[indexOfActivePlayer + 1] : playersInOrder[0]);
-        }
-
-        // If not dead, update current player points.
-        if (!died) {
-            setPlayersInOrder(playersInOrder.map(x => ({
-                ...x 
-                , currentBrainTotal: x === previousActivePlayer ? x.currentBrainTotal + currentTurnPoints : x.currentBrainTotal
-            })));
         }
 
         // Reset turn state.
@@ -159,7 +163,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                     <Text
                                         variant='xLarge'
                                     >
-                                        {currentPlayerTotalPoints}
+                                        {activePlayer?.currentBrainTotal}
                                         {
                                             currentTurnPoints > 0 && 
                                             activePlayer === x && (
