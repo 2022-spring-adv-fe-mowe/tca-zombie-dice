@@ -10,47 +10,76 @@ interface PlayGameProps {
     currentGame: CurrentGame
 }
 
+interface PlayerInGame extends Player {
+    currentBrainTotal: number;
+}
+
 export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
     const nav = useNavigate();
 
     const [turns, setTurns] = useState<GameTurn[]>([]);
-    const [activePlayerName, setActivePlayerName] = useState<string | undefined>(undefined);
+    const [activePlayer, setActivePlayer] = useState<PlayerInGame | undefined>(undefined);
 
     const [turnFirstRoll, setTurnFirstRoll] = useState(false);
+    const [currentTurnPoints, setCurrentTurnPoints] = useState(0);
+    const [currentPlayerTotalPoints, setCurrentPlayerTotalPoints] = useState(0);
 
-    const [playersInOrder, setPlayersInOrder] = useState<Player[]>([]);
+
+    const [playersInOrder, setPlayersInOrder] = useState<PlayerInGame[]>([]);
 
     const showChoosePlayerPanel =
-        !activePlayerName
+        !activePlayer
         && playersInOrder.length < currentGame.players.length
     ;
 
     const playerChosen = (player: string) => {
-        setActivePlayerName(player);
+        
+        const newPlayerInGame: PlayerInGame = {
+            name: player
+            , order: playersInOrder.length + 1
+            , currentBrainTotal: 0        
+        }
+        
+        setActivePlayer(newPlayerInGame);
+
         setPlayersInOrder([
             ...playersInOrder 
-            , {
-                name: player
-                , order: playersInOrder.length + 1
-            }
+            , newPlayerInGame
         ]);
     };
 
-    const endPlayerTurn = (player: string) => {
+    const endPlayerTurn = (player: PlayerInGame, died: boolean) => {
+        
+        const previousActivePlayer = activePlayer;
 
         // Trigger choose player number if not all chosen.
         if (playersInOrder.length < currentGame.players.length) {
-            setActivePlayerName(undefined);
+            setActivePlayer(undefined);
         }
 
         // Otherwise, next player until game ends.
         else {
-            const indexOfActivePlayer = playersInOrder.findIndex(x => x.name === player);
-            setActivePlayerName(indexOfActivePlayer + 1 < playersInOrder.length ? playersInOrder[indexOfActivePlayer + 1].name : playersInOrder[0].name);
+            const indexOfActivePlayer = playersInOrder.findIndex(x => x === player);
+            setActivePlayer(indexOfActivePlayer + 1 < playersInOrder.length ? playersInOrder[indexOfActivePlayer + 1] : playersInOrder[0]);
         }
 
+        // If not dead, update current player points.
+        if (!died) {
+            setPlayersInOrder(playersInOrder.map(x => ({
+                ...x 
+                , currentBrainTotal: x === previousActivePlayer ? x.currentBrainTotal + currentTurnPoints : x.currentBrainTotal
+            })));
+        }
+
+        // Reset turn state.
         setTurnFirstRoll(false);
+        setCurrentTurnPoints(0);
+    };
+
+    const addTurnPoints = (p: number) => {
+
+        setCurrentTurnPoints(currentTurnPoints + p);
     };
 
     return (
@@ -110,7 +139,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                 styles={{root: {
                                         fontSize: 40
                                         , color: DefaultPalette.redDark
-                                        , opacity: activePlayerName === x.name ? 1 : 0
+                                        , opacity: activePlayer === x ? 1 : 0
                                     }
                                 }}
                             />
@@ -129,29 +158,32 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                 >
                                     <Text
                                         variant='xLarge'
-                                        styles={{root: {textDecoration: "line-through"}}}
                                     >
-                                        0
+                                        {currentPlayerTotalPoints}
+                                        {
+                                            currentTurnPoints > 0 && 
+                                            activePlayer === x && (
+                                                <Text
+                                                    variant='xLarge'
+                                                    styles={{root: {color: DefaultPalette.redDark}}}
+                                                >
+                                                    {` + ${currentTurnPoints} = ${currentPlayerTotalPoints + currentTurnPoints}`}
+                                                </Text>
+                                            )
+                                        }
                                     </Text>
-                                    <Text
+                                    {/* <Text
                                         variant='xLarge'
                                         styles={{root: {textDecoration: "line-through"}}}
                                     >
                                         0
-                                    </Text>
-                                    { x.name !== "Me" &&
-                                        <Text
-                                            variant='xLarge'
-                                        >
-                                            4
-                                        </Text>
-                                    }
+                                    </Text> */}
                                 </Stack>
 
                             </Stack>
                         </Stack>
                         {
-                            activePlayerName === x.name && (
+                            activePlayer === x && (
                                 <Stack
                                     styles={{root: {marginLeft: 60}}}
                                     tokens={{ childrenGap: 20}}
@@ -169,13 +201,19 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         styles={{root: { justifyContent: "begin"}}}
                                         tokens={{childrenGap: 5}}
                                     >
-                                        <DefaultButton>
+                                        <DefaultButton
+                                            onClick={() => addTurnPoints(1)}
+                                        >
                                             <Text variant='large'>+1</Text>
                                         </DefaultButton>
-                                        <DefaultButton>
+                                        <DefaultButton
+                                            onClick={() => addTurnPoints(2)}
+                                        >
                                             <Text variant='large'>+2</Text>                                
                                         </DefaultButton>
-                                        <DefaultButton>
+                                        <DefaultButton
+                                            onClick={() => addTurnPoints(3)}
+                                        >
                                             <Text variant='large'>+3</Text>
                                         </DefaultButton>
                                     </Stack>}
@@ -209,7 +247,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                         padding: 10
                                                     }
                                                 }}
-                                                onClick={() => endPlayerTurn(x.name)}
+                                                onClick={() => endPlayerTurn(x, true)}
                                             >
                                                 <Text
                                                     variant='large'
@@ -224,14 +262,15 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                             </PrimaryButton>)
                                         }
                                                                             {
-                                        turnFirstRoll && (
+                                        turnFirstRoll && 
+                                        currentTurnPoints > 0 && (
                                         <PrimaryButton
                                             styles={{
                                                 root: {
                                                     padding: 10
                                                 }
                                             }}
-                                            onClick={() => endPlayerTurn(x.name)}
+                                            onClick={() => endPlayerTurn(x, false)}
                                         >
                                             <Text
                                                 variant='large'
@@ -255,13 +294,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                     </Stack>
                 ))}
 
-                <Stack.Item>
-                    <Text
-                        variant='large'
-                    >
-                        Keep taking turns until somebody wins, or <Link onClick={() => nav("/")}>Quit</Link>
-                    </Text>
-                </Stack.Item>
+                <Text
+                    variant='large'
+                >
+                    Keep taking turns until somebody wins, or <Link onClick={() => nav("/")}>Quit</Link>
+                </Text>
             </Stack>
 
             {/* <Text variant='large'>
