@@ -160,8 +160,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         variant='xLargePlus'
                                     >
                                         {x.currentBrainTotal}
-                                        {
-                                            currentTurnPoints > 0 && 
+                                        { 
                                             activePlayer === x && (
                                                 <Text
                                                     variant="xLargePlus"
@@ -188,6 +187,50 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                     styles={{root: {marginLeft: 60}}}
                                     tokens={{ childrenGap: 3}}
                                 >
+                                    {
+                                        currentGame.expansions.findIndex(x => x === "Hunk & Hottie") >= 0
+                                        && (
+                                            <>
+                                                <Text 
+                                                    variant='medium'
+                                                    styles={{root: {marginBottom: 0}}}
+                                                >
+                                                    Rescues!
+                                                </Text>
+                                                <Stack
+                                                    horizontal
+                                                    styles={{root: { justifyContent: "begin"}}}
+                                                    tokens={{childrenGap: 3}}
+                                                >
+                                                    <DefaultButton
+                                                        styles={{
+                                                            root: {
+                                                                padding: 10
+                                                            }
+                                                        }}
+                                                        onClick={() => addTurnPoints(-1)}
+                                                    >
+                                                        <Text
+                                                            variant='large'
+                                                        >
+                                                            -1
+                                                        </Text>
+                                                    </DefaultButton>                                          
+                                                    <DefaultButton
+                                                        onClick={() => addTurnPoints(-2)}
+                                                    >
+                                                        <Text variant='large'>-2</Text>
+                                                    </DefaultButton>
+                                                    <DefaultButton
+                                                        onClick={() => addTurnPoints(-3)}
+                                                    >
+                                                        <Text variant='large'>-3</Text>                                
+                                                    </DefaultButton>
+                                                </Stack>
+                                            
+                                            </>
+                                        ) 
+                                    }
                                     <Text 
                                         variant='medium'
                                         styles={{root: {marginBottom: 0}}}
