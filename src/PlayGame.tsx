@@ -79,8 +79,17 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
     const addTurnPoints = (p: number) => {
 
+        // Don't go negative, but record Rescues of currently
+        // rolled dice ! ! !
+        // if (Math.abs(p) > currentTurnPoints) {
+        //     return;
+        // }
+
         setCurrentTurnPoints(currentTurnPoints + p);
     };
+
+    const hunkAndHottieUsed = currentGame.expansions.findIndex(x => x === "Hunk & Hottie") >= 0;
+    const santaUsed = currentGame.expansions.findIndex(x => x === "Santa") >= 0;
 
     return (
         <Stack style={{padding: 30}}>
@@ -188,7 +197,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                     tokens={{ childrenGap: 3}}
                                 >
                                     {
-                                        currentGame.expansions.findIndex(x => x === "Hunk & Hottie") >= 0
+                                        hunkAndHottieUsed
                                         && (
                                             <>
                                                 <Text 
@@ -221,11 +230,15 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     >
                                                         <Text variant='large'>-2</Text>
                                                     </DefaultButton>
-                                                    <DefaultButton
-                                                        onClick={() => addTurnPoints(-3)}
-                                                    >
-                                                        <Text variant='large'>-3</Text>                                
-                                                    </DefaultButton>
+                                                    {
+                                                        // Can only rescue 3 if santa in play too ! ! !
+                                                        santaUsed &&
+                                                        <DefaultButton
+                                                            onClick={() => addTurnPoints(-3)}
+                                                        >
+                                                            <Text variant='large'>-3</Text>                                
+                                                        </DefaultButton>
+                                                    }
                                                 </Stack>
                                             
                                             </>
