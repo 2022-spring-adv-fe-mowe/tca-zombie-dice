@@ -20,8 +20,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
     const [turns, setTurns] = useState<GameTurn[]>([]);
     const [activePlayer, setActivePlayer] = useState<PlayerInGame | undefined>(undefined);
-
-    const [turnFirstRoll, setTurnFirstRoll] = useState(false);
     const [currentTurnPoints, setCurrentTurnPoints] = useState(0);
 
 
@@ -76,7 +74,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
         }
 
         // Reset turn state.
-        setTurnFirstRoll(false);
         setCurrentTurnPoints(0);
     };
 
@@ -189,20 +186,18 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                             activePlayer === x && (
                                 <Stack
                                     styles={{root: {marginLeft: 60}}}
-                                    tokens={{ childrenGap: 20}}
+                                    tokens={{ childrenGap: 3}}
                                 >
-                                    { turnFirstRoll && 
-                                        <Text 
-                                            variant='medium'
-                                            styles={{root: {marginBottom: -15}}}
-                                        >
-                                            Brains Rolled
-                                        </Text>
-                                    }
-                                    { turnFirstRoll && <Stack
+                                    <Text 
+                                        variant='medium'
+                                        styles={{root: {marginBottom: 0}}}
+                                    >
+                                        Tap one after each roll
+                                    </Text>
+                                    <Stack
                                         horizontal
                                         styles={{root: { justifyContent: "begin"}}}
-                                        tokens={{childrenGap: 5}}
+                                        tokens={{childrenGap: 3}}
                                     >
                                         <DefaultButton
                                             onClick={() => addTurnPoints(1)}
@@ -219,11 +214,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         >
                                             <Text variant='large'>+3</Text>
                                         </DefaultButton>
-                                    </Stack>}
+                                    </Stack>
                                     <Stack
                                         horizontal
                                         tokens={{ 
-                                            childrenGap: 5
+                                            childrenGap: 3
                                         }}
 
                                         styles={{root: { justifyContent: "begin"}}}
@@ -234,39 +229,34 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     padding: 10
                                                 }
                                             }}
-                                            onClick={() => setTurnFirstRoll(true)}
+                                            onClick={() => addTurnPoints(0)}
                                         >
                                             <Text
                                                 variant='large'
                                             >
-                                                Roll
+                                                0
                                             </Text>
                                         </DefaultButton>                                        
-                                        {
-                                            turnFirstRoll && (
-                                            <PrimaryButton
+                                        <PrimaryButton
+                                            styles={{
+                                                root: {
+                                                    padding: 10
+                                                }
+                                            }}
+                                            onClick={() => endPlayerTurn(x, true)}
+                                        >
+                                            <Text
+                                                variant='large'
                                                 styles={{
                                                     root: {
-                                                        padding: 10
+                                                        color: DefaultPalette.white
                                                     }
                                                 }}
-                                                onClick={() => endPlayerTurn(x, true)}
                                             >
-                                                <Text
-                                                    variant='large'
-                                                    styles={{
-                                                        root: {
-                                                            color: DefaultPalette.white
-                                                        }
-                                                    }}
-                                                >
-                                                    Died
-                                                </Text>
-                                            </PrimaryButton>)
-                                        }
-                                                                            {
-                                        turnFirstRoll && 
-                                        currentTurnPoints > 0 && (
+                                                Died
+                                            </Text>
+                                        </PrimaryButton>
+                                        {currentTurnPoints > 0 && (
                                         <PrimaryButton
                                             styles={{
                                                 root: {
