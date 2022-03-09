@@ -256,7 +256,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     >
                                                         <Text variant='large'>-2 &nbsp;</Text>
                                                     </DefaultButton>
-                                                    {
+                                                    {/* {
                                                         // Can only rescue 3 if santa in play too ! ! !
                                                         santaUsed &&
                                                         <DefaultButton
@@ -264,7 +264,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                         >
                                                             <Text variant='large'>-3</Text>                                
                                                         </DefaultButton>
-                                                    }
+                                                    } */}
                                                 </Stack>
                                             
                                             </>
