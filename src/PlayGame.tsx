@@ -192,36 +192,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         variant='medium'
                                         styles={{root: {marginBottom: 0}}}
                                     >
-                                        Tap one after each roll
+                                        Brainnns!
                                     </Text>
                                     <Stack
                                         horizontal
                                         styles={{root: { justifyContent: "begin"}}}
                                         tokens={{childrenGap: 3}}
-                                    >
-                                        <DefaultButton
-                                            onClick={() => addTurnPoints(1)}
-                                        >
-                                            <Text variant='large'>+1</Text>
-                                        </DefaultButton>
-                                        <DefaultButton
-                                            onClick={() => addTurnPoints(2)}
-                                        >
-                                            <Text variant='large'>+2</Text>                                
-                                        </DefaultButton>
-                                        <DefaultButton
-                                            onClick={() => addTurnPoints(3)}
-                                        >
-                                            <Text variant='large'>+3</Text>
-                                        </DefaultButton>
-                                    </Stack>
-                                    <Stack
-                                        horizontal
-                                        tokens={{ 
-                                            childrenGap: 3
-                                        }}
-
-                                        styles={{root: { justifyContent: "begin"}}}
                                     >
                                         <DefaultButton
                                             styles={{
@@ -236,7 +212,31 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                             >
                                                 0
                                             </Text>
-                                        </DefaultButton>                                        
+                                        </DefaultButton>                                          
+                                        <DefaultButton
+                                            onClick={() => addTurnPoints(1)}
+                                        >
+                                            <Text variant='large'>+1</Text>
+                                        </DefaultButton>
+                                        <DefaultButton
+                                            onClick={() => addTurnPoints(2)}
+                                        >
+                                            <Text variant='large'>+2</Text>                                
+                                        </DefaultButton>
+                                    </Stack>
+                                    <Stack
+                                        horizontal
+                                        tokens={{ 
+                                            childrenGap: 3
+                                        }}
+
+                                        styles={{root: { justifyContent: "begin"}}}
+                                    >
+                                        <DefaultButton
+                                            onClick={() => addTurnPoints(3)}
+                                        >
+                                            <Text variant='large'>+3</Text>
+                                        </DefaultButton>                                      
                                         <PrimaryButton
                                             styles={{
                                                 root: {
