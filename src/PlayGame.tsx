@@ -218,19 +218,22 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                             }
                                                         }}
                                                         menuProps={{
-                                                            items: [
-                                                                {
-                                                                    key: "saved"
-                                                                    , text: "Saved brain rescued"
-                                                                    , onClick: () => addTurnPoints(-1)
-                                                                }
-                                                                , {
-                                                                    key: "rolled"
-                                                                    , text: "Current roll brain rescued"
-                                                                    , onClick: () => console.log("Rescue currently rolled")
-                                                                }
-                                                            ]
+                                                            items: currentTurnPoints >= 1 
+                                                                ? [
+                                                                    {
+                                                                        key: "saved"
+                                                                        , text: "Saved Hottie Rescued"
+                                                                        , onClick: () => addTurnPoints(-1)
+                                                                    }
+                                                                    , {
+                                                                        key: "rolled"
+                                                                        , text: "Rolled Hottie Rescued"
+                                                                        , onClick: () => console.log("Rolled Hottie Rescued")
+                                                                    }
+                                                                ]
+                                                                : []
                                                         }}
+                                                        onClick={() => console.log("Rolled Hottie Rescued")}
                                                     >
                                                         <Text
                                                             variant='large'
@@ -240,19 +243,22 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     </DefaultButton>                                          
                                                     <DefaultButton
                                                         menuProps={{
-                                                            items: [
-                                                                {
-                                                                    key: "saved"
-                                                                    , text: "Saved brains rescued"
-                                                                    , onClick: () => addTurnPoints(-2)
-                                                                }
-                                                                , {
-                                                                    key: "rolled"
-                                                                    , text: "Current roll brains rescued"
-                                                                    , onClick: () => console.log("Rescue currently rolled")
-                                                                }
-                                                            ]
+                                                            items: currentTurnPoints >= 2
+                                                                ? [
+                                                                    {
+                                                                        key: "saved"
+                                                                        , text: "Saved Hunk Rescued"
+                                                                        , onClick: () => addTurnPoints(-2)
+                                                                    }
+                                                                    , {
+                                                                        key: "rolled"
+                                                                        , text: "Rolled Hunk Rescued"
+                                                                        , onClick: () => console.log("Rolled Hunk Rescued")
+                                                                    }
+                                                                ]
+                                                                : []
                                                         }}
+                                                        onClick={() => console.log("Rolled Hunk Rescued")}
                                                     >
                                                         <Text variant='large'>-2 &nbsp;</Text>
                                                     </DefaultButton>
