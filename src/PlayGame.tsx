@@ -217,18 +217,44 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                                 padding: 10
                                                             }
                                                         }}
-                                                        onClick={() => addTurnPoints(-1)}
+                                                        menuProps={{
+                                                            items: [
+                                                                {
+                                                                    key: "saved"
+                                                                    , text: "Rescue Saved Brain"
+                                                                    , onClick: () => addTurnPoints(-1)
+                                                                }
+                                                                , {
+                                                                    key: "rolled"
+                                                                    , text: "Rescue Currently Rolled"
+                                                                    , onClick: () => console.log("Rescue currently rolled")
+                                                                }
+                                                            ]
+                                                        }}
                                                     >
                                                         <Text
                                                             variant='large'
                                                         >
-                                                            -1
+                                                            -1 &nbsp;
                                                         </Text>
                                                     </DefaultButton>                                          
                                                     <DefaultButton
-                                                        onClick={() => addTurnPoints(-2)}
+                                                        menuProps={{
+                                                            items: [
+                                                                {
+                                                                    key: "saved"
+                                                                    , text: "Rescue Saved Brains"
+                                                                    , onClick: () => addTurnPoints(-2)
+                                                                }
+                                                                , {
+                                                                    key: "rolled"
+                                                                    , text: "Rescue Currently Rolled"
+                                                                    , onClick: () => console.log("Rescue currently rolled")
+                                                                }
+                                                            ]
+                                                        }}
                                                     >
-                                                        <Text variant='large'>-2</Text>
+                                                        <Text variant='large'>-2 &nbsp;</Text>
                                                     </DefaultButton>
                                                     {
                                                         // Can only rescue 3 if santa in play too ! ! !
