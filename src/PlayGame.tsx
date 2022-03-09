@@ -221,12 +221,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                             items: [
                                                                 {
                                                                     key: "saved"
-                                                                    , text: "Rescue Saved Brain"
+                                                                    , text: "Saved brain rescued"
                                                                     , onClick: () => addTurnPoints(-1)
                                                                 }
                                                                 , {
                                                                     key: "rolled"
-                                                                    , text: "Rescue Currently Rolled"
+                                                                    , text: "Current roll brain rescued"
                                                                     , onClick: () => console.log("Rescue currently rolled")
                                                                 }
                                                             ]
@@ -243,12 +243,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                             items: [
                                                                 {
                                                                     key: "saved"
-                                                                    , text: "Rescue Saved Brains"
+                                                                    , text: "Saved brains rescued"
                                                                     , onClick: () => addTurnPoints(-2)
                                                                 }
                                                                 , {
                                                                     key: "rolled"
-                                                                    , text: "Rescue Currently Rolled"
+                                                                    , text: "Current roll brains rescued"
                                                                     , onClick: () => console.log("Rescue currently rolled")
                                                                 }
                                                             ]
