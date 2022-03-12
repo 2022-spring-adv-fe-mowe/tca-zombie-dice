@@ -172,7 +172,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         { 
                                             activePlayer === x && (
                                                 <Text
-                                                    variant="xLargePlus"
+                                                    variant="xLarge"
                                                     styles={{root: {color: DefaultPalette.redDark}}}
                                                 >
                                                     {` + ${currentTurnPoints} = ${x.currentBrainTotal + currentTurnPoints}`}
