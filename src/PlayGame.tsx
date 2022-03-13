@@ -1,4 +1,4 @@
-import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link, ChoiceGroup } from '@fluentui/react';
+import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link, ChoiceGroup, Dropdown, IDropdownOption } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
     const [playersInOrder, setPlayersInOrder] = useState<PlayerInGame[]>([]);
 
-    const [santaSpecial, setSantaSpecial] = useState("None");
+    const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
     const showChoosePlayerPanel =
         !activePlayer
@@ -207,7 +207,10 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     variant='medium'
                                                     styles={{root: {marginBottom: 0}}}
                                                 >
-                                                    Santa {santaSpecial === "Energy" && "(green feet are brains)"}
+                                                    Santa 
+                                                    {santaSpecial?.key === "brains" && " (score below)"}
+                                                    {santaSpecial?.key === "energy" && " (green feet are brains)"}
+                                                    {santaSpecial?.key === "helmet" && " (need 4 shotguns to die)"}
                                                 </Text>
                                                 <Stack
                                                     horizontal
@@ -227,9 +230,17 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                             Special
                                                         </Text>
                                                     </DefaultButton>                                           */}
-                                                    <ChoiceGroup 
+                                                    <Dropdown
                                                         options={[
                                                             {
+                                                                key: "none"
+                                                                , text: "None"
+                                                            }
+                                                            , {
+                                                                key: "brains"
+                                                                , text: "Brain(s)"
+                                                            }
+                                                            , {
                                                                 key: "helmet"
                                                                 , text: "Helmet"
                                                             }
@@ -238,14 +249,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                                 , text: "Energy"
                                                             }
                                                         ]}
-                                                        onChange={(e, o) => setSantaSpecial(o?.text ?? "None")}
-                                                        defaultSelectedKey="none"
+                                                        onChange={(e, o) => setSantaSpecial(o)}
+                                                        selectedKey={santaSpecial ? santaSpecial.key : "none"}
                                                     />
 
                                                     {
-                                                        santaSpecial === "Energy" &&
+                                                        santaSpecial?.key === "energy" &&
                                                         <Stack
-                                                            styles={{root: {marginTop: 10, paddingLeft: 40, marginBottom: -10}}}
+                                                            styles={{root: {marginTop: 0, marginBottom: -5}}}
                                                             tokens={{childrenGap: 3}}
                                                         >
                                                             <Stack 
