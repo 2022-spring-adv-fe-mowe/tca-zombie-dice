@@ -1,4 +1,4 @@
-import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link } from '@fluentui/react';
+import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link, ChoiceGroup } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +24,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
 
 
     const [playersInOrder, setPlayersInOrder] = useState<PlayerInGame[]>([]);
+
+    const [santaSpecial, setSantaSpecial] = useState("None");
 
     const showChoosePlayerPanel =
         !activePlayer
@@ -205,7 +207,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     variant='medium'
                                                     styles={{root: {marginBottom: 0}}}
                                                 >
-                                                    Santa
+                                                    Santa {santaSpecial === "Energy" && "(green feet are brains)"}
                                                 </Text>
                                                 <Stack
                                                     horizontal
@@ -218,58 +220,55 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                                 padding: 10
                                                             }
                                                         }}
-                                                        menuProps={{
-                                                            items: [
-                                                                ...(
-                                                                    currentTurnPoints >= 1
-                                                                    ? [
-                                                                        {
-                                                                            key: "saved"
-                                                                            , text: "Saved Hottie Rescued"
-                                                                            , onClick: () => addTurnPoints(-1)
-                                                                        }
-                                                                    ]
-                                                                    : []
-                                                                )
-                                                                , {
-                                                                    key: "rolled"
-                                                                    , text: "Rolled Hottie Rescued"
-                                                                    , onClick: () => console.log("Rolled Hottie Rescued")
-                                                                }
-                                                            ]
-                                                        }}
                                                     >
                                                         <Text
                                                             variant='large'
                                                         >
-                                                            -1 &nbsp;
+                                                            Special
                                                         </Text>
-                                                    </DefaultButton>                                          
-                                                    <DefaultButton
-                                                        menuProps={{
-                                                            items: [
-                                                                ...(
-                                                                    currentTurnPoints >= 2
-                                                                    ? [
-                                                                        {
-                                                                            key: "saved"
-                                                                            , text: "Saved Hunk Rescued"
-                                                                            , onClick: () => addTurnPoints(-2)
-                                                                        }
-                                                                    ]
-                                                                    : []
-                                                                )
-                                                                , {
-                                                                    key: "rolled"
-                                                                    , text: "Rolled Hunk Rescued"
-                                                                    , onClick: () => console.log("Rolled Hunk Rescued")
-                                                                }
-                                                            ]
-                                                        }}
-                                                    >
-                                                        <Text variant='large'>-2 &nbsp;</Text>
-                                                    </DefaultButton>
-                                                    */}
+                                                    </DefaultButton>                                           */}
+                                                    <ChoiceGroup 
+                                                        options={[
+                                                            {
+                                                                key: "helmet"
+                                                                , text: "Helmet"
+                                                            }
+                                                            , {
+                                                                key: "energy"
+                                                                , text: "Energy"
+                                                            }
+                                                        ]}
+                                                        onChange={(e, o) => setSantaSpecial(o?.text ?? "None")}
+                                                        defaultSelectedKey="none"
+                                                    />
+
+                                                    {
+                                                        santaSpecial === "Energy" &&
+                                                        <Stack
+                                                            styles={{root: {marginTop: 10, paddingLeft: 40, marginBottom: -10}}}
+                                                            tokens={{childrenGap: 3}}
+                                                        >
+                                                            <Stack 
+                                                                horizontal
+                                                                tokens={{childrenGap: 3}}
+                                                            >
+                                                                <DefaultButton>
+                                                                    <Text variant='large'>+1</Text>
+                                                                </DefaultButton>
+                                                                <DefaultButton>
+                                                                    <Text variant='large'>+2</Text>
+                                                                </DefaultButton>
+                                                            </Stack>
+                                                            <Stack 
+                                                                horizontal
+                                                                tokens={{childrenGap: 3}}
+                                                            >
+                                                                <DefaultButton>
+                                                                    <Text variant='large'>+3</Text>
+                                                                </DefaultButton>
+                                                            </Stack>
+                                                        </Stack>
+                                                    }
                                                 </Stack>
                                             
                                             </>
