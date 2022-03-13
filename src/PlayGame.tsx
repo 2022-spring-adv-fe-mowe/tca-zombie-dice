@@ -251,6 +251,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                             <Stack 
                                                                 horizontal
                                                                 tokens={{childrenGap: 3}}
+                                                                wrap
                                                             >
                                                                 <DefaultButton>
                                                                     <Text variant='large'>+1</Text>
@@ -258,14 +259,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                                 <DefaultButton>
                                                                     <Text variant='large'>+2</Text>
                                                                 </DefaultButton>
-                                                            </Stack>
-                                                            <Stack 
-                                                                horizontal
-                                                                tokens={{childrenGap: 3}}
-                                                            >
                                                                 <DefaultButton>
                                                                     <Text variant='large'>+3</Text>
-                                                                </DefaultButton>
+                                                                </DefaultButton>                                                            
                                                             </Stack>
                                                         </Stack>
                                                     }
@@ -289,6 +285,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     horizontal
                                                     styles={{root: { justifyContent: "begin"}}}
                                                     tokens={{childrenGap: 3}}
+                                                    wrap
                                                 >
                                                     <DefaultButton
                                                         styles={{
@@ -371,13 +368,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         horizontal
                                         styles={{root: { justifyContent: "begin"}}}
                                         tokens={{childrenGap: 3}}
+                                        wrap
                                     >
                                         <DefaultButton
-                                            styles={{
-                                                root: {
-                                                    padding: 10
-                                                }
-                                            }}
                                             onClick={() => addTurnPoints(0)}
                                         >
                                             <Text
@@ -396,15 +389,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         >
                                             <Text variant='large'>+2</Text>                                
                                         </DefaultButton>
-                                    </Stack>
-                                    <Stack
-                                        horizontal
-                                        tokens={{ 
-                                            childrenGap: 3
-                                        }}
-
-                                        styles={{root: { justifyContent: "begin"}}}
-                                    >
                                         <DefaultButton
                                             onClick={() => addTurnPoints(3)}
                                         >
