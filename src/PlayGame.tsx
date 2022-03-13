@@ -410,7 +410,27 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                             onClick={() => addTurnPoints(3)}
                                         >
                                             <Text variant='large'>+3</Text>
-                                        </DefaultButton>                                      
+                                        </DefaultButton>
+                                        { 
+                                            (santaUsed || hunkAndHottieUsed) && (
+
+                                                <DefaultButton
+                                                    onClick={() => addTurnPoints(4)}
+                                                >
+                                                    <Text variant='large'>+4</Text>
+                                                </DefaultButton>
+                                            )
+                                        }                                      
+                                        { 
+                                            (santaUsed && hunkAndHottieUsed) && (
+
+                                                <DefaultButton
+                                                    onClick={() => addTurnPoints(5)}
+                                                >
+                                                    <Text variant='large'>+5</Text>
+                                                </DefaultButton>
+                                            )
+                                        }                                      
                                     </Stack>
                                     <Stack 
                                         horizontal
