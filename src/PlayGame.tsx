@@ -411,6 +411,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         >
                                             <Text variant='large'>+3</Text>
                                         </DefaultButton>                                      
+                                    </Stack>
+                                    <Stack 
+                                        horizontal
+                                        tokens={{ 
+                                            childrenGap: 3
+                                        }}
+                                        styles={{root: {paddingTop: 20}}}                                    
+                                    >
                                         <PrimaryButton
                                             styles={{
                                                 root: {
@@ -450,10 +458,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                 Score
                                             </Text>
                                         </PrimaryButton>
-
-                                        )
-                                        }
-
+                                        )}
                                     </Stack>
                                 </Stack>                               
                             )
