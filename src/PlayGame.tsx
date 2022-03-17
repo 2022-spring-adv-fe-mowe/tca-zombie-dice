@@ -12,6 +12,7 @@ interface PlayGameProps {
 
 interface PlayerInGame extends Player {
     currentBrainTotal: number;
+    turns: any[];
 }
 
 const santaSpecials = [
@@ -46,6 +47,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
 
     const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
+    const [showGameOverPanel, setShowGameOverPanel] = useState(false);
+
     const showChoosePlayerPanel =
         !activePlayer
         && playersInOrder.length < currentGame.players.length
@@ -57,6 +60,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
             name: player
             , order: playersInOrder.length + 1
             , currentBrainTotal: 0
+            , turns: []
         }
 
         setActivePlayer(newPlayerInGame);
@@ -70,6 +74,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
     const endPlayerTurn = (player: PlayerInGame, died: boolean) => {
 
         const previousActivePlayer = activePlayer;
+
+        // Boolean array of died or not for now, i-o-g...
+        player.turns = [
+            ...player.turns
+            , died
+        ];
 
         // If not dead, update current player points.
         if (!died) {
@@ -97,6 +107,18 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
         // Reset turn state.
         setCurrentTurnPoints(0);
         setSantaSpecial(santaSpecials[0]);
+
+        // Check game over ? ? ?
+        // One player with 13 or more points...
+        // Each player has played...
+        // Each player has had the same number of turns...
+        // If more than one, more turns with just those players, overtime, hmm...
+        console.log(playersInOrder);
+        setShowGameOverPanel(
+            playersInOrder.filter(x => x.currentBrainTotal >= 13).length === 1
+            && playersInOrder.length === currentGame.players.length
+            && [...new Set(playersInOrder.map(x => x.turns.length))].length === 1
+        );
     };
 
     const addTurnPoints = (p: number) => {
@@ -115,6 +137,66 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
 
     return (
         <Stack style={{ padding: 30 }}>
+            <Panel
+                type={PanelType.smallFixedNear}
+                hasCloseButton={false}
+                isOpen={showGameOverPanel}
+                headerText={"Game Over"}
+            >
+                <Stack
+                    tokens={{ childrenGap: 30 }}
+                    styles={{ root: { marginTop: 40 } }}
+                >
+                    <PrimaryButton
+                        styles={{
+                            root: {
+                                padding: 30
+                            }
+                        }}
+                        onClick={() => console.log("foo")}
+                    >
+                        <Text
+                            variant='large'
+                            styles={{
+                                root: {
+                                    color: DefaultPalette.white
+                                }
+                            }}
+                        >
+                            Jack Won
+                        </Text>
+                    </PrimaryButton>
+                    <DefaultButton
+                        styles={{
+                            root: {
+                                padding: 30
+                            }
+                        }}
+                        onClick={() => console.log("bar")}
+                    >
+                        <Text
+                            variant='large'
+                            styles={{
+                                root: {
+                                    color: DefaultPalette.white
+                                }
+                            }}
+                        >
+                            Cancel
+                        </Text>
+                    </DefaultButton>    
+                    <Text
+                        variant='medium'
+                    >
+                        Note: Cancel will take you back to score screen and allow "adjustments"...
+                    </Text>            
+                    <Text
+                        variant='medium'
+                    >
+                        However, your stats &amp; fun facts will likely be messed up a bit : - (
+                    </Text>            
+                </Stack>
+            </Panel>
             <Panel
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
