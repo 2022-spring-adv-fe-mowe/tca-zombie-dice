@@ -14,6 +14,25 @@ interface PlayerInGame extends Player {
     currentBrainTotal: number;
 }
 
+const santaSpecials = [
+    {
+        key: "none"
+        , text: "None"
+    }
+    , {
+        key: "brains"
+        , text: "Brain(s)"
+    }
+    , {
+        key: "helmet"
+        , text: "Helmet"
+    }
+    , {
+        key: "energy"
+        , text: "Energy"
+    }
+];
+
 export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
 
     const nav = useNavigate();
@@ -77,6 +96,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
 
         // Reset turn state.
         setCurrentTurnPoints(0);
+        setSantaSpecial(santaSpecials[0]);
     };
 
     const addTurnPoints = (p: number) => {
@@ -219,24 +239,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
                                                     wrap
                                                 >
                                                     <Dropdown
-                                                        options={[
-                                                            {
-                                                                key: "none"
-                                                                , text: "None"
-                                                            }
-                                                            , {
-                                                                key: "brains"
-                                                                , text: "Brain(s)"
-                                                            }
-                                                            , {
-                                                                key: "helmet"
-                                                                , text: "Helmet"
-                                                            }
-                                                            , {
-                                                                key: "energy"
-                                                                , text: "Energy"
-                                                            }
-                                                        ]}
+                                                        options={santaSpecials}
                                                         onChange={(e, o) => setSantaSpecial(o)}
                                                         selectedKey={santaSpecial ? santaSpecial.key : "none"}
                                                     />
