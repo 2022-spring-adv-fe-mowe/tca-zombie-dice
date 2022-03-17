@@ -155,7 +155,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                 padding: 30
                             }
                         }}
-                        onClick={() => console.log("foo")}
+                        onClick={() => nav('/')}
                     >
                         <Text
                             variant='large'
@@ -174,7 +174,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                 padding: 30
                             }
                         }}
-                        onClick={() => console.log("bar")}
+                        onClick={() => setShowGameOverPanel(false)}
                     >
                         <Text
                             variant='large'
