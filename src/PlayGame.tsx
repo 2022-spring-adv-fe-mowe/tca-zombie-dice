@@ -14,7 +14,7 @@ interface PlayerInGame extends Player {
     currentBrainTotal: number;
 }
 
-export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
+export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
 
     const nav = useNavigate();
 
@@ -30,31 +30,31 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
     const showChoosePlayerPanel =
         !activePlayer
         && playersInOrder.length < currentGame.players.length
-    ;
+        ;
 
     const playerChosen = (player: string) => {
-        
+
         const newPlayerInGame: PlayerInGame = {
             name: player
             , order: playersInOrder.length + 1
-            , currentBrainTotal: 0        
+            , currentBrainTotal: 0
         }
-        
+
         setActivePlayer(newPlayerInGame);
 
         setPlayersInOrder([
-            ...playersInOrder 
+            ...playersInOrder
             , newPlayerInGame
         ]);
     };
 
     const endPlayerTurn = (player: PlayerInGame, died: boolean) => {
-        
+
         const previousActivePlayer = activePlayer;
-        
+
         // If not dead, update current player points.
         if (!died) {
-            
+
             player.currentBrainTotal += currentTurnPoints;
 
             // setPlayersInOrder(playersInOrder.map(x => ({
@@ -94,7 +94,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
     const santaUsed = currentGame.expansions.findIndex(x => x === "Santa") >= 0;
 
     return (
-        <Stack style={{padding: 30}}>
+        <Stack style={{ padding: 30 }}>
             <Panel
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
@@ -102,13 +102,13 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                 headerText={`Choose Player ${playersInOrder.length + 1}`}
             >
                 <Stack
-                    tokens={{ childrenGap: 30}}
-                    styles={{root: {marginTop: 40}}}
+                    tokens={{ childrenGap: 30 }}
+                    styles={{ root: { marginTop: 40 } }}
                 >
                     {
                         currentGame.players
                             .filter(x => playersInOrder.findIndex(y => y.name === x.name) === -1)
-                            .map(x =>(
+                            .map(x => (
                                 <PrimaryButton
                                     key={x.name}
                                     styles={{
@@ -129,25 +129,26 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         {x.name}
                                     </Text>
                                 </PrimaryButton>
-                        ))
+                            ))
                     }
                 </Stack>
             </Panel>
             <Stack
-                tokens={{childrenGap: 20}}
+                tokens={{ childrenGap: 20 }}
             >
                 {playersInOrder.map(x => (
                     <Stack
-                        tokens={{childrenGap: 20}}
+                        tokens={{ childrenGap: 20 }}
                     >
                         <Stack
                             horizontal
-                            tokens={{childrenGap: 20}}
-                            styles={{root: { alignItems: "center"}}}
+                            tokens={{ childrenGap: 20 }}
+                            styles={{ root: { alignItems: "center" } }}
                         >
-                            <Icon 
-                                iconName='CubeShape' 
-                                styles={{root: {
+                            <Icon
+                                iconName='CubeShape'
+                                styles={{
+                                    root: {
                                         fontSize: 40
                                         , color: DefaultPalette.redDark
                                         , opacity: activePlayer === x ? 1 : 0
@@ -156,7 +157,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                             />
                             <Stack
                                 key={x.name}
-                                tokens={{childrenGap: 0}}
+                                tokens={{ childrenGap: 0 }}
                             >
                                 <Text
                                     variant='xLarge'
@@ -165,17 +166,17 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                 </Text>
                                 <Stack
                                     horizontal
-                                    tokens={{childrenGap: 15}}
+                                    tokens={{ childrenGap: 15 }}
                                 >
                                     <Text
                                         variant='xLargePlus'
                                     >
                                         {x.currentBrainTotal}
-                                        { 
+                                        {
                                             activePlayer === x && (
                                                 <Text
                                                     variant="xLarge"
-                                                    styles={{root: {color: DefaultPalette.redDark}}}
+                                                    styles={{ root: { color: DefaultPalette.redDark } }}
                                                 >
                                                     {` + ${currentTurnPoints} = ${x.currentBrainTotal + currentTurnPoints}`}
                                                 </Text>
@@ -195,27 +196,26 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                         {
                             activePlayer === x && (
                                 <Stack
-                                    styles={{root: {marginLeft: 60}}}
-                                    tokens={{ childrenGap: 3}}
+                                    styles={{ root: { marginLeft: 60 } }}
+                                    tokens={{ childrenGap: 3 }}
                                 >
-
-{
+                                    {
                                         santaUsed
                                         && (
                                             <>
-                                                <Text 
+                                                <Text
                                                     variant='medium'
-                                                    styles={{root: {marginBottom: 0}}}
+                                                    styles={{ root: { marginBottom: 0 } }}
                                                 >
-                                                    Santa 
+                                                    Santa
                                                     {santaSpecial?.key === "brains" && " (score below)"}
                                                     {santaSpecial?.key === "energy" && " (green feet are brains)"}
                                                     {santaSpecial?.key === "helmet" && " (need 4 shotguns to die)"}
                                                 </Text>
                                                 <Stack
                                                     horizontal
-                                                    styles={{root: { justifyContent: "begin"}}}
-                                                    tokens={{childrenGap: 3}}
+                                                    styles={{ root: { justifyContent: "begin" } }}
+                                                    tokens={{ childrenGap: 3 }}
                                                 >
                                                     {/* <DefaultButton
                                                         styles={{
@@ -256,12 +256,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     {
                                                         santaSpecial?.key === "energy" &&
                                                         <Stack
-                                                            styles={{root: {marginTop: 0, marginBottom: -5}}}
-                                                            tokens={{childrenGap: 3}}
+                                                            styles={{ root: { marginTop: 0, marginBottom: -5 } }}
+                                                            tokens={{ childrenGap: 3 }}
                                                         >
-                                                            <Stack 
+                                                            <Stack
                                                                 horizontal
-                                                                tokens={{childrenGap: 3}}
+                                                                tokens={{ childrenGap: 3 }}
                                                                 wrap
                                                             >
                                                                 <DefaultButton>
@@ -272,30 +272,30 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                                 </DefaultButton>
                                                                 <DefaultButton>
                                                                     <Text variant='large'>+3</Text>
-                                                                </DefaultButton>                                                            
+                                                                </DefaultButton>
                                                             </Stack>
                                                         </Stack>
                                                     }
                                                 </Stack>
-                                            
+
                                             </>
-                                        ) 
+                                        )
                                     }
 
                                     {
                                         hunkAndHottieUsed
                                         && (
                                             <>
-                                                <Text 
+                                                <Text
                                                     variant='medium'
-                                                    styles={{root: {marginBottom: 0}}}
+                                                    styles={{ root: { marginBottom: 0 } }}
                                                 >
                                                     Rescues!
                                                 </Text>
                                                 <Stack
                                                     horizontal
-                                                    styles={{root: { justifyContent: "begin"}}}
-                                                    tokens={{childrenGap: 3}}
+                                                    styles={{ root: { justifyContent: "begin" } }}
+                                                    tokens={{ childrenGap: 3 }}
                                                     wrap
                                                 >
                                                     <DefaultButton
@@ -308,14 +308,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                             items: [
                                                                 ...(
                                                                     currentTurnPoints >= 1
-                                                                    ? [
-                                                                        {
-                                                                            key: "saved"
-                                                                            , text: "Saved Hottie Rescued"
-                                                                            , onClick: () => addTurnPoints(-1)
-                                                                        }
-                                                                    ]
-                                                                    : []
+                                                                        ? [
+                                                                            {
+                                                                                key: "saved"
+                                                                                , text: "Saved Hottie Rescued"
+                                                                                , onClick: () => addTurnPoints(-1)
+                                                                            }
+                                                                        ]
+                                                                        : []
                                                                 )
                                                                 , {
                                                                     key: "rolled"
@@ -330,20 +330,20 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                         >
                                                             -1 &nbsp;
                                                         </Text>
-                                                    </DefaultButton>                                          
+                                                    </DefaultButton>
                                                     <DefaultButton
                                                         menuProps={{
                                                             items: [
                                                                 ...(
                                                                     currentTurnPoints >= 2
-                                                                    ? [
-                                                                        {
-                                                                            key: "saved"
-                                                                            , text: "Saved Hunk Rescued"
-                                                                            , onClick: () => addTurnPoints(-2)
-                                                                        }
-                                                                    ]
-                                                                    : []
+                                                                        ? [
+                                                                            {
+                                                                                key: "saved"
+                                                                                , text: "Saved Hunk Rescued"
+                                                                                , onClick: () => addTurnPoints(-2)
+                                                                            }
+                                                                        ]
+                                                                        : []
                                                                 )
                                                                 , {
                                                                     key: "rolled"
@@ -365,20 +365,20 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                         </DefaultButton>
                                                     } */}
                                                 </Stack>
-                                            
+
                                             </>
-                                        ) 
+                                        )
                                     }
-                                    <Text 
+                                    <Text
                                         variant='medium'
-                                        styles={{root: {marginBottom: 0}}}
+                                        styles={{ root: { marginBottom: 0 } }}
                                     >
                                         Brainnns!
                                     </Text>
                                     <Stack
                                         horizontal
-                                        styles={{root: { justifyContent: "begin"}}}
-                                        tokens={{childrenGap: 3}}
+                                        styles={{ root: { justifyContent: "begin" } }}
+                                        tokens={{ childrenGap: 3 }}
                                         wrap
                                     >
                                         <DefaultButton
@@ -389,7 +389,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                             >
                                                 0
                                             </Text>
-                                        </DefaultButton>                                          
+                                        </DefaultButton>
                                         <DefaultButton
                                             onClick={() => addTurnPoints(1)}
                                         >
@@ -398,14 +398,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                         <DefaultButton
                                             onClick={() => addTurnPoints(2)}
                                         >
-                                            <Text variant='large'>+2</Text>                                
+                                            <Text variant='large'>+2</Text>
                                         </DefaultButton>
                                         <DefaultButton
                                             onClick={() => addTurnPoints(3)}
                                         >
                                             <Text variant='large'>+3</Text>
                                         </DefaultButton>
-                                        { 
+                                        {
                                             (santaUsed || hunkAndHottieUsed) && (
 
                                                 <DefaultButton
@@ -414,8 +414,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     <Text variant='large'>+4</Text>
                                                 </DefaultButton>
                                             )
-                                        }                                      
-                                        { 
+                                        }
+                                        {
                                             (santaUsed && hunkAndHottieUsed) && (
 
                                                 <DefaultButton
@@ -424,14 +424,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                                     <Text variant='large'>+5</Text>
                                                 </DefaultButton>
                                             )
-                                        }                                      
+                                        }
                                     </Stack>
-                                    <Stack 
+                                    <Stack
                                         horizontal
-                                        tokens={{ 
+                                        tokens={{
                                             childrenGap: 3
                                         }}
-                                        styles={{root: {paddingTop: 20}}}                                    
+                                        styles={{ root: { paddingTop: 20 } }}
                                     >
                                         <PrimaryButton
                                             styles={{
@@ -453,28 +453,28 @@ export const PlayGame: React.FC<PlayGameProps> = ({currentGame}) => {
                                             </Text>
                                         </PrimaryButton>
                                         {currentTurnPoints > 0 && (
-                                        <PrimaryButton
-                                            styles={{
-                                                root: {
-                                                    padding: 10
-                                                }
-                                            }}
-                                            onClick={() => endPlayerTurn(x, false)}
-                                        >
-                                            <Text
-                                                variant='large'
+                                            <PrimaryButton
                                                 styles={{
                                                     root: {
-                                                        color: DefaultPalette.white
+                                                        padding: 10
                                                     }
                                                 }}
+                                                onClick={() => endPlayerTurn(x, false)}
                                             >
-                                                Score
-                                            </Text>
-                                        </PrimaryButton>
+                                                <Text
+                                                    variant='large'
+                                                    styles={{
+                                                        root: {
+                                                            color: DefaultPalette.white
+                                                        }
+                                                    }}
+                                                >
+                                                    Score
+                                                </Text>
+                                            </PrimaryButton>
                                         )}
                                     </Stack>
-                                </Stack>                               
+                                </Stack>
                             )
                         }
                     </Stack>
