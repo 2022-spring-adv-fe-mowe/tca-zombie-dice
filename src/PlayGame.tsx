@@ -216,20 +216,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
                                                     horizontal
                                                     styles={{ root: { justifyContent: "begin" } }}
                                                     tokens={{ childrenGap: 3 }}
+                                                    wrap
                                                 >
-                                                    {/* <DefaultButton
-                                                        styles={{
-                                                            root: {
-                                                                padding: 10
-                                                            }
-                                                        }}
-                                                    >
-                                                        <Text
-                                                            variant='large'
-                                                        >
-                                                            Special
-                                                        </Text>
-                                                    </DefaultButton>                                           */}
                                                     <Dropdown
                                                         options={[
                                                             {
@@ -255,26 +243,17 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
 
                                                     {
                                                         santaSpecial?.key === "energy" &&
-                                                        <Stack
-                                                            styles={{ root: { marginTop: 0, marginBottom: -5 } }}
-                                                            tokens={{ childrenGap: 3 }}
-                                                        >
-                                                            <Stack
-                                                                horizontal
-                                                                tokens={{ childrenGap: 3 }}
-                                                                wrap
-                                                            >
-                                                                <DefaultButton>
-                                                                    <Text variant='large'>+1</Text>
-                                                                </DefaultButton>
-                                                                <DefaultButton>
-                                                                    <Text variant='large'>+2</Text>
-                                                                </DefaultButton>
-                                                                <DefaultButton>
-                                                                    <Text variant='large'>+3</Text>
-                                                                </DefaultButton>
-                                                            </Stack>
-                                                        </Stack>
+                                                            <>
+                                                            <DefaultButton>
+                                                                <Text variant='large'>+1</Text>
+                                                            </DefaultButton>
+                                                            <DefaultButton>
+                                                                <Text variant='large'>+2</Text>
+                                                            </DefaultButton>
+                                                            <DefaultButton>
+                                                                <Text variant='large'>+3</Text>
+                                                            </DefaultButton>
+                                                            </>
                                                     }
                                                 </Stack>
 
