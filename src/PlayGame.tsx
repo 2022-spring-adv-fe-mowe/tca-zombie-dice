@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
 interface PlayGameProps {
-    currentGame: CurrentGame
+    currentGame: CurrentGame;
 }
 
 interface PlayerInGame extends Player {
@@ -34,7 +34,9 @@ const santaSpecials = [
     }
 ];
 
-export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
+export const PlayGame: React.FC<PlayGameProps> = ({ 
+    currentGame
+}) => {
 
     const nav = useNavigate();
 
@@ -176,11 +178,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
                     >
                         <Text
                             variant='large'
-                            styles={{
-                                root: {
-                                    color: DefaultPalette.white
-                                }
-                            }}
                         >
                             Cancel
                         </Text>

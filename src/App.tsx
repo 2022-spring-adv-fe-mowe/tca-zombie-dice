@@ -228,7 +228,7 @@ export const App: React.FunctionComponent = () => {
               uniquePlayers={getUniquePlayers(gameResults)} 
               darkTheme={darkThemeChosen}
               setCurrentGame={setCurrentGame}
-            />} 
+            />}   
           />
           <Route path="play" element={
             <PlayGame
