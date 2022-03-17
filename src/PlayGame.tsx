@@ -244,13 +244,19 @@ export const PlayGame: React.FC<PlayGameProps> = ({ currentGame }) => {
                                                     {
                                                         santaSpecial?.key === "energy" &&
                                                             <>
-                                                            <DefaultButton>
+                                                            <DefaultButton
+                                                                onClick={() => addTurnPoints(1)}
+                                                            >
                                                                 <Text variant='large'>+1</Text>
                                                             </DefaultButton>
-                                                            <DefaultButton>
+                                                            <DefaultButton
+                                                                onClick={() => addTurnPoints(2)}
+                                                            >
                                                                 <Text variant='large'>+2</Text>
                                                             </DefaultButton>
-                                                            <DefaultButton>
+                                                            <DefaultButton
+                                                                onClick={() => addTurnPoints(3)}
+                                                            >
                                                                 <Text variant='large'>+3</Text>
                                                             </DefaultButton>
                                                             </>
