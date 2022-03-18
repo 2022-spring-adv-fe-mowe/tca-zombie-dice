@@ -50,6 +50,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
     const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
     const [showGameOverPanel, setShowGameOverPanel] = useState(false);
+    const [winner, setWinner] = useState("");
 
     const showChoosePlayerPanel =
         !activePlayer
@@ -121,13 +122,18 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         // If more than one, more turns with just those players, overtime, hmm...
 
         const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
-
+        const leaders = playersInOrder
+                            .filter(x => x.currentBrainTotal === highestScore)
+                            .map(x => x.name);
+        
         setShowGameOverPanel(
             playersInOrder.some(x => x.currentBrainTotal >= 13)
             && playersInOrder.length === currentGame.players.length
             && [...new Set(playersInOrder.map(x => x.turns.length))].length === 1
-            && playersInOrder.filter(x => x.currentBrainTotal === highestScore).length === 1
+            && leaders.length === 1
         );
+
+        setWinner(leaders.length === 1 ? leaders[0] : "");
     };
 
     const addTurnPoints = (p: number) => {
@@ -162,7 +168,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                 padding: 30
                             }
                         }}
-                        onClick={() => nav('/')}
+                        onClick={() => nav(-2)}
                     >
                         <Text
                             variant='large'
@@ -172,7 +178,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                 }
                             }}
                         >
-                            Jack Won
+                            {winner} Won
                         </Text>
                     </PrimaryButton>
                     <DefaultButton
