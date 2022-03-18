@@ -110,16 +110,23 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         setCurrentTurnPoints(0);
         setSantaSpecial(santaSpecials[0]);
 
+        //
         // Check game over ? ? ?
-        // One player with 13 or more points...
+        //
+        // At least one player with 13 or more points...
         // Each player has played...
         // Each player has had the same number of turns...
+        // Only one player with max score...
+        //
         // If more than one, more turns with just those players, overtime, hmm...
-        console.log(playersInOrder);
+
+        const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
+
         setShowGameOverPanel(
-            playersInOrder.filter(x => x.currentBrainTotal >= 13).length === 1
+            playersInOrder.some(x => x.currentBrainTotal >= 13)
             && playersInOrder.length === currentGame.players.length
             && [...new Set(playersInOrder.map(x => x.turns.length))].length === 1
+            && playersInOrder.filter(x => x.currentBrainTotal === highestScore).length === 1
         );
     };
 
