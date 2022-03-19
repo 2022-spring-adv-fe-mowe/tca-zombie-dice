@@ -387,7 +387,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                         menuProps={{
                                                             items: [
                                                                 ...(
-                                                                    x.currentBrainTotal + currentTurnPoints >= 1
+                                                                    currentTurnPoints >= 1
                                                                         ? [
                                                                             {
                                                                                 key: "saved"
@@ -415,7 +415,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                         menuProps={{
                                                             items: [
                                                                 ...(
-                                                                    x.currentBrainTotal + currentTurnPoints >= 2
+                                                                    currentTurnPoints >= 2
                                                                         ? [
                                                                             {
                                                                                 key: "saved"
