@@ -51,7 +51,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const [showGameOverPanel, setShowGameOverPanel] = useState(false);
     const [winner, setWinner] = useState("");
-    const [lastTiedWinningScore, setlastTiedWinningScore] = useState(Math.max);
 
     const showChoosePlayerPanel =
         !activePlayer
@@ -101,20 +100,19 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
         const mostTurns = Math.max(...playersInOrder.map(x => x.turns.length));
         const leaders = playersInOrder.filter(x => x.currentBrainTotal === highestScore);
-        const possibleTiedNextPlayers = playersInOrder.filter(
-            x =>
-                // Tied for lead. 
-                x.currentBrainTotal === highestScore
+        const overtimePlayers = 
+            highestScore >= 13 
+                ? playersInOrder.filter(
+                    x =>
+                        // At least tied for lead. 
+                        x.currentBrainTotal >= highestScore
 
-                // Or was previously a winner, tied for the lead, but hasn't had another turn yet
-                || (
-                    x.currentBrainTotal === lastTiedWinningScore
-                    && x.turns.length < mostTurns
+                        // And fewer turns than someone else, presumable another
+                        // tied player that has kept playing
+                        && x.turns.length < mostTurns
                 )
-        );
-
-        // Update the last tied score after using it to find possible players above. Smelly ! ! !
-        setlastTiedWinningScore(highestScore);
+                : []
+        ;
 
         // Trigger choose player number if not all chosen.
         if (playersInOrder.length < currentGame.players.length) {
@@ -124,15 +122,12 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         // Check for overtime game here...
         else if (
             highestScore >= 13
-            && possibleTiedNextPlayers.length > 1
+            && overtimePlayers.length > 1
         ) {
-            // Use possibleTiedNextPlayers for next player navigation.
             const indexOfActivePlayer = playersInOrder.findIndex(x => x === player);
+            const nextPossiblePlayers = overtimePlayers.filter(x => x.order > indexOfActivePlayer + 1);
 
-            // Get next possible players.
-            const nextPossiblePlayers = possibleTiedNextPlayers.filter(x => x.order > indexOfActivePlayer + 1);
-
-            setActivePlayer(nextPossiblePlayers.length > 0 ? nextPossiblePlayers[0] : possibleTiedNextPlayers[0]);
+            setActivePlayer(nextPossiblePlayers.length > 0 ? nextPossiblePlayers[0] : overtimePlayers[0]);
         }
 
         // Otherwise, next player until game ends.
@@ -158,7 +153,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         setShowGameOverPanel(
             playersInOrder.some(x => x.currentBrainTotal >= 13)
             && playersInOrder.length === currentGame.players.length
-            && [...new Set(playersInOrder.map(x => x.turns.length))].length === 1
+            && [...new Set(overtimePlayers.map(x => x.turns.length))].length === 1
             && leaders.length === 1
         );
 
