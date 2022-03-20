@@ -100,8 +100,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
         const mostTurns = Math.max(...playersInOrder.map(x => x.turns.length));
         const leaders = playersInOrder.filter(x => x.currentBrainTotal === highestScore);
-        const overtimePlayers = 
+        const activePlayers = 
             highestScore >= 13 
+            && [...new Set(playersInOrder.map(x => x.turns.length))].length === 1
                 ? playersInOrder.filter(
                     x =>
                         // At least tied for lead. 
@@ -109,9 +110,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
                         // And fewer turns than someone else, presumable another
                         // tied player that has kept playing
-                        && x.turns.length < mostTurns
+                        && (x.turns.length < mostTurns || leaders.length > 1)
                 )
-                : []
+                : playersInOrder
         ;
 
         // Trigger choose player number if not all chosen.
@@ -119,21 +120,10 @@ export const PlayGame: React.FC<PlayGameProps> = ({
             setActivePlayer(undefined);
         }
 
-        // Check for overtime game here...
-        else if (
-            highestScore >= 13
-            && overtimePlayers.length > 1
-        ) {
-            const indexOfActivePlayer = playersInOrder.findIndex(x => x === player);
-            const nextPossiblePlayers = overtimePlayers.filter(x => x.order > indexOfActivePlayer + 1);
-
-            setActivePlayer(nextPossiblePlayers.length > 0 ? nextPossiblePlayers[0] : overtimePlayers[0]);
-        }
-
         // Otherwise, next player until game ends.
         else {
-            const indexOfActivePlayer = playersInOrder.findIndex(x => x === player);
-            setActivePlayer(indexOfActivePlayer + 1 < playersInOrder.length ? playersInOrder[indexOfActivePlayer + 1] : playersInOrder[0]);
+            const upcomingPlayers = activePlayers.filter(x => x.order > player.order);
+            setActivePlayer(upcomingPlayers.length > 0 ? upcomingPlayers[0] : activePlayers[0]);
         }
 
         // Reset turn state.
@@ -153,7 +143,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         setShowGameOverPanel(
             playersInOrder.some(x => x.currentBrainTotal >= 13)
             && playersInOrder.length === currentGame.players.length
-            && [...new Set(overtimePlayers.map(x => x.turns.length))].length === 1
+            && [...new Set(activePlayers.map(x => x.turns.length))].length === 1
             && leaders.length === 1
         );
 
