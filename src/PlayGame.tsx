@@ -49,6 +49,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
+    const [previousHighScore, setPreviousHighScore] = useState(0);
+
     const [showGameOverPanel, setShowGameOverPanel] = useState(false);
     const [winner, setWinner] = useState("");
 
@@ -76,7 +78,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const endPlayerTurn = (player: PlayerInGame, died: boolean) => {
 
-        const previousActivePlayer = activePlayer;
+        //
+        // Update player turns and score (if didn't die).
+        //
 
         // Boolean array of died or not for now, i-o-g...
         player.turns = [
@@ -86,34 +90,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
         // If not dead, update current player points.
         if (!died) {
-
             player.currentBrainTotal += currentTurnPoints;
+        }        
 
-            // setPlayersInOrder(playersInOrder.map(x => ({
-            //     ...x 
-            //     , currentBrainTotal: x === previousActivePlayer ? x.currentBrainTotal + currentTurnPoints : x.currentBrainTotal
-            // })));
-        }
-
-        // Highest score and leaders used to determing overtime
-        // and end of game ! ! !
-        const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
-        const mostTurns = Math.max(...playersInOrder.map(x => x.turns.length));
-        const leaders = playersInOrder.filter(x => x.currentBrainTotal === highestScore);
-        const activePlayers = 
-            highestScore >= 13 
-            && [...new Set(playersInOrder.map(x => x.turns.length))].length === 1
-                ? playersInOrder.filter(
-                    x =>
-                        // At least tied for lead. 
-                        x.currentBrainTotal >= highestScore
-
-                        // And fewer turns than someone else, presumable another
-                        // tied player that has kept playing
-                        && (x.turns.length < mostTurns || leaders.length > 1)
-                )
-                : playersInOrder
-        ;
 
         // Trigger choose player number if not all chosen.
         if (playersInOrder.length < currentGame.players.length) {
@@ -122,11 +101,25 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
         // Otherwise, next player until game ends.
         else {
+
+            const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
+            setPreviousHighScore(highestScore);
+
+            const activePlayers = 
+                highestScore < 13
+                ? playersInOrder
+                : playersInOrder.filter(
+                    x =>
+                        // At least tied for lead. 
+                        x.currentBrainTotal >= previousHighScore
+                )
+            ;
+
             const upcomingPlayers = activePlayers.filter(x => x.order > player.order);
             setActivePlayer(upcomingPlayers.length > 0 ? upcomingPlayers[0] : activePlayers[0]);
         }
 
-        // Reset turn state.
+        // Reset turn state for next player.
         setCurrentTurnPoints(0);
         setSantaSpecial(santaSpecials[0]);
 
@@ -140,14 +133,16 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         //
         // If more than one, more turns with just those players, overtime, hmm...
         
-        setShowGameOverPanel(
-            playersInOrder.some(x => x.currentBrainTotal >= 13)
-            && playersInOrder.length === currentGame.players.length
-            && [...new Set(activePlayers.map(x => x.turns.length))].length === 1
-            && leaders.length === 1
-        );
+        // setShowGameOverPanel(
+        //     playersInOrder.some(x => x.currentBrainTotal >= 13)
+        //     && playersInOrder.length === currentGame.players.length
+        //     && [...new Set(activePlayers.map(x => x.turns.length))].length === 1
+        //     && leaders.length === 1
+        // );
 
-        setWinner(leaders.length === 1 ? leaders[0].name : "");
+        // setWinner(leaders.length === 1 ? leaders[0].name : "");
+
+
     };
 
     const addTurnPoints = (p: number) => {
