@@ -113,10 +113,16 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                 )
             ;
 
-            if (activePlayers.length === 1) {
+            if (
+                // Only one player active
+                activePlayers.length === 1
+                
+                // Or last player just won ? ? ?
+                || (player === activePlayers[activePlayers.length - 1] && player.currentBrainTotal > previousHighScore)
+            ) {
 
                 // Game over, we have a winner ? ? ?
-                setWinner(activePlayers[0].name);
+                setWinner(activePlayers.length === 1 ? activePlayers[0].name : player.name);
             }
 
             else {
