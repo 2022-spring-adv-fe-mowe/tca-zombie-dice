@@ -50,8 +50,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
     const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
     const [previousHighScore, setPreviousHighScore] = useState(0);
-
-    const [showGameOverPanel, setShowGameOverPanel] = useState(false);
     const [winner, setWinner] = useState("");
 
     const showChoosePlayerPanel =
@@ -115,34 +113,23 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                 )
             ;
 
-            const upcomingPlayers = activePlayers.filter(x => x.order > player.order);
-            setActivePlayer(upcomingPlayers.length > 0 ? upcomingPlayers[0] : activePlayers[0]);
+            if (activePlayers.length === 1) {
+
+                // Game over, we have a winner ? ? ?
+                setWinner(activePlayers[0].name);
+            }
+
+            else {
+
+                // Who's next ? ? ?
+                const upcomingPlayers = activePlayers.filter(x => x.order > player.order);
+                setActivePlayer(upcomingPlayers.length > 0 ? upcomingPlayers[0] : activePlayers[0]);
+            }
         }
 
         // Reset turn state for next player.
         setCurrentTurnPoints(0);
         setSantaSpecial(santaSpecials[0]);
-
-        //
-        // Check game over ? ? ?
-        //
-        // At least one player with 13 or more points...
-        // Each player has played...
-        // Each player has had the same number of turns...
-        // Only one player with max score...
-        //
-        // If more than one, more turns with just those players, overtime, hmm...
-        
-        // setShowGameOverPanel(
-        //     playersInOrder.some(x => x.currentBrainTotal >= 13)
-        //     && playersInOrder.length === currentGame.players.length
-        //     && [...new Set(activePlayers.map(x => x.turns.length))].length === 1
-        //     && leaders.length === 1
-        // );
-
-        // setWinner(leaders.length === 1 ? leaders[0].name : "");
-
-
     };
 
     const addTurnPoints = (p: number) => {
@@ -164,7 +151,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
             <Panel
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
-                isOpen={showGameOverPanel}
+                isOpen={winner.length > 0}
                 headerText={"Game Over"}
             >
                 <Stack
@@ -196,7 +183,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                 padding: 30
                             }
                         }}
-                        onClick={() => setShowGameOverPanel(false)}
+                        onClick={() => setWinner("")}
                     >
                         <Text
                             variant='large'
