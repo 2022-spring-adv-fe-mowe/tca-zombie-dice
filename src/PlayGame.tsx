@@ -183,7 +183,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                             {winner} Won
                         </Text>
                     </PrimaryButton>
-                    <DefaultButton
+                    {/* <DefaultButton
                         styles={{
                             root: {
                                 padding: 30
@@ -206,7 +206,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                         variant='medium'
                     >
                         However, your stats &amp; fun facts will likely be messed up a bit : - (
-                    </Text>            
+                    </Text>             */}
                 </Stack>
             </Panel>
             <Panel
