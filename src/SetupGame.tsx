@@ -31,7 +31,10 @@ export const SetupGame: React.FC<SetupGameProps> = ({
     const addNewPlayer = () => {
         
         // Prevent dupes.
-        if (sortedPlayers.some(x => x.name.toUpperCase().localeCompare(newPlayerName.toUpperCase()) === 0)) {
+        if (
+            newPlayerName.length === 0
+            || sortedPlayers.some(x => x.name.toUpperCase().localeCompare(newPlayerName.toUpperCase()) === 0)
+        ) {
             return;
         }
 
@@ -57,18 +60,25 @@ export const SetupGame: React.FC<SetupGameProps> = ({
     };
 
     const startGame = () => {
+
+        const chosenPlayers = sortedPlayers.filter(x => x.checked);
+
+        // Validate at least one player chosen ! ! !
+        if (chosenPlayers.length < 1) {
+            return;
+        }
+
         setCurrentGame(
             {
                 expansions: [
                     ...(hunkHottieChosen ? ["Hunk & Hottie"] : [])
                     , ...(santaChosen ? ["Santa"] : [])
                 ]
-                , players: [
-                    ...sortedPlayers.filter(x => x.checked).map((x, i) => ({
-                        name: x.name
-                        , order: i
-                    }))
-                ]
+                , players: chosenPlayers.map((x, i) => ({
+                    ...x 
+                    , order: i
+
+                }))
                 , start: (new Date()).toISOString()
             }
         );
