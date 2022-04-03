@@ -232,7 +232,7 @@ export const App: React.FunctionComponent = () => {
           />
           <Route path="setup" element={
             <SetupGame 
-              uniquePlayers={getUniquePlayers(gameResults)} 
+              uniquePlayers={getUniquePlayers(results)} 
               darkTheme={darkThemeChosen}
               setCurrentGame={setCurrentGame}
             />}   
