@@ -117,7 +117,7 @@ export const Home: React.FC<HomeProps> = ({
                 </DocumentCard>
             </Stack.Item>
 
-            <Stack.Item
+            {/* <Stack.Item
                 align='stretch'
                 styles={stackItemStyles}
             >
@@ -133,7 +133,7 @@ export const Home: React.FC<HomeProps> = ({
                         </Stack>
                     </Stack>
                 </DocumentCard>
-            </Stack.Item>
+            </Stack.Item> */}
 
             <Stack.Item
                 align='stretch'
@@ -143,7 +143,7 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Stack tokens={{ childrenGap: 10}}>
-                        <Text variant="large">Games Played</Text>
+                        <Text variant="large">Total Games Played</Text>
                         <Text
                             variant="mega"
                         >
