@@ -49,7 +49,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
-    const [previousTurnHighScore, setPreviousTurnHighScore] = useState(0);
     const [winner, setWinner] = useState("");
     const [activePlayers, setActivePlayers] = useState<PlayerInGame[]>([]);
 
@@ -71,6 +70,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
         setPlayersInOrder([
             ...playersInOrder
+            , newPlayerInGame
+        ]);
+
+        setActivePlayers([
+            ...activePlayers
             , newPlayerInGame
         ]);
     };
@@ -100,38 +104,39 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         // Otherwise, next player until game ends.
         else {
 
-            const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
-            setPreviousTurnHighScore(highestScore);
-
-            const activePlayers = 
-                highestScore < 13
-                ? playersInOrder
-                : playersInOrder.filter(
-                    x =>
-                        // At least tied for lead. 
-                        x.currentBrainTotal >= previousTurnHighScore
-                )
-            ;
-
-            const leaders = activePlayers.filter(x => x.currentBrainTotal === highestScore);
-
-            console.log({
-                player
-                , highestScore
-                , previousTurnHighScore
-                , activePlayers
-                , leaders
-            });
             if (
                 // The last active player has just played ! ! !
                 player === activePlayers[activePlayers.length - 1]
-
-                // ? ? ?
-                && leaders.length === 1
             ) {
-
+                console.log("Last Effing Player this Turn ! ! !");
+                
                 // Game over, we have a winner ? ? ?
-                setWinner(leaders[0].name);
+                if (false) {
+                 // setWinner(leaders[0].name);
+                }
+                
+                // Otherwise setup the next turn active players.
+                else {
+                    const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
+
+                    const ap = 
+                        highestScore < 13
+
+                        // Everybody active if nobody over 13 ! ! !
+                        ? playersInOrder 
+
+                        // Otherwise just those previous active players that have the highest score.
+                        : playersInOrder.filter(x => x.currentBrainTotal === highestScore);
+        
+                    if (ap.length === 1) {
+                        setWinner(ap[0].name); 
+                    }
+
+                    else {
+                        setActivePlayers(ap);
+                        setActivePlayer(ap[0]);
+                    }
+                }
             }
 
             else {
