@@ -37,6 +37,10 @@ export const Home: React.FC<HomeProps> = ({
 
     const nav = useNavigate();
 
+    const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
+    const daysAgo = (Date.now() - lastGame)/ (1000 * 60 * 60 * 24);    
+    const lastPlayedDisplay = daysAgo >= 1 ? `${daysAgo.toFixed(0)}` : 'Today'
+
     return (
 
         <Stack
@@ -94,14 +98,17 @@ export const Home: React.FC<HomeProps> = ({
                             <Text
                                 variant="mega"
                             >
-                                7
+                                {lastPlayedDisplay}
                             </Text>
-                            <Text
-                                variant="xLarge"
-                                styles={{root: { marginBottom: 13}}}
-                            >
-                                days ago
-                            </Text>
+                            {
+                                lastPlayedDisplay !== 'Today' && 
+                                <Text
+                                    variant="xLarge"
+                                    styles={{root: { marginBottom: 13}}}
+                                >
+                                    days ago
+                                </Text>
+                            }
 
                         </Stack>
                     </Stack>
