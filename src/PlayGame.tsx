@@ -49,8 +49,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const [santaSpecial, setSantaSpecial] = useState<IDropdownOption>();
 
-    const [previousHighScore, setPreviousHighScore] = useState(0);
+    const [previousTurnHighScore, setPreviousTurnHighScore] = useState(0);
     const [winner, setWinner] = useState("");
+    const [activePlayers, setActivePlayers] = useState<PlayerInGame[]>([]);
 
     const showChoosePlayerPanel =
         !activePlayer
@@ -91,7 +92,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
             player.currentBrainTotal += currentTurnPoints;
         }        
 
-
         // Trigger choose player number if not all chosen.
         if (playersInOrder.length < currentGame.players.length) {
             setActivePlayer(undefined);
@@ -101,7 +101,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         else {
 
             const highestScore = Math.max(...playersInOrder.map(x => x.currentBrainTotal));
-            setPreviousHighScore(highestScore);
+            setPreviousTurnHighScore(highestScore);
 
             const activePlayers = 
                 highestScore < 13
@@ -109,20 +109,29 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                 : playersInOrder.filter(
                     x =>
                         // At least tied for lead. 
-                        x.currentBrainTotal >= previousHighScore
+                        x.currentBrainTotal >= previousTurnHighScore
                 )
             ;
 
+            const leaders = activePlayers.filter(x => x.currentBrainTotal === highestScore);
+
+            console.log({
+                player
+                , highestScore
+                , previousTurnHighScore
+                , activePlayers
+                , leaders
+            });
             if (
-                // Only one player active
-                activePlayers.length === 1
-                
-                // Or last player just won ? ? ?
-                || (player === activePlayers[activePlayers.length - 1] && player.currentBrainTotal > previousHighScore)
+                // The last active player has just played ! ! !
+                player === activePlayers[activePlayers.length - 1]
+
+                // ? ? ?
+                && leaders.length === 1
             ) {
 
                 // Game over, we have a winner ? ? ?
-                setWinner(activePlayers.length === 1 ? activePlayers[0].name : player.name);
+                setWinner(leaders[0].name);
             }
 
             else {
