@@ -130,7 +130,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                         // Otherwise just those previous active players that have the highest score.
                         : playersInOrder.filter(x => x.currentBrainTotal === highestScore);
         
-                    if (ap.length === 1) {
+                    if (ap.length === 1 && ap[0].currentBrainTotal >= 13) {
                         setWinner(ap[0].name); 
                     }
 
