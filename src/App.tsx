@@ -207,6 +207,13 @@ export const App: React.FunctionComponent = () => {
     , start: ""
   });
 
+  const addGameResult = (gr: GameResult) => {
+    setResults([
+      ...results 
+      , gr
+    ]);
+  };
+
   initializeIcons();
 
   return (
@@ -233,6 +240,7 @@ export const App: React.FunctionComponent = () => {
           <Route path="play" element={
             <PlayGame
               currentGame={currentGame} 
+              addGameResult={addGameResult}
             />} 
           />
         </Routes>

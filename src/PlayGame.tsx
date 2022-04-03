@@ -2,12 +2,13 @@ import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link, ChoiceGroup, D
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
-import { CurrentGame, GameTurn, Player } from './App';
+import { CurrentGame, GameTurn, Player, GameResult } from './App';
 import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
 interface PlayGameProps {
     currentGame: CurrentGame;
+    addGameResult: (gr: GameResult) => void
 }
 
 interface PlayerInGame extends Player {
@@ -36,6 +37,7 @@ const santaSpecials = [
 
 export const PlayGame: React.FC<PlayGameProps> = ({ 
     currentGame
+    , addGameResult
 }) => {
 
     const nav = useNavigate();
@@ -166,6 +168,19 @@ export const PlayGame: React.FC<PlayGameProps> = ({
     const hunkAndHottieUsed = currentGame.expansions.findIndex(x => x === "Hunk & Hottie") >= 0;
     const santaUsed = currentGame.expansions.findIndex(x => x === "Santa") >= 0;
 
+    const endGame = () => {
+
+        // Save a game result somewhere.
+        addGameResult({
+            ...currentGame
+            , end: new Date().toISOString()
+            , winner: winner
+        });
+
+        // Navigate back to home.
+        nav(-2);
+    };
+
     return (
         <Stack style={{ padding: 30 }}>
             <Panel
@@ -184,7 +199,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                 padding: 30
                             }
                         }}
-                        onClick={() => nav(-2)}
+                        onClick={endGame}
                     >
                         <Text
                             variant='large'
