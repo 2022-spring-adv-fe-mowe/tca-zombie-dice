@@ -200,7 +200,7 @@ export const App: React.FunctionComponent = () => {
 
   // State as useState() until it gets unbearable ! ! !
   const [darkThemeChosen, setDarkThemeChosen] = useState(false);
-  const [results, setResults] = useState<GameResult[]>(gameResults);
+  const [results, setResults] = useState<GameResult[]>([]);
   const [currentGame, setCurrentGame] = useState<CurrentGame>({
     expansions: []
     , players: []

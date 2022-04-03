@@ -39,7 +39,11 @@ export const Home: React.FC<HomeProps> = ({
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
     const daysAgo = (Date.now() - lastGame)/ (1000 * 60 * 60 * 24);    
-    const lastPlayedDisplay = daysAgo >= 1 ? `${daysAgo.toFixed(0)}` : 'Today'
+    const lastPlayedDisplay = daysAgo < 1 
+        ? 'Today'
+        : isFinite(daysAgo) 
+            ? `${daysAgo.toFixed(0)}` 
+            : 'Never'
 
     return (
 
@@ -101,7 +105,7 @@ export const Home: React.FC<HomeProps> = ({
                                 {lastPlayedDisplay}
                             </Text>
                             {
-                                lastPlayedDisplay !== 'Today' && 
+                                lastPlayedDisplay !== 'Today' && lastPlayedDisplay !== 'Never' && 
                                 <Text
                                     variant="xLarge"
                                     styles={{root: { marginBottom: 13}}}
