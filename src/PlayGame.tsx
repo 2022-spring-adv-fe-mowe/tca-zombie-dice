@@ -1,8 +1,8 @@
 import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link, ChoiceGroup, Dropdown, IDropdownOption } from '@fluentui/react';
 import { Text } from '@fluentui/react/lib/Text';
-import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
+import { DefaultButton, PrimaryButton, CompoundButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
-import { CurrentGame, GameTurn, Player, GameResult } from './App';
+import { CurrentGame, GameTurn, Player, GameResult, buttonStyles } from './App';
 import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
@@ -343,6 +343,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                     tokens={{ childrenGap: 3 }}
                                 >
                                     {
+                                        false && 
                                         santaUsed
                                         && (
                                             <>
@@ -364,7 +365,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                     <Dropdown
                                                         options={santaSpecials}
                                                         onChange={(e, o) => setSantaSpecial(o)}
-                                                        selectedKey={santaSpecial ? santaSpecial.key : "none"}
+                                                        selectedKey={santaSpecial ? santaSpecial?.key : "none"}
                                                     />
 
                                                     {
@@ -394,6 +395,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                     }
 
                                     {
+                                        false &&
                                         hunkAndHottieUsed
                                         && (
                                             <>
@@ -480,13 +482,33 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                             </>
                                         )
                                     }
-                                    <Text
+                                    {/* <Text
                                         variant='medium'
                                         styles={{ root: { marginBottom: 0 } }}
                                     >
                                         Brainnns!
-                                    </Text>
-                                    <Stack
+                                    </Text> */}
+                                    <DefaultButton
+                                        styles={buttonStyles}
+                                        onClick={() => addTurnPoints(1)}
+                                    >
+                                        <Stack>
+                                            <Text variant='xxLarge'>+1</Text>
+                                            <Text variant='large'>Tally Brainnns!</Text>
+                                        </Stack>
+                                    </DefaultButton>
+                                    <DefaultButton
+                                        styles={buttonStyles}
+                                        onClick={() => addTurnPoints(-1)}
+                                    >
+                                        <Stack>
+                                            <Text variant='xxLarge'>-1</Text>
+                                            <Text variant='large'>{`Correction${hunkAndHottieUsed ? ' or Rescue!' : ''}`}</Text>
+
+                                        </Stack>
+                                    </DefaultButton>
+
+                                    {/* <Stack
                                         horizontal
                                         styles={{ root: { justifyContent: "begin" } }}
                                         tokens={{ childrenGap: 3 }}
@@ -536,7 +558,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                 </DefaultButton>
                                             )
                                         }
-                                    </Stack>
+                                    </Stack> */}
                                     <Stack
                                         horizontal
                                         tokens={{
@@ -553,7 +575,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                             onClick={() => endPlayerTurn(x, true)}
                                         >
                                             <Text
-                                                variant='large'
+                                                variant='xLarge'
                                                 styles={{
                                                     root: {
                                                         color: DefaultPalette.white
@@ -563,7 +585,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                 Died
                                             </Text>
                                         </PrimaryButton>
-                                        {currentTurnPoints > 0 && (
+                                        {currentTurnPoints !== 0 && (
                                             <PrimaryButton
                                                 styles={{
                                                     root: {
@@ -573,7 +595,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                 onClick={() => endPlayerTurn(x, false)}
                                             >
                                                 <Text
-                                                    variant='large'
+                                                    variant='xLarge'
                                                     styles={{
                                                         root: {
                                                             color: DefaultPalette.white
