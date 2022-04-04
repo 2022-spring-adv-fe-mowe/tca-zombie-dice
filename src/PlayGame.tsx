@@ -2,7 +2,7 @@ import { DefaultPalette, Persona, PersonaSize, Stack, Icon, Link, ChoiceGroup, D
 import { Text } from '@fluentui/react/lib/Text';
 import { DefaultButton, PrimaryButton, CompoundButton } from '@fluentui/react/lib/Button';
 import { useNavigate } from 'react-router-dom';
-import { CurrentGame, GameTurn, Player, GameResult, buttonStyles } from './App';
+import { CurrentGame, Player, GameResult, buttonStyles } from './App';
 import { useState } from 'react';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
@@ -42,7 +42,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const nav = useNavigate();
 
-    const [turns, setTurns] = useState<GameTurn[]>([]);
     const [activePlayer, setActivePlayer] = useState<PlayerInGame | undefined>(undefined);
     const [currentTurnPoints, setCurrentTurnPoints] = useState(0);
 
@@ -87,10 +86,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         // Update player turns and score (if didn't die).
         //
 
-        // Boolean array of died or not for now, i-o-g...
+        // Number array of points...
+        // Good enough for biggest turn ever ! ! !
         player.turns = [
             ...player.turns
-            , died
+            , died ? 0 : currentTurnPoints
         ];
 
         // If not dead, update current player points.
@@ -172,9 +172,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
         // Save a game result somewhere.
         addGameResult({
-            ...currentGame
+            expansions: currentGame.expansions
+            , start: currentGame.start
             , end: new Date().toISOString()
             , winner: winner
+            , players: playersInOrder
         });
 
         // Navigate back to home.

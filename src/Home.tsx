@@ -37,6 +37,8 @@ export const Home: React.FC<HomeProps> = ({
 
     const nav = useNavigate();
 
+    console.log(gameResults);
+
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
     const daysAgo = (Date.now() - lastGame)/ (1000 * 60 * 60 * 24);    
     const lastPlayedDisplay = daysAgo < 1 

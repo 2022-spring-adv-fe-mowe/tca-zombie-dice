@@ -34,12 +34,7 @@ const stackTokens: IStackTokens = { childrenGap: 15 };
 export interface Player {
   name: string;
   order: number;
-}
-
-export interface SpecialAction {
-  die: string;
-  action: string;
-  value: number;
+  turns: number[];
 }
 
 export interface GameResult {
@@ -49,8 +44,7 @@ export interface GameResult {
   players: Player[];
 
   // tca-zombie-specific...
-  expansions?: string[];
-  gameTurns?: GameTurn[];
+  expansions: string[];
 }
 
 export interface CurrentGame {
@@ -59,70 +53,13 @@ export interface CurrentGame {
   start: string;
 }
 
-export interface PlayerTurn {
-  player?: string;
-  start?: string;
-  end?: string;
-  startingTotalScore?: number;
-  brainsThisTurn?: number;
-  endingTotalScore?: number;
-  specialActions?: any[];
-
-  rolls?: any[];
-}
-export interface GameTurn {
-  turnNumber: number;
-  playerTurns: PlayerTurn[];
-}
 
 const game1: GameResult = {
   start: "2022-02-14T15:14:30"
   , end: "2022-02-14T15:20:00"
   , winner: "Me"
-  , players: [{ name: "Me", order: 1}, { name: "Taylor", order: 2}, {name: "Jack", order: 3}]
+  , players: [{ name: "Me", order: 1, turns: []}, { name: "Taylor", order: 2, turns: []}, {name: "Jack", order: 3, turns: []}]
   , expansions: ["Santa", "Hunk/Hottie"]
-  , gameTurns: [
-      {
-          turnNumber: 1
-          , playerTurns: [
-              {
-                  player: "Me"
-                  , start: "2022-02-14T15:14:30"
-                  , end: "2022-02-14T15:15:22" 
-                  , startingTotalScore: 0
-                  , brainsThisTurn: 3
-                  , endingTotalScore: 3
-
-                  , specialActions: [
-                      {die: "Santa", action: "Helmet", value: 0}
-                      , {die: "Hunk", action: "Double Brains", value: 2}
-                      , {die: "Hottie", action: "Rescue", value: -2}
-                  ]
-
-                  , rolls:  [
-                    {
-                      naturalBrains: 3
-                      , rescues: -2
-                      , santaEnergyBrains: 1
-                      , netBrains: 2
-                      , santaHelmet: true
-                    }
-                    , {
-                      naturalBrains: 0
-                      , rescues: 0
-                      , santaEnergyBrains: 0
-                      , netBrains: 0
-                      , santaHelmet: true
-                    }
-                  ]
-              }
-          ]
-      }
-      , {
-          turnNumber: 2
-          , playerTurns: []
-      }
-  ]
 };
 
 // console.log(new Date().toLocaleString());
@@ -131,7 +68,8 @@ const game2: GameResult = {
   start: "2022-02-14T21:00:30"
   , end: "2022-02-14T21:30:30"
   , winner: "Stephanie"
-  , players: [{ name: "Me", order: 1}, { name: "Stephanie", order: 2}, {name: "Jack", order: 3}]
+  , players: [{ name: "Me", order: 1, turns: []}, { name: "Stephanie", order: 2, turns: []}, {name: "Jack", order: 3, turns: []}]
+  , expansions: []
 };
 
 

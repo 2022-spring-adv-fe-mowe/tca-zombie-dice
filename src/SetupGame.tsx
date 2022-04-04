@@ -77,7 +77,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({
                 , players: chosenPlayers.map((x, i) => ({
                     ...x 
                     , order: i
-
+                    , turns: []
                 }))
                 , start: (new Date()).toISOString()
             }
