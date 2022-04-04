@@ -23,6 +23,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({
 
     const [santaChosen, setSantaChosen] = useState(false);
     const [hunkHottieChosen, setHunkHottieChosen] = useState(false);
+    const [schoolBusChosen, setSchoolBusChosen] = useState(false);
 
     const [sortedPlayers, setSortedPlayers] = useState([...uniquePlayers].sort().map(x => ({name: x, checked: false})));
 
@@ -73,6 +74,7 @@ export const SetupGame: React.FC<SetupGameProps> = ({
                 expansions: [
                     ...(hunkHottieChosen ? ["Hunk & Hottie"] : [])
                     , ...(santaChosen ? ["Santa"] : [])
+                    , ...(schoolBusChosen ? ["School Bus"] : [])
                 ]
                 , players: chosenPlayers.map((x, i) => ({
                     ...x 
@@ -136,6 +138,29 @@ export const SetupGame: React.FC<SetupGameProps> = ({
                     {hunkHottieChosen && 
                         <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
                             Swap with 2 standard &nbsp;<span style={{color: "gold", backgroundColor: 'white', paddingLeft: 4, paddingRight: 4, paddingBottom: 3, marginTop: -2, fontWeight: "bold"}}>yellow</span>
+                        </Text>
+                    }                 
+                </Stack>
+            </DefaultButton>
+
+            <DefaultButton
+                styles={buttonStyles}
+                primary={schoolBusChosen}
+                onClick={() => setSchoolBusChosen(!schoolBusChosen)}
+            >
+                <Stack>
+                    <Text 
+                        variant='xLarge'
+                        styles={{ root: {
+                                color: darkTheme ? "#fefefd" : schoolBusChosen ? DefaultPalette.white : "#0f0c35"
+                            }
+                        }} 
+                    >
+                        School Bus
+                    </Text>
+                    {schoolBusChosen && 
+                        <Text variant='medium' styles={{root: { color: DefaultPalette.white}}}>
+                            Lunch wagon ! ! !
                         </Text>
                     }                 
                 </Stack>
