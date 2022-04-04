@@ -152,9 +152,23 @@ export const App: React.FunctionComponent = () => {
     }    
   };
 
+  const loadGameResults = async () => {
+    try {
+      const gr = await localforage.getItem<GameResult[]>('gameResults');
+      console.log(gr);
+      setResults(gr ?? []);
+
+    } catch (err) {
+        // This code runs if there were any errors.
+        console.error(err);
+        setResults([]);
+    }    
+  };
+
   useEffect(
     () => {
       loadDarkMode();
+      loadGameResults();
     }
     , []
   );
@@ -164,20 +178,23 @@ export const App: React.FunctionComponent = () => {
     loadDarkMode();
   };
 
-
   // State as useState() until it gets unbearable ! ! !
-  const [results, setResults] = useState<GameResult[]>([]);
+  const [results, setResults] = useState<GameResult[]>(() => []);
+
   const [currentGame, setCurrentGame] = useState<CurrentGame>({
     expansions: []
     , players: []
     , start: ""
   });
 
-  const addGameResult = (gr: GameResult) => {
-    setResults([
+  const addGameResult = async (gr: GameResult) => {
+    const newResults = [
       ...results 
       , gr
-    ]);
+    ];
+
+    await localforage.setItem<GameResult[]>("gameResults", newResults);
+    loadGameResults();
   };
 
   initializeIcons();
