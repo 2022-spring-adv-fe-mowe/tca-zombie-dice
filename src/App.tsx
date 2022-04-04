@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stack, Text, FontWeights, IStackTokens, IStackStyles, ITextStyles } from '@fluentui/react';
 import logo from './logo.svg';
 import './App.css';
@@ -9,6 +9,7 @@ import { loadTheme, ThemeProvider } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react';
 import { PlayGame } from './PlayGame';
 import { DefaultPalette, createTheme } from '@fluentui/theme';
+import localforage from 'localforage';
 
 export const buttonStyles = {
   root: {
@@ -136,8 +137,35 @@ const darkTheme = createTheme({
 
 export const App: React.FunctionComponent = () => {
 
+  const [darkThemeChosen, setDarkThemeChosen] = useState(() => false);
+
+  const loadDarkMode = async () => {
+    try {
+      const darkMode = await localforage.getItem<boolean>('darkMode');
+      console.log(darkMode);
+      setDarkThemeChosen(darkMode ?? false);
+
+    } catch (err) {
+        // This code runs if there were any errors.
+        console.error(err);
+        setDarkThemeChosen(false);
+    }    
+  };
+
+  useEffect(
+    () => {
+      loadDarkMode();
+    }
+    , []
+  );
+
+  const setDarkMode = async (dark: boolean) => {
+    const d = await localforage.setItem<boolean>("darkMode", dark);
+    loadDarkMode();
+  };
+
+
   // State as useState() until it gets unbearable ! ! !
-  const [darkThemeChosen, setDarkThemeChosen] = useState(false);
   const [results, setResults] = useState<GameResult[]>([]);
   const [currentGame, setCurrentGame] = useState<CurrentGame>({
     expansions: []
@@ -165,7 +193,7 @@ export const App: React.FunctionComponent = () => {
             <Home 
               gameResults={results}
               darkMode={darkThemeChosen}
-              setDarkMode={setDarkThemeChosen}
+              setDarkMode={setDarkMode}
             />} 
           />
           <Route path="setup" element={
