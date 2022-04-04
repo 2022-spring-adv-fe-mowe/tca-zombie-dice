@@ -618,7 +618,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                 <Text
                     variant='large'
                 >
-                    Keep taking turns until somebody wins, or <Link onClick={() => nav("/")}>Quit</Link>
+                    Keep taking turns until somebody wins, or <Link onClick={() => nav(-2)}>Quit</Link>
                 </Text>
             </Stack>
 
