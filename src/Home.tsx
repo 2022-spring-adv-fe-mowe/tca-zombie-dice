@@ -51,6 +51,29 @@ const calculateLeaderBoard = (p: string[], r: GameResult[]) => {
     return lb.sort((a, b) => `${b.average}${b.wins + b.losses}`.localeCompare(`${a.average}${a.wins + a.losses}`));
 };
 
+const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
+
+    const data = p.map(x => {
+  
+      const gamesThisPlayerHasPlayed = r.filter(y => y.players.some(z => z.name === x));
+      const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.winner === x);
+  
+      return {
+        name: x
+        , fewestTurns: Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns.length)))
+      };
+    });
+  
+    return data
+        .sort((a, b) => a.fewestTurns > b.fewestTurns ? 1 : -1)
+        .map(x => ({
+            ...x
+            , fewestTurns: isFinite(x.fewestTurns) ? x.fewestTurns.toString() : "n/a"
+        }))
+    ;
+};
+
+
 export const Home: React.FC<HomeProps> = ({
     gameResults
     , darkMode
@@ -70,6 +93,11 @@ export const Home: React.FC<HomeProps> = ({
 
 
     const leaderboardData = calculateLeaderBoard(
+        uniquePlayers 
+        , gameResults
+    );
+
+    const fewestTurnData = calculateFewestTurnWins(
         uniquePlayers 
         , gameResults
     );
@@ -221,6 +249,28 @@ export const Home: React.FC<HomeProps> = ({
                             {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
                             , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
                             , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
+                            , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                        ]}
+                    />
+
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <Text variant="large">Fewest Turn Wins</Text>
+                    <DetailsList
+                        compact={true}
+                        selectionMode={SelectionMode.none}
+                        items={fewestTurnData}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        columns={[
+                            {key: 'turns', name: '#', fieldName: 'fewestTurns', minWidth: 30, maxWidth: 30}
                             , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
                         ]}
                     />
