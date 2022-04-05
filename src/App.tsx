@@ -211,6 +211,7 @@ export const App: React.FunctionComponent = () => {
               gameResults={results}
               darkMode={darkThemeChosen}
               setDarkMode={setDarkMode}
+              uniquePlayers={getUniquePlayers(results)} 
             />} 
           />
           <Route path="setup" element={

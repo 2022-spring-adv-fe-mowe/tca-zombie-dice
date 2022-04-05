@@ -15,11 +15,13 @@ import {
   } from '@fluentui/react/lib/DocumentCard';
 import { DefaultPalette } from '@fluentui/theme';
 import { GameResult, buttonStyles, buttonTextStyles, cardStyles } from "./App";
+import { DetailsList, DetailsListLayoutMode, Selection, IColumn, SelectionMode } from '@fluentui/react/lib/DetailsList';
 
 interface HomeProps {
     gameResults: GameResult[];
     darkMode: boolean;
     setDarkMode: any;
+    uniquePlayers: string[];
 };
 
 const stackItemStyles = { 
@@ -29,15 +31,34 @@ const stackItemStyles = {
     }
 };
 
+const calculateLeaderBoard = (p: string[], r: GameResult[]) => {
+
+    const lb = p.map(x => {
+  
+      const gamesThisPlayerHasPlayed = r.filter(y => y.players.some(z => z.name === x));
+      const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.winner === x);
+  
+      return {
+        name: x
+        , wins: gamesThisPlayerHasWon.length
+        , losses: gamesThisPlayerHasPlayed.length - gamesThisPlayerHasWon.length
+        , average: (gamesThisPlayerHasWon.length / gamesThisPlayerHasPlayed.length).toFixed(3)
+      };
+    });
+  
+    console.log("calculateLeaderBoard", lb);
+  
+    return lb.sort((a, b) => `${b.average}${b.wins + b.losses}`.localeCompare(`${a.average}${a.wins + a.losses}`));
+};
+
 export const Home: React.FC<HomeProps> = ({
     gameResults
     , darkMode
     , setDarkMode
+    , uniquePlayers
 }) => {
 
     const nav = useNavigate();
-
-    console.log(gameResults);
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
     const daysAgo = (Date.now() - lastGame)/ (1000 * 60 * 60 * 24);    
@@ -46,6 +67,12 @@ export const Home: React.FC<HomeProps> = ({
         : isFinite(daysAgo) 
             ? `${daysAgo.toFixed(0)}` 
             : 'Never'
+
+
+    const leaderboardData = calculateLeaderBoard(
+        uniquePlayers 
+        , gameResults
+    );
 
     return (
 
@@ -174,6 +201,30 @@ export const Home: React.FC<HomeProps> = ({
                             Try {darkMode ? "Light" : "Dark"} Mode
                         </Text>
                     </DefaultButton>                
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <Text variant="large">Leaderboard</Text>
+                    <DetailsList
+                        compact={true}
+                        selectionMode={SelectionMode.none}
+                        items={leaderboardData}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        columns={[
+                            {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
+                            , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
+                            , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
+                            , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                        ]}
+                    />
+
                 </DocumentCard>
             </Stack.Item>
 
