@@ -110,7 +110,7 @@ const calculateExpansionsPlayed = (r: GameResult[]) => {
     );
 
     return [...groupedByCombinedExpansionString].map(x => ({
-        expansions: x[0].length === 0 ? "None" : x[0]
+        expansions: x[0].length === 0 ? "Base Game Only" : x[0]
         , count: x[1].length
     })).sort((a, b) => a.count > b.count ? -1 : 1);
 };
@@ -174,7 +174,7 @@ export const Home: React.FC<HomeProps> = ({
 
     const expansionsData = calculateExpansionsPlayed(gameResults);
     const gameTimeData = calculateGameTimes(gameResults);
-    
+
     return (
 
         <Stack
