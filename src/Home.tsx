@@ -35,7 +35,7 @@ const calculateLeaderBoard = (p: string[], r: GameResult[]) => {
 
     const lb = p.map(x => {
   
-      const gamesThisPlayerHasPlayed = r.filter(y => y.players.some(z => z.name === x));
+      const gamesThisPlayerHasPlayed = r.filter(y => y.players.length > 1 && y.players.some(z => z.name === x));
       const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.winner === x);
   
       return {
@@ -56,11 +56,15 @@ const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
     const data = p.map(x => {
   
       const gamesThisPlayerHasPlayed = r.filter(y => y.players.some(z => z.name === x));
-      const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.winner === x);
+      const soloGamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length === 1 && y.winner === x);
+      const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length > 1 && y.winner === x);
   
+      const soloMinTurns = Math.min(...soloGamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns.length)));
+      const competitiveMinTurns = Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns.length)));
+
       return {
-        name: x
-        , fewestTurns: Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns.length)))
+        name: `${x}${soloMinTurns < competitiveMinTurns ? ' (solo)' : ''}`
+        , fewestTurns: Math.min(soloMinTurns, competitiveMinTurns)
       };
     });
   
