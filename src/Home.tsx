@@ -17,6 +17,9 @@ import { DefaultPalette } from '@fluentui/theme';
 import { GameResult, buttonStyles, buttonTextStyles, cardStyles } from "./App";
 import { DetailsList, DetailsListLayoutMode, Selection, IColumn, SelectionMode } from '@fluentui/react/lib/DetailsList';
 import pms from 'pretty-ms';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { useState } from 'react';
+import { TextField } from '@fluentui/react/lib/TextField';
 
 interface HomeProps {
     gameResults: GameResult[];
@@ -150,6 +153,8 @@ export const Home: React.FC<HomeProps> = ({
 }) => {
 
     const nav = useNavigate();
+
+    const [changingEmail, setChangingEmail] = useState(false);
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
     const daysAgo = (Date.now() - lastGame)/ (1000 * 60 * 60 * 24);    
@@ -294,14 +299,31 @@ export const Home: React.FC<HomeProps> = ({
                 <DocumentCard
                     styles={cardStyles}
                 >
-                    <DefaultButton
-                        styles={buttonStyles}
-                        onClick={() => setDarkMode(!darkMode)}
+                    <Stack
+                        tokens={{childrenGap: 15}}
                     >
-                        <Text variant='large'>
-                            Try {darkMode ? "Light" : "Dark"} Mode
-                        </Text>
-                    </DefaultButton>                
+                        <DefaultButton
+                            styles={buttonStyles}
+                            onClick={() => setDarkMode(!darkMode)}
+                        >
+                            <Text variant='large'>
+                                Try {darkMode ? "Light" : "Dark"} Mode
+                            </Text>
+                        </DefaultButton>                
+                        <DefaultButton
+                            styles={buttonStyles}
+                            onClick={() => setChangingEmail(true)}
+                        >
+                            <Stack>
+                                <Text variant='large'>
+                                    Change Email
+                                </Text>
+                                <Text variant='medium'>
+                                    tsteele@madisoncollege.edu
+                                </Text>
+                            </Stack>
+                        </DefaultButton>                
+                    </Stack>
                 </DocumentCard>
             </Stack.Item>
 
@@ -454,6 +476,35 @@ export const Home: React.FC<HomeProps> = ({
                 </DocumentCard>
             </Stack.Item>
 
+            <Panel
+                type={PanelType.smallFixedNear}
+                hasCloseButton={false}
+                isOpen={changingEmail}
+                headerText={"Enter Email"}
+            >
+                <Stack
+                    tokens={{ childrenGap: 30 }}
+                    styles={{ root: { marginTop: 40 } }}
+                >
+                    <TextField>
+                    </TextField>
+                    <Stack 
+                        horizontal
+                        tokens={{childrenGap: 10}}
+                    >
+                        <DefaultButton
+                            onClick={() => setChangingEmail(false)}
+                        >
+                            Save
+                        </DefaultButton>
+                        <DefaultButton
+                            onClick={() => setChangingEmail(false)}
+                        >
+                            Cancel
+                        </DefaultButton>
+                    </Stack>
+               </Stack>
+            </Panel>
         </Stack>
     );
 }
