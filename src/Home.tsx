@@ -337,7 +337,7 @@ export const Home: React.FC<HomeProps> = ({
                         items={calculateMostSingleTurnBrains(uniquePlayers, gameResults)}
                         layoutMode={DetailsListLayoutMode.justified}
                         columns={[
-                            {key: 'brains', name: '#', fieldName: 'maxBrains', minWidth: 30, maxWidth: 30}
+                            {key: 'brains', name: 'Brains', fieldName: 'maxBrains', minWidth: 50, maxWidth: 50}
                             , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
                         ]}
                     />
@@ -359,7 +359,7 @@ export const Home: React.FC<HomeProps> = ({
                         items={fewestTurnData}
                         layoutMode={DetailsListLayoutMode.justified}
                         columns={[
-                            {key: 'turns', name: '#', fieldName: 'fewestTurns', minWidth: 30, maxWidth: 30}
+                            {key: 'turns', name: 'Turns', fieldName: 'fewestTurns', minWidth: 50, maxWidth: 50}
                             , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
                         ]}
                     />
@@ -382,7 +382,7 @@ export const Home: React.FC<HomeProps> = ({
                         layoutMode={DetailsListLayoutMode.justified}
                         columns={[
                             {key: 'expansions', name: 'Expansions', fieldName: 'expansions', minWidth: 90}
-                            , {key: 'count', name: '#', fieldName: 'count', minWidth: 30, maxWidth: 30}
+                            , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
                         ]}
                     />
 
@@ -403,8 +403,8 @@ export const Home: React.FC<HomeProps> = ({
                         items={calculateGameTimes(gameResults)}
                         layoutMode={DetailsListLayoutMode.justified}
                         columns={[
-                            {key: 'players', name: 'Players', fieldName: 'players', minWidth: 75, maxWidth: 75}
-                            , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 75, maxWidth: 75}
+                            {key: 'players', name: 'Players', fieldName: 'players', minWidth: 50, maxWidth: 50}
+                            , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
                             , {key: 'avgminutes', name: 'Minutes (avg)', fieldName: 'averageMinutes', minWidth: 90, maxWidth: 90}
                         ]}
                     />
