@@ -138,7 +138,7 @@ const calculateGameTimes = (r: GameResult[]) => {
         })
     }).map(x => ({
         ...x 
-        , averageMs: pms(x.averageMs)
+        , averageMs: pms(x.averageMs, {secondsDecimalDigits: 0})
     })).sort((a, b) => a.players < b.players ? -1 : 1);
 };
 
