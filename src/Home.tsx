@@ -165,13 +165,16 @@ export const Home: React.FC<HomeProps> = ({
         , gameResults
     );
 
+    const mostSingleTurnBrainsData = calculateMostSingleTurnBrains(uniquePlayers, gameResults);
+
     const fewestTurnData = calculateFewestTurnWins(
         uniquePlayers 
         , gameResults
     );
 
     const expansionsData = calculateExpansionsPlayed(gameResults);
-
+    const gameTimeData = calculateGameTimes(gameResults);
+    
     return (
 
         <Stack
@@ -310,19 +313,26 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Text variant="large">Leaderboard</Text>
-                    <DetailsList
-                        compact={true}
-                        selectionMode={SelectionMode.none}
-                        items={leaderboardData}
-                        layoutMode={DetailsListLayoutMode.justified}
-                        columns={[
-                            {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
-                            , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
-                            , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
-                            , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
-                        ]}
-                    />
-
+                    {
+                        leaderboardData.length === 0 ?
+                        <p>
+                            <Text variant='medium'>
+                                Play some games ! ! !
+                            </Text>
+                        </p> :
+                        <DetailsList
+                            compact={true}
+                            selectionMode={SelectionMode.none}
+                            items={leaderboardData}
+                            layoutMode={DetailsListLayoutMode.justified}
+                            columns={[
+                                {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
+                                , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
+                                , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
+                                , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                            ]}
+                        />
+                    }
                 </DocumentCard>
             </Stack.Item>
 
@@ -334,17 +344,25 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Text variant="large">Most Single Turn Brains</Text>
-                    <DetailsList
-                        compact={true}
-                        selectionMode={SelectionMode.none}
-                        items={calculateMostSingleTurnBrains(uniquePlayers, gameResults)}
-                        layoutMode={DetailsListLayoutMode.justified}
-                        columns={[
-                            {key: 'brains', name: 'Brains', fieldName: 'maxBrains', minWidth: 50, maxWidth: 50}
-                            , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
-                        ]}
-                    />
-
+                    {
+                        mostSingleTurnBrainsData.length === 0 ?
+                        <p>
+                            <Text variant='medium'>
+                                Eat some brainnns ! ! !
+                            </Text>
+                        </p> :
+                        <DetailsList
+                            compact={true}
+                            selectionMode={SelectionMode.none}
+                            items={mostSingleTurnBrainsData}
+                            layoutMode={DetailsListLayoutMode.justified}
+                            columns={[
+                                {key: 'brains', name: 'Brains', fieldName: 'maxBrains', minWidth: 50, maxWidth: 50}
+                                , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                            ]}
+                        />
+                    }
+                    
                 </DocumentCard>
             </Stack.Item>
 
@@ -356,17 +374,24 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Text variant="large">Fewest Turn Wins</Text>
-                    <DetailsList
-                        compact={true}
-                        selectionMode={SelectionMode.none}
-                        items={fewestTurnData}
-                        layoutMode={DetailsListLayoutMode.justified}
-                        columns={[
-                            {key: 'turns', name: 'Turns', fieldName: 'fewestTurns', minWidth: 50, maxWidth: 50}
-                            , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
-                        ]}
-                    />
-
+                    {
+                        fewestTurnData.length === 0 ?
+                        <p>
+                            <Text variant='medium'>
+                                Try a solo game ! ! !
+                            </Text>
+                        </p> :                    
+                        <DetailsList
+                            compact={true}
+                            selectionMode={SelectionMode.none}
+                            items={fewestTurnData}
+                            layoutMode={DetailsListLayoutMode.justified}
+                            columns={[
+                                {key: 'turns', name: 'Turns', fieldName: 'fewestTurns', minWidth: 50, maxWidth: 50}
+                                , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                            ]}
+                        />
+                    }
                 </DocumentCard>
             </Stack.Item>
 
@@ -378,17 +403,24 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Text variant="large">Expansions Played</Text>
-                    <DetailsList
-                        compact={true}
-                        selectionMode={SelectionMode.none}
-                        items={expansionsData}
-                        layoutMode={DetailsListLayoutMode.justified}
-                        columns={[
-                            {key: 'expansions', name: 'Expansions', fieldName: 'expansions', minWidth: 90}
-                            , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
-                        ]}
-                    />
-
+                    {
+                        expansionsData.length === 0 ?
+                        <p>
+                            <Text variant='medium'>
+                                You guessed it, play ZD ! ! !
+                            </Text>
+                        </p> :
+                        <DetailsList
+                            compact={true}
+                            selectionMode={SelectionMode.none}
+                            items={expansionsData}
+                            layoutMode={DetailsListLayoutMode.justified}
+                            columns={[
+                                {key: 'expansions', name: 'Expansions', fieldName: 'expansions', minWidth: 90}
+                                , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
+                            ]}
+                        />
+                    }
                 </DocumentCard>
             </Stack.Item>
 
@@ -400,18 +432,25 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Text variant="large">Game Times</Text>
-                    <DetailsList
-                        compact={true}
-                        selectionMode={SelectionMode.none}
-                        items={calculateGameTimes(gameResults)}
-                        layoutMode={DetailsListLayoutMode.justified}
-                        columns={[
-                            {key: 'players', name: 'Players', fieldName: 'players', minWidth: 50, maxWidth: 50}
-                            , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
-                            , {key: 'length', name: 'Length (avg)', fieldName: 'averageMs', minWidth: 90, maxWidth: 90}
-                        ]}
-                    />
-
+                    {
+                        gameTimeData.length === 0 ?
+                        <p>
+                            <Text variant='medium'>
+                                No games, no times : - O
+                            </Text>
+                        </p> :
+                        <DetailsList
+                            compact={true}
+                            selectionMode={SelectionMode.none}
+                            items={gameTimeData}
+                            layoutMode={DetailsListLayoutMode.justified}
+                            columns={[
+                                {key: 'players', name: 'Players', fieldName: 'players', minWidth: 50, maxWidth: 50}
+                                , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
+                                , {key: 'length', name: 'Length (avg)', fieldName: 'averageMs', minWidth: 90, maxWidth: 90}
+                            ]}
+                        />
+                        }
                 </DocumentCard>
             </Stack.Item>
 
