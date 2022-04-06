@@ -48,7 +48,9 @@ const calculateLeaderBoard = (p: string[], r: GameResult[]) => {
   
     console.log("calculateLeaderBoard", lb);
   
-    return lb.sort((a, b) => `${b.average}${b.wins + b.losses}`.localeCompare(`${a.average}${a.wins + a.losses}`));
+    return lb
+        .filter(x => x.wins + x.losses > 0)
+        .sort((a, b) => `${b.average}${b.wins + b.losses}`.localeCompare(`${a.average}${a.wins + a.losses}`));
 };
 
 const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
