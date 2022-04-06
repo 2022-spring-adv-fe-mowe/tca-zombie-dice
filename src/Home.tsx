@@ -77,6 +77,22 @@ const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
     ;
 };
 
+const calculateExpansionsPlayed = (r: GameResult[]) => {
+
+    const groupedByCombinedExpansionString = r.reduce(
+        (acc, x) => acc.set(
+            x.expansions.join(", ")
+            , acc.has(x.expansions.join(", ")) ? [...acc.get(x.expansions.join(", ")) ?? [], x] : [x]
+        )
+        , new Map<string, GameResult[]>()
+    );
+
+    return [...groupedByCombinedExpansionString].map(x => ({
+        expansions: x[0].length === 0 ? "None" : x[0]
+        , count: x[1].length
+    })).sort((a, b) => a.count > b.count ? -1 : 1);
+};
+
 
 export const Home: React.FC<HomeProps> = ({
     gameResults
@@ -105,6 +121,8 @@ export const Home: React.FC<HomeProps> = ({
         uniquePlayers 
         , gameResults
     );
+
+    const expansionsData = calculateExpansionsPlayed(gameResults);
 
     return (
 
@@ -276,6 +294,28 @@ export const Home: React.FC<HomeProps> = ({
                         columns={[
                             {key: 'turns', name: '#', fieldName: 'fewestTurns', minWidth: 30, maxWidth: 30}
                             , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                        ]}
+                    />
+
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <Text variant="large">Expansions Played</Text>
+                    <DetailsList
+                        compact={true}
+                        selectionMode={SelectionMode.none}
+                        items={expansionsData}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        columns={[
+                            {key: 'expansions', name: 'Expansions', fieldName: 'expansions', minWidth: 90}
+                            , {key: 'count', name: '#', fieldName: 'count', minWidth: 30, maxWidth: 30}
                         ]}
                     />
 
