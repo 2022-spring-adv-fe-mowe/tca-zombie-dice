@@ -299,6 +299,37 @@ export const Home: React.FC<HomeProps> = ({
                 <DocumentCard
                     styles={cardStyles}
                 >
+                    <Text variant="large">Leaderboard</Text>
+                    {
+                        leaderboardData.length === 0 ?
+                        <p>
+                            <Text variant='medium'>
+                                Play some games with friends ! ! !
+                            </Text>
+                        </p> :
+                        <DetailsList
+                            compact={true}
+                            selectionMode={SelectionMode.none}
+                            items={leaderboardData}
+                            layoutMode={DetailsListLayoutMode.justified}
+                            columns={[
+                                {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
+                                , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
+                                , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
+                                , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                            ]}
+                        />
+                    }
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
                     <Stack
                         tokens={{childrenGap: 15}}
                     >
@@ -324,37 +355,6 @@ export const Home: React.FC<HomeProps> = ({
                             </Stack>
                         </DefaultButton>                
                     </Stack>
-                </DocumentCard>
-            </Stack.Item>
-
-            <Stack.Item
-                align='stretch'
-                styles={stackItemStyles}
-            >
-                <DocumentCard
-                    styles={cardStyles}
-                >
-                    <Text variant="large">Leaderboard</Text>
-                    {
-                        leaderboardData.length === 0 ?
-                        <p>
-                            <Text variant='medium'>
-                                Play some games with friends ! ! !
-                            </Text>
-                        </p> :
-                        <DetailsList
-                            compact={true}
-                            selectionMode={SelectionMode.none}
-                            items={leaderboardData}
-                            layoutMode={DetailsListLayoutMode.justified}
-                            columns={[
-                                {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
-                                , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
-                                , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
-                                , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
-                            ]}
-                        />
-                    }
                 </DocumentCard>
             </Stack.Item>
 
