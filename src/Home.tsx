@@ -339,7 +339,7 @@ export const Home: React.FC<HomeProps> = ({
                         leaderboardData.length === 0 ?
                         <p>
                             <Text variant='medium'>
-                                Play some games ! ! !
+                                Play some games with friends ! ! !
                             </Text>
                         </p> :
                         <DetailsList
