@@ -16,6 +16,7 @@ import {
 import { DefaultPalette } from '@fluentui/theme';
 import { GameResult, buttonStyles, buttonTextStyles, cardStyles } from "./App";
 import { DetailsList, DetailsListLayoutMode, Selection, IColumn, SelectionMode } from '@fluentui/react/lib/DetailsList';
+import pms from 'pretty-ms';
 
 interface HomeProps {
     gameResults: GameResult[];
@@ -128,16 +129,16 @@ const calculateGameTimes = (r: GameResult[]) => {
         return ({
             players: x[0]
             , count: x[1].length
-            , averageMinutes: x[1]
+            , averageMs: x[1]
                 .map(x => Date.parse(x.end) - Date.parse(x.start))
                 .reduce(
                     (acc, x) => acc + x
                     , 0
-                ) / x[1].length / 1000  / 60
+                ) / x[1].length
         })
     }).map(x => ({
         ...x 
-        , averageMinutes: x.averageMinutes.toFixed(2)
+        , averageMs: pms(x.averageMs)
     })).sort((a, b) => a.players < b.players ? -1 : 1);
 };
 
@@ -407,7 +408,7 @@ export const Home: React.FC<HomeProps> = ({
                         columns={[
                             {key: 'players', name: 'Players', fieldName: 'players', minWidth: 50, maxWidth: 50}
                             , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 50, maxWidth: 50}
-                            , {key: 'avgminutes', name: 'Minutes (avg)', fieldName: 'averageMinutes', minWidth: 90, maxWidth: 90}
+                            , {key: 'length', name: 'Length (avg)', fieldName: 'averageMs', minWidth: 90, maxWidth: 90}
                         ]}
                     />
 
