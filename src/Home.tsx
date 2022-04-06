@@ -77,6 +77,25 @@ const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
     ;
 };
 
+const calculateMostSingleTurnBrains = (p: string[], r: GameResult[]) => {
+
+    const data = p.map(x => {
+  
+      const soloGamesThisPlayerHasPlayed = r.filter(y => y.players.length === 1 && y.players.some(z => z.name === x));
+      const competitiveGamesThisPlayerHasPlayed = r.filter(y => y.players.length > 1 && y.players.some(z => z.name === x));
+  
+      const soloMax = Math.max(...soloGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
+      const competitiveMax = Math.max(...competitiveGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
+
+      return {
+        name: `${x}${soloMax > competitiveMax ? ' (solo)' : ''}`
+        , maxBrains: Math.max(soloMax, competitiveMax)
+      };
+    });
+  
+    return data.sort((a, b) => a.maxBrains < b.maxBrains ? 1 : -1);
+};
+
 const calculateExpansionsPlayed = (r: GameResult[]) => {
 
     const groupedByCombinedExpansionString = r.reduce(
@@ -271,6 +290,28 @@ export const Home: React.FC<HomeProps> = ({
                             {key: 'wins', name: 'W', fieldName: 'wins', minWidth: 30, maxWidth: 30}
                             , {key: 'losses', name: 'L', fieldName: 'losses', minWidth: 30, maxWidth: 30}
                             , {key: 'avg', name: 'AVG', fieldName: 'average', minWidth: 50, maxWidth: 50}
+                            , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
+                        ]}
+                    />
+
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <Text variant="large">Most Single Turn Brains</Text>
+                    <DetailsList
+                        compact={true}
+                        selectionMode={SelectionMode.none}
+                        items={calculateMostSingleTurnBrains(uniquePlayers, gameResults)}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        columns={[
+                            {key: 'brains', name: '#', fieldName: 'maxBrains', minWidth: 30, maxWidth: 30}
                             , {key: 'name', name: '', fieldName: 'name', minWidth: 90}
                         ]}
                     />
