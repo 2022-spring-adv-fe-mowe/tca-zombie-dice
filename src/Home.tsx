@@ -112,6 +112,32 @@ const calculateExpansionsPlayed = (r: GameResult[]) => {
     })).sort((a, b) => a.count > b.count ? -1 : 1);
 };
 
+const calculateGameTimes = (r: GameResult[]) => {
+
+    const groupedByNumberOfPlayers = r.reduce(
+        (acc, x) => acc.set(
+            x.players.length
+            , acc.has(x.players.length) ? [...acc.get(x.players.length) ?? [], x] : [x]
+        )
+        , new Map<number, GameResult[]>()
+    );
+
+    return [...groupedByNumberOfPlayers].map(x => { 
+        return ({
+            players: x[0]
+            , count: x[1].length
+            , averageMinutes: x[1]
+                .map(x => Date.parse(x.end) - Date.parse(x.start))
+                .reduce(
+                    (acc, x) => acc + x
+                    , 0
+                ) / x[1].length / 1000  / 60
+        })
+    }).map(x => ({
+        ...x 
+        , averageMinutes: x.averageMinutes.toFixed(2)
+    })).sort((a, b) => a.players < b.players ? -1 : 1);
+};
 
 export const Home: React.FC<HomeProps> = ({
     gameResults
@@ -357,6 +383,29 @@ export const Home: React.FC<HomeProps> = ({
                         columns={[
                             {key: 'expansions', name: 'Expansions', fieldName: 'expansions', minWidth: 90}
                             , {key: 'count', name: '#', fieldName: 'count', minWidth: 30, maxWidth: 30}
+                        ]}
+                    />
+
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <Text variant="large">Game Times</Text>
+                    <DetailsList
+                        compact={true}
+                        selectionMode={SelectionMode.none}
+                        items={calculateGameTimes(gameResults)}
+                        layoutMode={DetailsListLayoutMode.justified}
+                        columns={[
+                            {key: 'players', name: 'Players', fieldName: 'players', minWidth: 75, maxWidth: 75}
+                            , {key: 'count', name: 'Games', fieldName: 'count', minWidth: 75, maxWidth: 75}
+                            , {key: 'avgminutes', name: 'Minutes (avg)', fieldName: 'averageMinutes', minWidth: 90, maxWidth: 90}
                         ]}
                     />
 
