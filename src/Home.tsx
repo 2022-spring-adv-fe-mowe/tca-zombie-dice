@@ -157,11 +157,10 @@ export const Home: React.FC<HomeProps> = ({
     const [changingEmail, setChangingEmail] = useState(false);
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
-    const daysAgo = (Date.now() - lastGame)/ (1000 * 60 * 60 * 24);    
-    const lastPlayedDisplay = daysAgo < 0.5 
-        ? 'Today'
-        : isFinite(daysAgo) 
-            ? `${daysAgo.toFixed(0)}` 
+    const msAgo = Date.now() - lastGame;    
+    const lastPlayedDisplay = 
+        isFinite(msAgo) 
+            ? `${pms(msAgo, {secondsDecimalDigits: 0})} ago`
             : 'Never'
 
 
@@ -232,24 +231,11 @@ export const Home: React.FC<HomeProps> = ({
 
                     <Stack tokens={{ childrenGap: 10}}>
                         <Text variant="large">Last Played</Text>
-
-                        <Stack horizontal tokens={{ childrenGap: 10}} styles={{root: {justifyContent: "start", alignItems: "end"}}}>
-                            <Text
-                                variant="mega"
-                            >
-                                {lastPlayedDisplay}
-                            </Text>
-                            {
-                                lastPlayedDisplay !== 'Today' && lastPlayedDisplay !== 'Never' && 
-                                <Text
-                                    variant="xLarge"
-                                    styles={{root: { marginBottom: 13}}}
-                                >
-                                    days ago
-                                </Text>
-                            }
-
-                        </Stack>
+                        <Text
+                            variant="xxLarge"
+                        >
+                            {lastPlayedDisplay}
+                        </Text>
                     </Stack>
 
 
