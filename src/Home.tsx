@@ -269,11 +269,22 @@ export const Home: React.FC<HomeProps> = ({
                 >
                     <Stack tokens={{ childrenGap: 10}}>
                         <Text variant="large">Total Games Played</Text>
-                        <Text
-                            variant="mega"
+                        <Stack
+                            horizontal
                         >
-                            {gameResults.length}
-                        </Text>
+                            <Text
+                                variant="mega"
+                            >
+                                {gameResults.filter(x => x.players.length > 1).length}
+                            </Text>
+                            {gameResults.filter(x => x.players.length === 1).length > 0 &&
+                                <Text
+                                    variant="large"
+                                >
+                                    {`(${gameResults.filter(x => x.players.length === 1).length} solo)`}
+                                </Text>
+                            }
+                        </Stack>
                     </Stack>
                 </DocumentCard>
             </Stack.Item>
