@@ -271,6 +271,7 @@ export const Home: React.FC<HomeProps> = ({
                         <Text variant="large">Total Games Played</Text>
                         <Stack
                             horizontal
+                            tokens={{ }}
                         >
                             <Text
                                 variant="mega"
@@ -278,11 +279,19 @@ export const Home: React.FC<HomeProps> = ({
                                 {gameResults.filter(x => x.players.length > 1).length}
                             </Text>
                             {gameResults.filter(x => x.players.length === 1).length > 0 &&
-                                <Text
-                                    variant="large"
+                                <Stack.Item
+                                    align="end"
+                                    styles={{root: {
+                                        paddingLeft: 10
+                                        , paddingBottom: 13
+                                    }}}
                                 >
-                                    {`(${gameResults.filter(x => x.players.length === 1).length} solo)`}
-                                </Text>
+                                    <Text
+                                        variant="large"
+                                    >
+                                        {`competitive, and ${gameResults.filter(x => x.players.length === 1).length} solo`}
+                                    </Text>
+                                </Stack.Item>
                             }
                         </Stack>
                     </Stack>
