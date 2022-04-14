@@ -18,7 +18,7 @@ import { GameResult, buttonStyles, buttonTextStyles, cardStyles } from "./App";
 import { DetailsList, DetailsListLayoutMode, Selection, IColumn, SelectionMode } from '@fluentui/react/lib/DetailsList';
 import pms from 'pretty-ms';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextField } from '@fluentui/react/lib/TextField';
 
 interface HomeProps {
@@ -158,9 +158,16 @@ export const Home: React.FC<HomeProps> = ({
 
     const [changingEmail, setChangingEmail] = useState(false);
 
-    const [jsonGameResults, setJsonGameResults] = useState(() => JSON.stringify(gameResults, null, 4));
+    const [jsonGameResults, setJsonGameResults] = useState("");
 
     console.log(jsonGameResults);
+
+    useEffect(
+        () => {
+            setJsonGameResults(JSON.stringify(gameResults, null, 4));
+        }
+        , [gameResults]
+    );
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
     const msAgo = Date.now() - lastGame;    
@@ -523,7 +530,10 @@ export const Home: React.FC<HomeProps> = ({
                         onChange={(e: any) => setJsonGameResults(e.target.value)} 
                     />
                     <DefaultButton
-                        onClick={() => saveAtOwnRisk(jsonGameResults)}
+                        onClick={() => {
+                            setChangingEmail(false);
+                            saveAtOwnRisk(jsonGameResults);
+                        }}
                     >
                         Save at your own risk
                     </DefaultButton>
