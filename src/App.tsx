@@ -197,6 +197,11 @@ export const App: React.FunctionComponent = () => {
     loadGameResults();
   };
 
+  const saveAtOwnRisk = async (json: string) => {
+    await localforage.setItem<GameResult[]>("gameResults", JSON.parse(json));
+    loadGameResults();  
+  };
+
   initializeIcons();
 
   return (
@@ -212,6 +217,7 @@ export const App: React.FunctionComponent = () => {
               darkMode={darkThemeChosen}
               setDarkMode={setDarkMode}
               uniquePlayers={getUniquePlayers(results)} 
+              saveAtOwnRisk={saveAtOwnRisk}
             />} 
           />
           <Route path="setup" element={

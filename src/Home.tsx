@@ -26,6 +26,7 @@ interface HomeProps {
     darkMode: boolean;
     setDarkMode: any;
     uniquePlayers: string[];
+    saveAtOwnRisk: (json: string) => void
 };
 
 const stackItemStyles = { 
@@ -150,11 +151,16 @@ export const Home: React.FC<HomeProps> = ({
     , darkMode
     , setDarkMode
     , uniquePlayers
+    , saveAtOwnRisk
 }) => {
 
     const nav = useNavigate();
 
     const [changingEmail, setChangingEmail] = useState(false);
+
+    const [jsonGameResults, setJsonGameResults] = useState(() => JSON.stringify(gameResults, null, 4));
+
+    console.log(jsonGameResults);
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
     const msAgo = Date.now() - lastGame;    
@@ -486,7 +492,7 @@ export const Home: React.FC<HomeProps> = ({
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
                 isOpen={changingEmail}
-                headerText={"Enter Email"}
+                headerText={"Settings"}
             >
                 <Stack
                     tokens={{ childrenGap: 30 }}
@@ -509,6 +515,18 @@ export const Home: React.FC<HomeProps> = ({
                             Cancel
                         </DefaultButton>
                     </Stack>
+                    <TextField 
+                        label="Game Results JSON" 
+                        multiline 
+                        autoAdjustHeight
+                        value={jsonGameResults}
+                        onChange={(e: any) => setJsonGameResults(e.target.value)} 
+                    />
+                    <DefaultButton
+                        onClick={() => saveAtOwnRisk(jsonGameResults)}
+                    >
+                        Save at your own risk
+                    </DefaultButton>
                </Stack>
             </Panel>
         </Stack>
