@@ -27,6 +27,9 @@ interface HomeProps {
     setDarkMode: any;
     uniquePlayers: string[];
     saveAtOwnRisk: (json: string) => void
+    email: string;
+    saveNewEmail: (e: string) => void;
+    emailLoaded: boolean;
 };
 
 const stackItemStyles = { 
@@ -152,11 +155,24 @@ export const Home: React.FC<HomeProps> = ({
     , setDarkMode
     , uniquePlayers
     , saveAtOwnRisk
+    , email
+    , saveNewEmail
+    , emailLoaded
 }) => {
 
     const nav = useNavigate();
 
-    const [changingEmail, setChangingEmail] = useState(false);
+    const [changingEmail, setChangingEmail] = useState(email.length === 0);
+
+    const [editedEmail, setEditedEmail] = useState("");
+
+    const updateEmail = () => {
+        if (editedEmail.length === 0) {
+            return;
+        }
+        saveNewEmail(editedEmail);
+        setChangingEmail(false);
+    };
 
     const [jsonGameResults, setJsonGameResults] = useState("");
 
@@ -165,8 +181,9 @@ export const Home: React.FC<HomeProps> = ({
     useEffect(
         () => {
             setJsonGameResults(JSON.stringify(gameResults, null, 4));
+            setChangingEmail(email.length === 0);
         }
-        , [gameResults]
+        , [gameResults, email]
     );
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
@@ -369,7 +386,9 @@ export const Home: React.FC<HomeProps> = ({
                                     Change Email
                                 </Text>
                                 <Text variant='medium'>
-                                    tsteele@madisoncollege.edu
+                                    {
+                                        email.length === 0 ? "Not Set" : email
+                                    }
                                 </Text>
                             </Stack>
                         </DefaultButton>                
@@ -498,31 +517,34 @@ export const Home: React.FC<HomeProps> = ({
             <Panel
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
-                isOpen={changingEmail}
-                headerText={"Settings"}
+                isOpen={emailLoaded && changingEmail}
+                headerText={"Change Email"}
             >
                 <Stack
                     tokens={{ childrenGap: 30 }}
                     styles={{ root: { marginTop: 40 } }}
                 >
-                    <TextField>
+                    <TextField
+                        value={editedEmail}
+                        onChange={(e: any) => setEditedEmail(e.target.value)}
+                    >
                     </TextField>
                     <Stack 
                         horizontal
                         tokens={{childrenGap: 10}}
                     >
                         <DefaultButton
-                            onClick={() => setChangingEmail(false)}
+                            onClick={updateEmail}
                         >
                             Save
                         </DefaultButton>
-                        <DefaultButton
+                        {/* <DefaultButton
                             onClick={() => setChangingEmail(false)}
                         >
                             Cancel
-                        </DefaultButton>
+                        </DefaultButton> */}
                     </Stack>
-                    <TextField 
+                    {/* <TextField 
                         label="Game Results JSON" 
                         multiline 
                         autoAdjustHeight
@@ -536,7 +558,7 @@ export const Home: React.FC<HomeProps> = ({
                         }}
                     >
                         Save at your own risk
-                    </DefaultButton>
+                    </DefaultButton> */}
                </Stack>
             </Panel>
         </Stack>

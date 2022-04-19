@@ -139,6 +139,8 @@ const darkTheme = createTheme({
 export const App: React.FunctionComponent = () => {
 
   const [darkThemeChosen, setDarkThemeChosen] = useState(() => false);
+  const [email, setEmail] = useState("");
+  const [emailLoaded, setEmailLoaded] = useState(false);
 
   const loadDarkMode = async () => {
     try {
@@ -153,6 +155,20 @@ export const App: React.FunctionComponent = () => {
     }    
   };
 
+  const loadEmail = async () => {
+    try {
+      const e = await localforage.getItem<string>('email');
+      setEmail(e ?? "");
+      setEmailLoaded(true);
+
+    } catch (err) {
+        // This code runs if there were any errors.
+        console.error(err);
+        setEmail("");
+        setEmailLoaded(false);
+      }    
+  };
+  
   const loadGameResults = async () => {
     try {
       const gr = await localforage.getItem<GameResult[]>('gameResults');
@@ -179,8 +195,9 @@ export const App: React.FunctionComponent = () => {
     () => {
       loadDarkMode();
       loadGameResults();
+      loadEmail();
     }
-    , []
+    , [email]
   );
 
   const setDarkMode = async (dark: boolean) => {
@@ -214,6 +231,11 @@ export const App: React.FunctionComponent = () => {
 
   initializeIcons();
 
+  const saveNewEmail = async (e: string) => {
+    setEmail(e);
+    await localforage.setItem<string>('email', e);
+  };
+
   return (
     <ThemeProvider
       applyTo="body"
@@ -228,6 +250,9 @@ export const App: React.FunctionComponent = () => {
               setDarkMode={setDarkMode}
               uniquePlayers={getUniquePlayers(results)} 
               saveAtOwnRisk={saveAtOwnRisk}
+              email={email}
+              saveNewEmail={saveNewEmail}
+              emailLoaded={emailLoaded}
             />} 
           />
           <Route path="setup" element={
