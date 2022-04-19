@@ -224,7 +224,15 @@ export const App: React.FunctionComponent = () => {
       , gr
     ];
 
-    await localforage.setItem<GameResult[]>("gameResults", newResults);
+    // await localforage.setItem<GameResult[]>("gameResults", newResults);
+
+    await saveGameToCloud(
+      email
+      , "tca-zombie-dice"
+      , gr.end
+      , gr
+    );
+
     loadGameResults();
   };
 
