@@ -66,8 +66,8 @@ const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
       const soloGamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length === 1 && y.winner === x);
       const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length > 1 && y.winner === x);
   
-      const soloMinTurns = Math.min(...soloGamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns.length)));
-      const competitiveMinTurns = Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns.length)));
+      const soloMinTurns = Math.min(...soloGamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns?.length)));
+      const competitiveMinTurns = Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns?.length)));
 
       return {
         name: `${x}${soloMinTurns < competitiveMinTurns ? ' (solo)' : ''}`
@@ -108,7 +108,7 @@ const calculateExpansionsPlayed = (r: GameResult[]) => {
     const groupedByCombinedExpansionString = r.reduce(
         (acc, x) => acc.set(
             x.expansions.join(", ")
-            , acc.has(x.expansions.join(", ")) ? [...acc.get(x.expansions.join(", ")) ?? [], x] : [x]
+            , acc.has(x.expansions?.join(", ")) ? [...acc.get(x.expansions.join(", ")) ?? [], x] : [x]
         )
         , new Map<string, GameResult[]>()
     );
