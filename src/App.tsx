@@ -10,6 +10,7 @@ import { initializeIcons } from '@fluentui/react';
 import { PlayGame } from './PlayGame';
 import { DefaultPalette, createTheme } from '@fluentui/theme';
 import localforage from 'localforage';
+import { saveGameToCloud, loadGamesFromCloud } from './TcaCloudApi';
 
 export const buttonStyles = {
   root: {
@@ -156,6 +157,15 @@ export const App: React.FunctionComponent = () => {
     try {
       const gr = await localforage.getItem<GameResult[]>('gameResults');
       console.log(gr);
+
+      // Run once to get existing 4 games to cloud...
+      // gr?.forEach(async x => await saveGameToCloud(
+      //   "tsteele@madisoncollege.edu"
+      //   , "tca-zombie-dice"
+      //   , x.end
+      //   , x
+      // ));
+
       setResults(gr ?? []);
 
     } catch (err) {

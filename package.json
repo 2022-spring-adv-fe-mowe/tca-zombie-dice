@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://2022-spring-adv-fe-mowe.github.io/tca-zombie-dice",
   "dependencies": {
+    "@aws-sdk/util-dynamodb": "^3.72.0",
     "@fluentui/react": "^8.55.3",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
