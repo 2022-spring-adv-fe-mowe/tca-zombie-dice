@@ -171,7 +171,11 @@ export const App: React.FunctionComponent = () => {
   
   const loadGameResults = async () => {
     try {
-      const gr = await localforage.getItem<GameResult[]>('gameResults');
+      // const gr = await localforage.getItem<GameResult[]>('gameResults');
+      const gr = await loadGamesFromCloud(
+        email 
+        , "tca-zombie-dice"
+      );
       console.log(gr);
 
       // Run once to get existing 4 games to cloud...
