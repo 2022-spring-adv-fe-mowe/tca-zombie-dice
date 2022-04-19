@@ -182,6 +182,7 @@ export const Home: React.FC<HomeProps> = ({
         () => {
             setJsonGameResults(JSON.stringify(gameResults, null, 4));
             setChangingEmail(email.length === 0);
+            setEditedEmail(email);
         }
         , [gameResults, email]
     );
@@ -538,11 +539,11 @@ export const Home: React.FC<HomeProps> = ({
                         >
                             Save
                         </DefaultButton>
-                        {/* <DefaultButton
+                        <DefaultButton
                             onClick={() => setChangingEmail(false)}
                         >
                             Cancel
-                        </DefaultButton> */}
+                        </DefaultButton>
                     </Stack>
                     {/* <TextField 
                         label="Game Results JSON" 
