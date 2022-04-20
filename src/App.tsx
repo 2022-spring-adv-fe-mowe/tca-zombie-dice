@@ -141,6 +141,7 @@ export const App: React.FunctionComponent = () => {
   const [darkThemeChosen, setDarkThemeChosen] = useState(() => false);
   const [email, setEmail] = useState("");
   const [emailLoaded, setEmailLoaded] = useState(false);
+  const [gamesLoaded, setGamesLoaded] = useState(false);
 
   const loadDarkMode = async () => {
     try {
@@ -187,6 +188,7 @@ export const App: React.FunctionComponent = () => {
       // ));
 
       setResults(gr ?? []);
+      setGamesLoaded(true);
 
     } catch (err) {
         // This code runs if there were any errors.
@@ -265,6 +267,7 @@ export const App: React.FunctionComponent = () => {
               email={email}
               saveNewEmail={saveNewEmail}
               emailLoaded={emailLoaded}
+              gamesLoaded={gamesLoaded}
             />} 
           />
           <Route path="setup" element={

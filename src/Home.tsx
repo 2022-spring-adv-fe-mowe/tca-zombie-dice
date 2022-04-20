@@ -30,6 +30,7 @@ interface HomeProps {
     email: string;
     saveNewEmail: (e: string) => void;
     emailLoaded: boolean;
+    gamesLoaded: boolean;
 };
 
 const stackItemStyles = { 
@@ -203,6 +204,7 @@ export const Home: React.FC<HomeProps> = ({
     , email
     , saveNewEmail
     , emailLoaded
+    , gamesLoaded
 }) => {
 
     const nav = useNavigate();
@@ -256,6 +258,37 @@ export const Home: React.FC<HomeProps> = ({
     const gameTimeData = calculateGameTimes(gameResults);
 
     return (
+
+        !gamesLoaded && !emailLoaded ? 
+        <Stack
+            tokens={{
+                padding: 10
+                , childrenGap: 10
+            }}
+        >
+        
+        <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+
+                    <Stack tokens={{ childrenGap: 10}}>
+                        <Text
+                            variant="xLarge"
+                        >
+                            Loading...
+                        </Text>
+                    </Stack>
+
+
+                </DocumentCard>
+            </Stack.Item>
+
+        </Stack>
+        :
 
         <Stack
             tokens={{
