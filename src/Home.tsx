@@ -63,20 +63,43 @@ const calculateLeaderBoard = (p: string[], r: GameResult[]) => {
 
 const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
 
-    const data = p.map(x => {
-  
-      const gamesThisPlayerHasPlayed = r.filter(y => y.players.some(z => z.name === x));
-      const soloGamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length === 1 && y.winner === x);
-      const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length > 1 && y.winner === x);
-  
-      const soloMinTurns = Math.min(...soloGamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns?.length)));
-      const competitiveMinTurns = Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns?.length)));
+    const data = p
+        .reduce(
+            (acc: {name: string, fewestTurns: number}[], x) => {
 
-      return {
-        name: `${x}${soloMinTurns < competitiveMinTurns ? ' (solo)' : ''}`
-        , fewestTurns: Math.min(soloMinTurns, competitiveMinTurns)
-      };
-    });
+                const gamesThisPlayerHasPlayed = r.filter(y => y.players.some(z => z.name === x));
+                const soloGamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length === 1 && y.winner === x);
+                const gamesThisPlayerHasWon = gamesThisPlayerHasPlayed.filter(y => y.players.length > 1 && y.winner === x);
+            
+                const soloMinTurns = Math.min(...soloGamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns?.length)));
+                const competitiveMinTurns: number = Math.min(...gamesThisPlayerHasWon.flatMap(y => y.players.map(z => z.turns?.length)));
+    
+                return [
+                    ...acc
+                    , ...(
+                        competitiveMinTurns > 0 
+                            ? [
+                                {
+                                    name: x
+                                    , fewestTurns: competitiveMinTurns
+                                }
+                            ]
+                            : []
+                    )
+                    , ...(
+                        soloGamesThisPlayerHasWon.length > 0 
+                            ? [
+                                {
+                                    name: `${x} (solo)`
+                                    , fewestTurns: soloMinTurns
+                                }
+                            ]
+                            : []
+                    )
+                ];
+            }
+            , []
+        );
   
     return data
         .sort((a, b) => a.fewestTurns > b.fewestTurns ? 1 : -1)
@@ -404,7 +427,7 @@ export const Home: React.FC<HomeProps> = ({
                 <DocumentCard
                     styles={cardStyles}
                 >
-                    <Text variant="large">Most Single Turn Brains</Text>
+                    <Text variant="large">Most Brains (Single Turn)</Text>
                     {
                         mostSingleTurnBrainsData.length === 0 ?
                         <p>
