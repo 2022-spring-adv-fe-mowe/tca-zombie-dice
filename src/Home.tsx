@@ -584,11 +584,11 @@ export const Home: React.FC<HomeProps> = ({
                         >
                             Save
                         </DefaultButton>
-                        <DefaultButton
+                        {email.length > 0 && <DefaultButton
                             onClick={() => setChangingEmail(false)}
                         >
                             Cancel
-                        </DefaultButton>
+                        </DefaultButton>}
                     </Stack>
                     {/* <TextField 
                         label="Game Results JSON" 
