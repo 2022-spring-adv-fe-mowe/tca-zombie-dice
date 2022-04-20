@@ -112,19 +112,41 @@ const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
 
 const calculateMostSingleTurnBrains = (p: string[], r: GameResult[]) => {
 
-    const data = p.map(x => {
-  
-      const soloGamesThisPlayerHasPlayed = r.filter(y => y.players.length === 1 && y.players.some(z => z.name === x));
-      const competitiveGamesThisPlayerHasPlayed = r.filter(y => y.players.length > 1 && y.players.some(z => z.name === x));
-  
-      const soloMax = Math.max(...soloGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
-      const competitiveMax = Math.max(...competitiveGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
-
-      return {
-        name: `${x}${soloMax > competitiveMax ? ' (solo)' : ''}`
-        , maxBrains: Math.max(soloMax, competitiveMax)
-      };
-    });
+    const data = p.reduce(
+        (acc: {name: string, maxBrains: number}[], x) => {
+        
+            const soloGamesThisPlayerHasPlayed = r.filter(y => y.players.length === 1 && y.players.some(z => z.name === x));
+            const competitiveGamesThisPlayerHasPlayed = r.filter(y => y.players.length > 1 && y.players.some(z => z.name === x));
+        
+            const soloMax = Math.max(...soloGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
+            const competitiveMax = Math.max(...competitiveGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
+            
+            return [
+                ...acc
+                , ...(
+                    competitiveMax > 0 
+                        ? [
+                            {
+                                name: x
+                                , maxBrains: competitiveMax
+                            }
+                        ]
+                        : []
+                )
+                , ...(
+                    soloGamesThisPlayerHasPlayed.length > 0 
+                        ? [
+                            {
+                                name: `${x} (solo)`
+                                , maxBrains: soloMax
+                            }
+                        ]
+                        : []
+                )
+            ];
+        }
+        , []
+    );
   
     return data.sort((a, b) => a.maxBrains < b.maxBrains ? 1 : -1);
 };
