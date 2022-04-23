@@ -216,7 +216,7 @@ export const App: React.FunctionComponent = () => {
     () => {
       init();
     }
-    , []
+    , [email]
   );
 
   const setDarkMode = async (dark: boolean) => {
