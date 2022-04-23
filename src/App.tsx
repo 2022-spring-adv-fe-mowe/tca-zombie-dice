@@ -142,42 +142,50 @@ export const App: React.FunctionComponent = () => {
   const [email, setEmail] = useState("");
   const [emailLoaded, setEmailLoaded] = useState(false);
   const [gamesLoaded, setGamesLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const loadDarkMode = async () => {
     try {
+      setLoading(true);
       const darkMode = await localforage.getItem<boolean>('darkMode');
       console.log(darkMode);
       setDarkThemeChosen(darkMode ?? false);
-
+      setLoading(false);
     } catch (err) {
         // This code runs if there were any errors.
         console.error(err);
         setDarkThemeChosen(false);
+        setLoading(false);
     }    
   };
 
   const loadEmail = async () => {
     try {
+      setLoading(true);
       const e = await localforage.getItem<string>('email');
       setEmail(e ?? "");
       setEmailLoaded(true);
-
+      setLoading(false);
+      return e;
     } catch (err) {
         // This code runs if there were any errors.
         console.error(err);
         setEmail("");
         setEmailLoaded(false);
+        setLoading(false);
       }    
   };
   
-  const loadGameResults = async () => {
+  const loadGameResults = async (e: string) => {
     try {
+
+      setLoading(true);
       // const gr = await localforage.getItem<GameResult[]>('gameResults');
       const gr = await loadGamesFromCloud(
-        email 
+        e 
         , "tca-zombie-dice"
       );
-      console.log(gr);
+      console.log("games loaded", gr);
 
       // Run once to get existing 4 games to cloud...
       // gr?.forEach(async x => await saveGameToCloud(
@@ -189,21 +197,26 @@ export const App: React.FunctionComponent = () => {
 
       setResults(gr ?? []);
       setGamesLoaded(true);
-
+      setLoading(false);
     } catch (err) {
         // This code runs if there were any errors.
         console.error(err);
         setResults([]);
+        setLoading(false);
     }    
+  };
+
+  const init = async () => {
+    await loadDarkMode();
+    const e = await loadEmail();
+    await loadGameResults(e ?? "");
   };
 
   useEffect(
     () => {
-      loadDarkMode();
-      loadGameResults();
-      loadEmail();
+      init();
     }
-    , [email]
+    , []
   );
 
   const setDarkMode = async (dark: boolean) => {
@@ -235,12 +248,12 @@ export const App: React.FunctionComponent = () => {
       , gr
     );
 
-    loadGameResults();
+    loadGameResults(email);
   };
 
   const saveAtOwnRisk = async (json: string) => {
     await localforage.setItem<GameResult[]>("gameResults", JSON.parse(json));
-    loadGameResults();  
+    loadGameResults(email);  
   };
 
   initializeIcons();
@@ -268,6 +281,7 @@ export const App: React.FunctionComponent = () => {
               saveNewEmail={saveNewEmail}
               emailLoaded={emailLoaded}
               gamesLoaded={gamesLoaded}
+              loading={loading}
             />} 
           />
           <Route path="setup" element={

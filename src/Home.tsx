@@ -31,6 +31,7 @@ interface HomeProps {
     saveNewEmail: (e: string) => void;
     emailLoaded: boolean;
     gamesLoaded: boolean;
+    loading: boolean;
 };
 
 const stackItemStyles = { 
@@ -205,6 +206,7 @@ export const Home: React.FC<HomeProps> = ({
     , saveNewEmail
     , emailLoaded
     , gamesLoaded
+    , loading
 }) => {
 
     const nav = useNavigate();
@@ -227,11 +229,11 @@ export const Home: React.FC<HomeProps> = ({
 
     useEffect(
         () => {
-            setJsonGameResults(JSON.stringify(gameResults, null, 4));
+            // setJsonGameResults(JSON.stringify(gameResults, null, 4));
             setChangingEmail(email.length === 0);
             setEditedEmail(email);
         }
-        , [gameResults, email]
+        , [email]
     );
 
     const lastGame = Math.max(...gameResults.map(x => Date.parse((x as any).end)));
@@ -259,14 +261,13 @@ export const Home: React.FC<HomeProps> = ({
 
     return (
 
-        !gamesLoaded && !emailLoaded ? 
+        loading ? 
         <Stack
             tokens={{
                 padding: 10
                 , childrenGap: 10
             }}
         >
-        
         <Stack.Item
                 align='stretch'
                 styles={stackItemStyles}
@@ -286,10 +287,8 @@ export const Home: React.FC<HomeProps> = ({
 
                 </DocumentCard>
             </Stack.Item>
-
         </Stack>
         :
-
         <Stack
             tokens={{
                 padding: 10
