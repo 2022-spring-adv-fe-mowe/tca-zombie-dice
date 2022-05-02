@@ -71,6 +71,13 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
             // And clear out lastPlayerResult... Can only undo last one ! ! !
             setLastPlayerResult(undefined);
+
+            // And if still choosing players, undo the last player choice...
+            //
+            // i-o-g
+            if (playersInOrder.length < currentGame.players.length) {
+                setPlayersInOrder(playersInOrder.filter((x, i) => i != playersInOrder.length - 1));
+            } 
         }
     };
 
