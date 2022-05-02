@@ -299,34 +299,37 @@ export const Home: React.FC<HomeProps> = ({
                 align='stretch'
                 styles={stackItemStyles}
             >
-                <PrimaryButton
-                    // onMenuClick={(e) => console.log(e)}
-                    // split
-                    // menuProps={{ items: [
-                    //     {
-                    //         key: "theme"
-                    //         , text: darkMode ? "Light Mode" : "Dark Mode"
-                    //         , onClick: () => setDarkMode(!darkMode)
-                    //     }
-                    // ]}}
-                    onClick={() => nav("/setup")}
-                    styles={buttonStyles}
+                <DocumentCard
+                    styles={cardStyles}
                 >
                     <Stack>
-                        <Text
-                            variant='xxLarge'
-                            styles={buttonTextStyles}
+                        <Stack
+                            style={{marginBottom: 20}}
                         >
-                            Play Zombie Dice
-                        </Text>
-                        <Text 
-                            variant="medium"
-                            styles={buttonTextStyles}
+                            <Text
+                                variant='xxLarge'
+                            >
+                                Play Zombie Dice
+                            </Text>
+                            <Text 
+                                variant="large"
+                            >
+                                And track your stats...
+                            </Text>
+                        </Stack>
+                        <PrimaryButton
+                            onClick={() => nav("/setup")}
+                            styles={buttonStyles}
                         >
-                            And track your stats...
-                        </Text>
+                            <Text
+                                variant='xLarge'
+                                styles={buttonTextStyles}
+                            >
+                                Start a Game
+                            </Text>
+                        </PrimaryButton>
                     </Stack>
-                </PrimaryButton>
+                </DocumentCard>
             </Stack.Item>
 
             <Stack.Item
