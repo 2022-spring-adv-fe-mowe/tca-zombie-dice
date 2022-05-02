@@ -60,7 +60,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
             // Subtact the undo score from player current score.
             lastPlayerResult.player.currentBrainTotal -= lastPlayerResult.points;
-            
+
             // Remove an item from the player turns array.
             lastPlayerResult.player.turns = lastPlayerResult.player.turns.filter((x, i) => i !== lastPlayerResult.player.turns.length - 1);
 
@@ -68,6 +68,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
             // to what is store in lastPlayerResult state.
             setCurrentTurnPoints(lastPlayerResult.points);
             setActivePlayer(lastPlayerResult.player);
+
+            // And clear out lastPlayerResult... Can only undo last one ! ! !
+            setLastPlayerResult(undefined);
         }
     };
 
