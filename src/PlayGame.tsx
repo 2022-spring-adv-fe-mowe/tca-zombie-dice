@@ -53,6 +53,24 @@ export const PlayGame: React.FC<PlayGameProps> = ({
     const [winner, setWinner] = useState("");
     const [activePlayers, setActivePlayers] = useState<PlayerInGame[]>([]);
 
+    const [lastPlayerResult, setLastPlayerResult] = useState<{points: number, player: PlayerInGame} | undefined>(undefined);
+
+    const undoLastTurn = () => {
+        if (lastPlayerResult) {
+
+            // Subtact the undo score from player current score.
+            lastPlayerResult.player.currentBrainTotal -= lastPlayerResult.points;
+            
+            // Remove an item from the player turns array.
+            lastPlayerResult.player.turns = lastPlayerResult.player.turns.filter((x, i) => i !== lastPlayerResult.player.turns.length - 1);
+
+            // Set the current player and current turn points
+            // to what is store in lastPlayerResult state.
+            setCurrentTurnPoints(lastPlayerResult.points);
+            setActivePlayer(lastPlayerResult.player);
+        }
+    };
+
     const showChoosePlayerPanel =
         !activePlayer
         && playersInOrder.length < currentGame.players.length
@@ -97,6 +115,11 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         if (!died) {
             player.currentBrainTotal += currentTurnPoints;
         }        
+
+        setLastPlayerResult({
+            points: died ? 0 : currentTurnPoints
+            , player: player
+        });
 
         // Trigger choose player number if not all chosen.
         if (playersInOrder.length < currentGame.players.length) {
@@ -614,7 +637,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                         }
                     </Stack>
                 ))}
-
+                {
+                    currentTurnPoints === 0 && lastPlayerResult &&
+                    <Text
+                        variant='large'
+                    >
+                        Mistake? <Link onClick={undoLastTurn}>Undo last turn result</Link>
+                    </Text>
+                }
                 <Text
                     variant='large'
                 >
