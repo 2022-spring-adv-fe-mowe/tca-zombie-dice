@@ -259,6 +259,19 @@ export const Home: React.FC<HomeProps> = ({
     const expansionsData = calculateExpansionsPlayed(gameResults);
     const gameTimeData = calculateGameTimes(gameResults);
 
+    const competitiveGames = gameResults.filter(x => x.players.length > 1);
+    const winnerHadHighestSingleTurn = competitiveGames.filter(x => {
+
+        const highestTurn = Math.max(...x.players.flatMap(y => y.turns));
+        const bestSingleTurnPlayers = x.players
+            .filter(y => y.turns.some(z => z === highestTurn))
+            .map(y => y.name)
+
+        return bestSingleTurnPlayers.some(y => y == x.winner);
+
+    }).length;
+    const tortoiseHarePercent = (winnerHadHighestSingleTurn / competitiveGames.length * 100).toFixed(0) + '%';
+
     return (
 
         loading ? 
@@ -387,7 +400,7 @@ export const Home: React.FC<HomeProps> = ({
                             <Text
                                 variant="mega"
                             >
-                                {gameResults.filter(x => x.players.length > 1).length}
+                                {competitiveGames.length}
                             </Text>
                             {gameResults.filter(x => x.players.length === 1).length > 0 &&
                                 <Stack.Item
@@ -592,6 +605,33 @@ export const Home: React.FC<HomeProps> = ({
                             ]}
                         />
                         }
+                </DocumentCard>
+            </Stack.Item>
+
+            <Stack.Item
+                align='stretch'
+                styles={stackItemStyles}
+            >
+                <DocumentCard
+                    styles={cardStyles}
+                >
+                    <Text variant="large">
+                        Tortoise or Hare?
+                    </Text>
+
+                    <Stack
+                        horizontal
+                        tokens={{ childrenGap: 30 }}
+                        styles={{ root: { marginTop: 20 } }}
+                    >
+                        <Text variant="mega">
+                            {tortoiseHarePercent}
+                        </Text>
+                        <Text variant="large">
+                            of games are won by the player with highest single turn
+                        </Text>
+                    </Stack>
+                    
                 </DocumentCard>
             </Stack.Item>
 
