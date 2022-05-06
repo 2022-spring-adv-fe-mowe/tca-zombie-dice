@@ -120,8 +120,12 @@ const calculateMostSingleTurnBrains = (p: string[], r: GameResult[]) => {
             const soloGamesThisPlayerHasPlayed = r.filter(y => y.players.length === 1 && y.players.some(z => z.name === x));
             const competitiveGamesThisPlayerHasPlayed = r.filter(y => y.players.length > 1 && y.players.some(z => z.name === x));
         
-            const soloMax = Math.max(...soloGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
-            const competitiveMax = Math.max(...competitiveGamesThisPlayerHasPlayed.flatMap(y => y.players.flatMap(z => z.turns)));
+            const soloMax = Math.max(...soloGamesThisPlayerHasPlayed
+                .flatMap(y => y.players.filter(aa => aa.name === x).flatMap(z => z.turns))
+            );
+            const competitiveMax = Math.max(...competitiveGamesThisPlayerHasPlayed
+                .flatMap(y => y.players.filter(aa => aa.name === x).flatMap(z => z.turns))
+            );
             
             return [
                 ...acc
