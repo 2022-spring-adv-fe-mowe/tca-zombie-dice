@@ -216,6 +216,20 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         nav(-2);
     };
 
+    const highestTurn = Math.max(...playersInOrder.flatMap(x => x.turns));
+    const bestSingleTurnPlayers = playersInOrder
+        .filter(x => x.turns.some(y => y === highestTurn))
+        .map(x => x.name)
+    ;
+    const bestSingleTurn = `${bestSingleTurnPlayers.join(", ")} (${highestTurn} brains)`;
+
+    const playerZeroTurns = playersInOrder.map(x => ({
+        name: x.name
+        , zeroTurnCount: x.turns.filter(y => y === 0).length
+    }));
+    const mostZeroTurnsCount = Math.max(...playerZeroTurns.map(x => x.zeroTurnCount));
+    const mostZeroTurns = `${playerZeroTurns.filter(x => x.zeroTurnCount === mostZeroTurnsCount).map(x => x.name).join(', ')} (${mostZeroTurnsCount} turns)`;
+
     return (
         <Stack style={{ padding: 30 }}>
             <Panel
@@ -271,6 +285,33 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                     >
                         However, your stats &amp; fun facts will likely be messed up a bit : - (
                     </Text>             */}
+                    <Text
+                        variant='xLarge'
+                    >
+                        Game Facts
+                    </Text>        
+                    <Text
+                        variant='large'
+                        styles={{ root: { marginBottom: -25 } }}
+                    >
+                        Most Zero Turns:
+                    </Text>        
+                    <Text
+                        variant='large'
+                    >
+                        {mostZeroTurns}
+                    </Text>        
+                    <Text
+                        variant='large'
+                        styles={{ root: { marginBottom: -25 } }}
+                    >
+                        Best Single Turn:
+                    </Text>        
+                    <Text
+                        variant='large'
+                    >
+                        {bestSingleTurn}
+                    </Text>        
                 </Stack>
             </Panel>
             <Panel
