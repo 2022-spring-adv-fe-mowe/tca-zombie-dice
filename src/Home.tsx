@@ -417,7 +417,7 @@ export const Home: React.FC<HomeProps> = ({
                                     <Text
                                         variant="large"
                                     >
-                                        {`competitive, and ${gameResults.filter(x => x.players.length === 1).length} solo`}
+                                        {`competitive (${gameResults.filter(x => x.players.length === 1).length} solo`})
                                     </Text>
                                 </Stack.Item>
                             }
@@ -628,12 +628,20 @@ export const Home: React.FC<HomeProps> = ({
                         tokens={{ childrenGap: 30 }}
                         styles={{ root: { marginTop: 20 } }}
                     >
-                        <Text variant="mega">
-                            {tortoiseHarePercent}
-                        </Text>
-                        <Text variant="large">
-                            of games are won by the player with highest single turn
-                        </Text>
+                        <Stack.Item
+                            align='center'
+                        >
+                            <Text variant="mega">
+                                {tortoiseHarePercent}
+                            </Text>
+                        </Stack.Item>
+                        <Stack.Item
+                            align='center'
+                        >
+                            <Text variant="large">
+                                of games won by player with highest single turn
+                            </Text>
+                        </Stack.Item>
                     </Stack>
                     
                 </DocumentCard>
