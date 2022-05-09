@@ -37,7 +37,9 @@ interface HomeProps {
 const stackItemStyles = { 
     root: { 
         display: 'flex'
-        , justifyContent: 'center' 
+        , justifyContent: 'center'
+        // , maxWidth: 1024
+        // , width: 350 
     }
 };
 
@@ -307,6 +309,8 @@ export const Home: React.FC<HomeProps> = ({
         </Stack>
         :
         <Stack
+            horizontal
+            wrap
             tokens={{
                 padding: 10
                 , childrenGap: 10
