@@ -388,14 +388,14 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                     tokens={{ childrenGap: 15 }}
                                 >
                                     <Text
-                                        variant='xLargePlus'
+                                        variant='xxLarge'
                                     >
                                         {x.currentBrainTotal}
                                         {
                                             activePlayer === x && (
                                                 <Text
-                                                    variant="xLarge"
-                                                    styles={{ root: { color: DefaultPalette.redDark } }}
+                                                    variant="xxLarge"
+                                                    styles={{ root: { color: DefaultPalette.greenDark } }}
                                                 >
                                                     {` + ${currentTurnPoints} = ${x.currentBrainTotal + currentTurnPoints}`}
                                                 </Text>
@@ -640,18 +640,18 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                         tokens={{
                                             childrenGap: 3
                                         }}
-                                        styles={{ root: { paddingTop: 20 } }}
+                                        styles={{ root: { paddingTop: 20, justifyContent: "space-between" } }}
                                     >
                                         <PrimaryButton
                                             styles={{
                                                 root: {
-                                                    padding: 10
+                                                    padding: 25
                                                 }
                                             }}
                                             onClick={() => endPlayerTurn(x, true)}
                                         >
                                             <Text
-                                                variant='xLarge'
+                                                variant='xxLarge'
                                                 styles={{
                                                     root: {
                                                         color: DefaultPalette.white
@@ -665,13 +665,15 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                             <PrimaryButton
                                                 styles={{
                                                     root: {
-                                                        padding: 10
+                                                        padding: 25
+                                                        , backgroundColor: DefaultPalette.greenDark
+                                                        , borderColor: DefaultPalette.greenDark
                                                     }
                                                 }}
                                                 onClick={() => endPlayerTurn(x, false)}
                                             >
                                                 <Text
-                                                    variant='xLarge'
+                                                    variant='xxLarge'
                                                     styles={{
                                                         root: {
                                                             color: DefaultPalette.white
