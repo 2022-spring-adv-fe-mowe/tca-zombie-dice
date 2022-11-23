@@ -680,7 +680,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                         }
                                                     }}
                                                 >
-                                                    Score
+                                                    Score {currentTurnPoints}
                                                 </Text>
                                             </PrimaryButton>
                                         )}
