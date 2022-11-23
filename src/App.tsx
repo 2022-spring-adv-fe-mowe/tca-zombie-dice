@@ -195,7 +195,11 @@ export const App: React.FunctionComponent = () => {
       //   , x
       // ));
 
-      setResults(gr ?? []);
+      // Filter down to only games with family members ? ? ?
+      const sampleFamily = ["Tom1", "Stephanie", "Jack", "Chris"]; 
+      const familyOnlyGameResults = gr?.filter((x: any) => x.players.some((y: any) => sampleFamily.includes(y.name)));
+
+      setResults(familyOnlyGameResults ?? []);
       setGamesLoaded(true);
       setLoading(false);
     } catch (err) {

@@ -474,14 +474,22 @@ export const Home: React.FC<HomeProps> = ({
                             <Text variant='large'>
                                 Try {darkMode ? "Light" : "Dark"} Mode
                             </Text>
-                        </DefaultButton>                
+                        </DefaultButton>
+                        <DefaultButton
+                            styles={buttonStyles}
+                            onClick={() => {}}
+                        >
+                            <Text variant='large'>
+                                Family Only: Off
+                            </Text>
+                        </DefaultButton>                                        
                         <DefaultButton
                             styles={buttonStyles}
                             onClick={() => setChangingEmail(true)}
                         >
                             <Stack>
                                 <Text variant='large'>
-                                    Change Email
+                                    Change Email &amp; Family
                                 </Text>
                                 <Text variant='medium'>
                                     {
@@ -651,7 +659,7 @@ export const Home: React.FC<HomeProps> = ({
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
                 isOpen={emailLoaded && changingEmail}
-                headerText={"Change Email"}
+                headerText={"Change Email & Family"}
             >
                 <Stack
                     tokens={{ childrenGap: 30 }}
