@@ -32,6 +32,8 @@ interface HomeProps {
     emailLoaded: boolean;
     gamesLoaded: boolean;
     loading: boolean;
+    familyOnly: boolean;
+    setFamilyOnly: any;
 };
 
 const stackItemStyles = { 
@@ -211,6 +213,8 @@ export const Home: React.FC<HomeProps> = ({
     , emailLoaded
     , gamesLoaded
     , loading
+    , familyOnly
+    , setFamilyOnly
 }) => {
 
     const nav = useNavigate();
@@ -477,10 +481,10 @@ export const Home: React.FC<HomeProps> = ({
                         </DefaultButton>
                         <DefaultButton
                             styles={buttonStyles}
-                            onClick={() => {}}
+                            onClick={() => setFamilyOnly(!familyOnly)}
                         >
                             <Text variant='large'>
-                                Family Only: Off
+                                Family Only: {familyOnly ? "On" : "Off"}
                             </Text>
                         </DefaultButton>                                        
                         <DefaultButton

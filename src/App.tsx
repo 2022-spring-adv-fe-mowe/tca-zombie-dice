@@ -139,6 +139,7 @@ const darkTheme = createTheme({
 export const App: React.FunctionComponent = () => {
 
   const [darkThemeChosen, setDarkThemeChosen] = useState(() => false);
+  const [familyOnlyChosen, setFamilyOnlyChosen] = useState(() => false);
   const [email, setEmail] = useState("");
   const [emailLoaded, setEmailLoaded] = useState(false);
   const [gamesLoaded, setGamesLoaded] = useState(false);
@@ -159,6 +160,27 @@ export const App: React.FunctionComponent = () => {
     }    
   };
 
+  const setDarkMode = async (dark: boolean) => {
+    const d = await localforage.setItem<boolean>("darkMode", dark);
+    loadDarkMode();
+  };
+
+  const loadFamilyOnly = async () => {
+    try {
+      setLoading(true);
+      const familyOnly = await localforage.getItem<boolean>('familyOnly');
+      setFamilyOnlyChosen(familyOnly ?? false);
+      setLoading(false);
+    } catch (err) {
+        setLoading(false);
+    }    
+  };
+
+  const setFamilyOnly = async (familyOnly: boolean) => {
+    const fo = await localforage.setItem<boolean>("familyOnly", familyOnly);
+    loadFamilyOnly();
+  };
+  
   const loadEmail = async () => {
     try {
       setLoading(true);
@@ -196,10 +218,11 @@ export const App: React.FunctionComponent = () => {
       // ));
 
       // Filter down to only games with family members ? ? ?
-      const sampleFamily = ["Tom1", "Stephanie", "Jack", "Chris"]; 
-      const familyOnlyGameResults = gr?.filter((x: any) => x.players.some((y: any) => sampleFamily.includes(y.name)));
+      // const sampleFamily = ["Tom1", "Stephanie", "Jack", "Chris"]; 
+      // const familyOnlyGameResults = gr?.filter((x: any) => x.players.some((y: any) => sampleFamily.includes(y.name)));
+      // setResults(familyOnlyGameResults ?? []);
 
-      setResults(familyOnlyGameResults ?? []);
+      setResults(gr ?? []);
       setGamesLoaded(true);
       setLoading(false);
     } catch (err) {
@@ -212,6 +235,7 @@ export const App: React.FunctionComponent = () => {
 
   const init = async () => {
     await loadDarkMode();
+    await loadFamilyOnly();
     const e = await loadEmail();
     await loadGameResults(e ?? "");
   };
@@ -222,11 +246,6 @@ export const App: React.FunctionComponent = () => {
     }
     , [email]
   );
-
-  const setDarkMode = async (dark: boolean) => {
-    const d = await localforage.setItem<boolean>("darkMode", dark);
-    loadDarkMode();
-  };
 
   // State as useState() until it gets unbearable ! ! !
   const [results, setResults] = useState<GameResult[]>(() => []);
@@ -286,6 +305,8 @@ export const App: React.FunctionComponent = () => {
               emailLoaded={emailLoaded}
               gamesLoaded={gamesLoaded}
               loading={loading}
+              familyOnly={familyOnlyChosen}
+              setFamilyOnly={setFamilyOnly}
             />} 
           />
           <Route path="setup" element={
