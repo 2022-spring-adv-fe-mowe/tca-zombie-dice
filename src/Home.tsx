@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { DefaultButton, PrimaryButton, CompoundButton } from '@fluentui/react/lib/Button';
 import { Text } from '@fluentui/react/lib/Text';
 import { Stack, StackItem } from '@fluentui/react/lib/Stack';
-import { CommandBar, Icon } from '@fluentui/react';
+import { Checkbox, CommandBar, Icon, Label } from '@fluentui/react';
 import {
     DocumentCard,
     DocumentCardActivity,
@@ -223,6 +223,8 @@ export const Home: React.FC<HomeProps> = ({
 
     const [editedEmail, setEditedEmail] = useState("");
 
+    const [sortedPlayers, setSortedPlayers] = useState([...uniquePlayers].sort().map(x => ({name: x, checked: false})));
+
     const updateEmail = () => {
         if (editedEmail.length === 0) {
             return;
@@ -279,6 +281,13 @@ export const Home: React.FC<HomeProps> = ({
 
     }).length;
     const tortoiseHarePercent = (winnerHadHighestSingleTurn / competitiveGames.length * 100).toFixed(0) + '%';
+
+    const toggleFamily = (key: string) => {
+        setSortedPlayers(sortedPlayers.map(x => ({
+            ...x
+            , checked: x.name === key ? !x.checked : x.checked
+        })));
+    };
 
     return (
 
@@ -663,17 +672,36 @@ export const Home: React.FC<HomeProps> = ({
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
                 isOpen={emailLoaded && changingEmail}
-                headerText={"Change Email & Family"}
+                headerText={"Settings"}
             >
                 <Stack
                     tokens={{ childrenGap: 30 }}
                     styles={{ root: { marginTop: 40 } }}
                 >
+                    <Label
+                        styles={{root: {marginTop: -20, marginBottom: -20}}}
+                    >
+                        Email address:
+                    </Label>
                     <TextField
                         value={editedEmail}
                         onChange={(e: any) => setEditedEmail(e.target.value)}
                     >
                     </TextField>
+                    <Label
+                        styles={{root: {marginTop: 20, marginBottom: -20}}}
+                    >
+                        Choose family:
+                    </Label>
+                    {sortedPlayers.map(x => (
+                        <Checkbox 
+                            key={x.name} 
+                            label={x.name}
+                            checked={x.checked}
+                            onChange={() => toggleFamily(x.name)}
+                        />
+                    ))}
+                    
                     <Stack 
                         horizontal
                         tokens={{childrenGap: 10}}
@@ -689,6 +717,7 @@ export const Home: React.FC<HomeProps> = ({
                             Cancel
                         </DefaultButton>}
                     </Stack>
+
                     {/* <TextField 
                         label="Game Results JSON" 
                         multiline 
