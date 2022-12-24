@@ -233,9 +233,8 @@ export const Home: React.FC<HomeProps> = ({
         setChangingEmail(false);
     };
 
-    const [jsonGameResults, setJsonGameResults] = useState("");
-
-    console.log(jsonGameResults);
+    // const [jsonGameResults, setJsonGameResults] = useState("");
+    // console.log(jsonGameResults);
 
     useEffect(
         () => {

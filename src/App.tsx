@@ -235,17 +235,14 @@ export const App: React.FunctionComponent = () => {
 
   const init = async () => {
     await loadDarkMode();
+    console.log('1');
     await loadFamilyOnly();
+    console.log('2');
     const e = await loadEmail();
+    console.log('3');
     await loadGameResults(e ?? "");
+    console.log('4');
   };
-
-  useEffect(
-    () => {
-      init();
-    }
-    , [email]
-  );
 
   // State as useState() until it gets unbearable ! ! !
   const [results, setResults] = useState<GameResult[]>(() => []);
@@ -255,6 +252,13 @@ export const App: React.FunctionComponent = () => {
     , players: []
     , start: ""
   });
+
+  useEffect(
+    () => {
+      init();
+    }
+    , [email]
+  );
 
   const addGameResult = async (gr: GameResult) => {
     const newResults = [
