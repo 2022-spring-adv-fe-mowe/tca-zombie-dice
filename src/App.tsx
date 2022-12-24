@@ -36,7 +36,8 @@ const stackTokens: IStackTokens = { childrenGap: 15 };
 export interface Player {
   name: string;
   order: number;
-  turns: number[];
+  // turns: number[];
+  turns: {points: number, died: boolean}[];
 }
 
 export interface GameResult {

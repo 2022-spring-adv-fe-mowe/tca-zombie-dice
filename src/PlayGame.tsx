@@ -13,7 +13,8 @@ interface PlayGameProps {
 
 interface PlayerInGame extends Player {
     currentBrainTotal: number;
-    turns: any[];
+    // turns: any[];
+    turns: {points: number, died: boolean}[];
 }
 
 const santaSpecials = [
@@ -118,7 +119,10 @@ export const PlayGame: React.FC<PlayGameProps> = ({
         // Good enough for biggest turn ever ! ! !
         player.turns = [
             ...player.turns
-            , died ? 0 : currentTurnPoints
+            , {
+                points: currentTurnPoints
+                , died: died
+            }
         ];
 
         // If not dead, update current player points.
