@@ -276,6 +276,9 @@ export const Home: React.FC<HomeProps> = ({
     const updateSelections = (
         from: "leaderboard" | "most-brains" | "fewest-turn-wins" 
         , selection: any
+        , leaderboarData: any
+        , singleTurnData: any
+        , fewestTurnData: any
     ) => {
         console.log(
             "foo"
@@ -283,10 +286,10 @@ export const Home: React.FC<HomeProps> = ({
             , selection?.name
         );
         if (from !== "most-brains") {
-            const index = mostSingleTurnBrainsData.findIndex(x => x.name === selection?.name);
+            const index = singleTurnData.findIndex((x: any) => x?.name === selection?.name);
             console.log(index);
-            mostBrainsSelection.setAllSelected(false);
-            mostBrainsSelection.setIndexSelected(3, true, false)
+            // mostBrainsSelection.setAllSelected(false);
+            mostBrainsSelection.setIndexSelected(index, true, false)
         }
 
         // forceUpdate();
@@ -298,6 +301,9 @@ export const Home: React.FC<HomeProps> = ({
                 updateSelections(
                     "leaderboard"
                     , leaderboardSelection.getSelection()[0]
+                    , leaderboardData
+                    , mostSingleTurnBrainsData
+                    , fewestTurnData
                 );
             },
     }));
@@ -308,6 +314,9 @@ export const Home: React.FC<HomeProps> = ({
                 updateSelections(
                     "most-brains"
                     , mostBrainsSelection.getSelection()[0]
+                    , leaderboardData
+                    , mostSingleTurnBrainsData
+                    , fewestTurnData
                 );
             },
     }));
@@ -318,6 +327,9 @@ export const Home: React.FC<HomeProps> = ({
                 updateSelections(
                     "fewest-turn-wins"
                     , fewestTurnWinsSelection.getSelection()[0]
+                    , leaderboardData
+                    , mostSingleTurnBrainsData
+                    , fewestTurnData
                 );
             },
     }));
