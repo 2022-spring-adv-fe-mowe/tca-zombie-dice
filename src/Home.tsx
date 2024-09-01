@@ -273,6 +273,55 @@ export const Home: React.FC<HomeProps> = ({
     }).length;
     const tortoiseHarePercent = (winnerHadHighestSingleTurn / competitiveGames.length * 100).toFixed(0) + '%';
 
+    const updateSelections = (
+        from: "leaderboard" | "most-brains" | "fewest-turn-wins" 
+        , selection: any
+    ) => {
+        console.log(
+            "foo"
+            , from 
+            , selection?.name
+        );
+        if (from !== "most-brains") {
+            const index = mostSingleTurnBrainsData.findIndex(x => x.name === selection?.name);
+            console.log(index);
+            mostBrainsSelection.setAllSelected(false);
+            mostBrainsSelection.setIndexSelected(3, true, false)
+        }
+
+        // forceUpdate();
+    };
+
+    const [leaderboardSelection] = useState(new Selection({
+        onSelectionChanged: () =>
+            {
+                updateSelections(
+                    "leaderboard"
+                    , leaderboardSelection.getSelection()[0]
+                );
+            },
+    }));
+
+    const [mostBrainsSelection] = useState(new Selection({
+        onSelectionChanged: () =>
+            {
+                updateSelections(
+                    "most-brains"
+                    , mostBrainsSelection.getSelection()[0]
+                );
+            },
+    }));
+
+    const [fewestTurnWinsSelection] = useState(new Selection({
+        onSelectionChanged: () =>
+            {
+                updateSelections(
+                    "fewest-turn-wins"
+                    , fewestTurnWinsSelection.getSelection()[0]
+                );
+            },
+    }));
+
     return (
 
         loading ? 
@@ -431,6 +480,8 @@ export const Home: React.FC<HomeProps> = ({
                     styles={cardStyles}
                 >
                     <Text variant="large">Leaderboard</Text>
+                    <br />
+                    <Text>Select someone to see them highlighted in all lists...</Text>
                     {
                         leaderboardData.length === 0 ?
                         <p>
@@ -440,7 +491,10 @@ export const Home: React.FC<HomeProps> = ({
                         </p> :
                         <DetailsList
                             compact={true}
-                            selectionMode={SelectionMode.none}
+                            selectionMode={SelectionMode.single}
+                            selection={leaderboardSelection}
+                            selectionPreservedOnEmptyClick={true}
+                            key={"name"}
                             items={leaderboardData}
                             layoutMode={DetailsListLayoutMode.justified}
                             columns={[
@@ -508,7 +562,9 @@ export const Home: React.FC<HomeProps> = ({
                         </p> :
                         <DetailsList
                             compact={true}
-                            selectionMode={SelectionMode.none}
+                            selectionMode={SelectionMode.single}
+                            selection={mostBrainsSelection}
+                            selectionPreservedOnEmptyClick={true}
                             items={mostSingleTurnBrainsData}
                             layoutMode={DetailsListLayoutMode.justified}
                             columns={[
@@ -538,7 +594,9 @@ export const Home: React.FC<HomeProps> = ({
                         </p> :                    
                         <DetailsList
                             compact={true}
-                            selectionMode={SelectionMode.none}
+                            selectionMode={SelectionMode.single}
+                            selection={fewestTurnWinsSelection}
+                            selectionPreservedOnEmptyClick={true}
                             items={fewestTurnData}
                             layoutMode={DetailsListLayoutMode.justified}
                             columns={[
