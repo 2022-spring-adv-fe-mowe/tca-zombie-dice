@@ -648,12 +648,25 @@ export const Home: React.FC<HomeProps> = ({
                 type={PanelType.smallFixedNear}
                 hasCloseButton={false}
                 isOpen={emailLoaded && changingEmail}
-                headerText={"Change Email"}
+                headerText={"Enter Email"}
             >
                 <Stack
                     tokens={{ childrenGap: 30 }}
-                    styles={{ root: { marginTop: 40 } }}
+                    styles={{ root: { marginTop: 5 } }}
                 >
+                    <Text>
+                        Your email is used to store your game results...
+                        <br />
+                        <br />
+                        . You won't get any spam 
+                        <br />
+                        <br />
+                        . Use the same email to see your results on other devices
+                        <br />
+                        <br />
+                        . App developers may look at your game results for learning and debugging purposes
+                    </Text>
+
                     <TextField
                         value={editedEmail}
                         onChange={(e: any) => setEditedEmail(e.target.value)}
