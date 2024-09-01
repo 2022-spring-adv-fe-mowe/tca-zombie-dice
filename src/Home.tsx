@@ -104,11 +104,8 @@ const calculateFewestTurnWins = (p: string[], r: GameResult[]) => {
         );
   
     return data
+        .filter(x => isFinite(x.fewestTurns))
         .sort((a, b) => a.fewestTurns > b.fewestTurns ? 1 : -1)
-        .map(x => ({
-            ...x
-            , fewestTurns: isFinite(x.fewestTurns) ? x.fewestTurns.toString() : "n/a"
-        }))
     ;
 };
 
