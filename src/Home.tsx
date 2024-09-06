@@ -290,12 +290,10 @@ export const Home: React.FC<HomeProps> = ({
             const index = singleTurnSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
             if (index >=0) {
                 console.log(index);
-                // mostBrainsSelection.setAllSelected(true);
-                mostBrainsSelection.setIndexSelected(index, true, false)
+                mostBrainsSelection.setAllSelected(false);
+                mostBrainsSelection.setIndexSelected(index, true, false);
             }
         }
-
-        // forceUpdate();
     };
 
     const [leaderboardSelection] = useState(new Selection({
