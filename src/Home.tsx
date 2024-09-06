@@ -277,18 +277,20 @@ export const Home: React.FC<HomeProps> = ({
         from: "leaderboard" | "most-brains" | "fewest-turn-wins" 
         , selection: any
         , leaderboarData: any
-        , singleTurnData: any
+        , singleTurnSelection: any
         , fewestTurnData: any
     ) => {
         console.log(
             "foo"
             , from 
             , selection
+            , singleTurnSelection.getItems()
         );
         if (from !== "most-brains") {
-            const index = singleTurnData.findIndex((x: any) => x?.name === selection?.name);
+            const index = singleTurnSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
             if (index >=0) {
                 console.log(index);
+                // mostBrainsSelection.setAllSelected(true);
                 mostBrainsSelection.setIndexSelected(index, true, false)
             }
         }
@@ -302,9 +304,9 @@ export const Home: React.FC<HomeProps> = ({
                 updateSelections(
                     "leaderboard"
                     , leaderboardSelection.getSelection()[0]
-                    , leaderboardData
-                    , mostSingleTurnBrainsData
-                    , fewestTurnData
+                    , leaderboardSelection
+                    , mostBrainsSelection
+                    , fewestTurnWinsSelection
                 );
             },
     }));
@@ -315,9 +317,9 @@ export const Home: React.FC<HomeProps> = ({
                 updateSelections(
                     "most-brains"
                     , mostBrainsSelection.getSelection()[0]
-                    , leaderboardData
-                    , mostSingleTurnBrainsData
-                    , fewestTurnData
+                    , leaderboardSelection
+                    , mostBrainsSelection
+                    , fewestTurnWinsSelection
                 );
             },
     }));
@@ -328,9 +330,9 @@ export const Home: React.FC<HomeProps> = ({
                 updateSelections(
                     "fewest-turn-wins"
                     , fewestTurnWinsSelection.getSelection()[0]
-                    , leaderboardData
-                    , mostSingleTurnBrainsData
-                    , fewestTurnData
+                    , leaderboardSelection
+                    , mostBrainsSelection
+                    , fewestTurnWinsSelection
                 );
             },
     }));
