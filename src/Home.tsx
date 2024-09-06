@@ -283,13 +283,14 @@ export const Home: React.FC<HomeProps> = ({
         console.log(
             "foo"
             , from 
-            , selection?.name
+            , selection
         );
         if (from !== "most-brains") {
             const index = singleTurnData.findIndex((x: any) => x?.name === selection?.name);
-            console.log(index);
-            // mostBrainsSelection.setAllSelected(false);
-            mostBrainsSelection.setIndexSelected(index, true, false)
+            if (index >=0) {
+                console.log(index);
+                mostBrainsSelection.setIndexSelected(index, true, false)
+            }
         }
 
         // forceUpdate();
@@ -506,7 +507,6 @@ export const Home: React.FC<HomeProps> = ({
                             selectionMode={SelectionMode.single}
                             selection={leaderboardSelection}
                             selectionPreservedOnEmptyClick={true}
-                            key={"name"}
                             items={leaderboardData}
                             layoutMode={DetailsListLayoutMode.justified}
                             columns={[
