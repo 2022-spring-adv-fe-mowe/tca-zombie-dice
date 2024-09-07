@@ -288,13 +288,15 @@ export const Home: React.FC<HomeProps> = ({
             , selection
             , singleTurnSelection.getItems()
         );
+        
         if (from !== "leaderboard") {
             const index = leaderboardSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
             if (index >=0) {
                 console.log(index);
-                // leaderboardSelection.setIndexSelected(index, true, false);
+                //leaderboardSelection.setIndexSelected(index, true, false);
             }
         }
+        
         if (from !== "most-brains") {
             const index = singleTurnSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
             if (index >=0) {
@@ -302,6 +304,14 @@ export const Home: React.FC<HomeProps> = ({
                 mostBrainsSelection.setIndexSelected(index, true, false);
             }
         }
+
+        if (from !== "fewest-turn-wins") {
+            const index = fewestTurnsSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
+            if (index >=0) {
+                console.log(index);
+                //fewestTurnsSelection.setIndexSelected(index, true, false);
+            }
+        }        
     };
 
     const [leaderboardSelection] = useState(new Selection({
