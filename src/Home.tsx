@@ -273,12 +273,14 @@ export const Home: React.FC<HomeProps> = ({
     }).length;
     const tortoiseHarePercent = (winnerHadHighestSingleTurn / competitiveGames.length * 100).toFixed(0) + '%';
 
+    const [updatingSelectionFor, setUpdatingSelectionFor] = useState("");
+
     const updateSelections = (
         from: "leaderboard" | "most-brains" | "fewest-turn-wins" 
         , selection: any
-        , leaderboarData: any
+        , leaderboardSelection: any
         , singleTurnSelection: any
-        , fewestTurnData: any
+        , fewestTurnsSelection: any
     ) => {
         console.log(
             "foo"
@@ -286,53 +288,59 @@ export const Home: React.FC<HomeProps> = ({
             , selection
             , singleTurnSelection.getItems()
         );
+        if (from !== "leaderboard") {
+            const index = leaderboardSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
+            if (index >=0) {
+                console.log(index);
+                // leaderboardSelection.setIndexSelected(index, true, false);
+            }
+        }
         if (from !== "most-brains") {
             const index = singleTurnSelection.getItems().findIndex((x: any) => x?.name === selection?.name);
             if (index >=0) {
                 console.log(index);
-                mostBrainsSelection.setAllSelected(false);
                 mostBrainsSelection.setIndexSelected(index, true, false);
             }
         }
     };
 
     const [leaderboardSelection] = useState(new Selection({
-        onSelectionChanged: () =>
-            {
-                updateSelections(
-                    "leaderboard"
-                    , leaderboardSelection.getSelection()[0]
-                    , leaderboardSelection
-                    , mostBrainsSelection
-                    , fewestTurnWinsSelection
-                );
-            },
+        onSelectionChanged: () => {
+            updateSelections(
+                "leaderboard"
+                , leaderboardSelection.getSelection()[0]
+                , leaderboardSelection
+                , mostBrainsSelection
+                , fewestTurnWinsSelection
+            );
+        },
+        selectionMode: SelectionMode.single
     }));
 
     const [mostBrainsSelection] = useState(new Selection({
-        onSelectionChanged: () =>
-            {
-                updateSelections(
-                    "most-brains"
-                    , mostBrainsSelection.getSelection()[0]
-                    , leaderboardSelection
-                    , mostBrainsSelection
-                    , fewestTurnWinsSelection
-                );
-            },
+        onSelectionChanged: () => {
+            updateSelections(
+                "most-brains"
+                , mostBrainsSelection.getSelection()[0]
+                , leaderboardSelection
+                , mostBrainsSelection
+                , fewestTurnWinsSelection
+            );
+        },
+        selectionMode: SelectionMode.single
     }));
 
     const [fewestTurnWinsSelection] = useState(new Selection({
-        onSelectionChanged: () =>
-            {
-                updateSelections(
-                    "fewest-turn-wins"
-                    , fewestTurnWinsSelection.getSelection()[0]
-                    , leaderboardSelection
-                    , mostBrainsSelection
-                    , fewestTurnWinsSelection
-                );
-            },
+        onSelectionChanged: () => {
+            updateSelections(
+                "fewest-turn-wins"
+                , fewestTurnWinsSelection.getSelection()[0]
+                , leaderboardSelection
+                , mostBrainsSelection
+                , fewestTurnWinsSelection
+            );
+        },
+        selectionMode: SelectionMode.single
     }));
 
     return (
