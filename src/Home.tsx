@@ -245,7 +245,7 @@ export const Home: React.FC<HomeProps> = ({
     const msAgo = Date.now() - lastGame;    
     const lastPlayedDisplay = 
         isFinite(msAgo) 
-            ? `${pms(msAgo, {compact: true, verbose: true})} ago`
+            ? `${pms(msAgo, {compact: true, verbose: false, })} ago`
             : 'Never'
 
 
