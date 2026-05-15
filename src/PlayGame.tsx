@@ -55,7 +55,7 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const [lastPlayerResult, setLastPlayerResult] = useState<{points: number, player: PlayerInGame} | undefined>(undefined);
 
-    const [demoMode, setDemoMode] = useState(false);
+    const [demoMode, setDemoMode] = useState(true);
 
     const undoLastTurn = () => {
         if (lastPlayerResult) {
