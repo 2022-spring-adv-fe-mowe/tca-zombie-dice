@@ -271,7 +271,10 @@ export const Home: React.FC<HomeProps> = ({
         return bestSingleTurnPlayers.some(y => y == x.winner);
 
     }).length;
-    const tortoiseHarePercent = (winnerHadHighestSingleTurn / competitiveGames.length * 100).toFixed(0) + '%';
+    const tortoiseHarePercent = competitiveGames.length > 0
+        ? (winnerHadHighestSingleTurn / competitiveGames.length * 100).toFixed(0) + '%'
+        : 'N/A'
+    ;
 
     return (
 
