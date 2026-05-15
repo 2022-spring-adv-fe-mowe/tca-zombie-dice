@@ -232,6 +232,8 @@ export const App: React.FunctionComponent = () => {
     , start: ""
   });
 
+  const [demoMode, setDemoMode] = useState(true);
+
   const addGameResult = async (gr: GameResult) => {
     const newResults = [
       ...results 
@@ -279,6 +281,8 @@ export const App: React.FunctionComponent = () => {
               emailLoaded={emailLoaded}
               gamesLoaded={gamesLoaded}
               loading={loading}
+              demoMode={demoMode}
+              setDemoMode={setDemoMode}
             />} 
           />
           <Route path="setup" element={
@@ -292,6 +296,7 @@ export const App: React.FunctionComponent = () => {
             <PlayGame
               currentGame={currentGame} 
               addGameResult={addGameResult}
+              demoMode={demoMode}
             />} 
           />
         </Routes>

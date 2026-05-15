@@ -32,6 +32,8 @@ interface HomeProps {
     emailLoaded: boolean;
     gamesLoaded: boolean;
     loading: boolean;
+    demoMode: boolean;
+    setDemoMode: any;
 };
 
 const stackItemStyles = { 
@@ -208,6 +210,8 @@ export const Home: React.FC<HomeProps> = ({
     , emailLoaded
     , gamesLoaded
     , loading
+    , demoMode
+    , setDemoMode
 }) => {
 
     const nav = useNavigate();
@@ -342,7 +346,7 @@ export const Home: React.FC<HomeProps> = ({
                                 variant='xLarge'
                                 styles={buttonTextStyles}
                             >
-                                Start a Game
+                                Start a {demoMode ? 'Demo Turn' : 'Game'}
                             </Text>
                         </PrimaryButton>
                     </Stack>
@@ -473,6 +477,14 @@ export const Home: React.FC<HomeProps> = ({
                         >
                             <Text variant='large'>
                                 Try {darkMode ? "Light" : "Dark"} Mode
+                            </Text>
+                        </DefaultButton>                
+                        <DefaultButton
+                            styles={buttonStyles}
+                            onClick={() => setDemoMode(!demoMode)}
+                        >
+                            <Text variant='large'>
+                                Try {demoMode ? "Real Game" : "Demo Turn"} Mode
                             </Text>
                         </DefaultButton>                
                         <DefaultButton

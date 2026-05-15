@@ -8,7 +8,8 @@ import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
 interface PlayGameProps {
     currentGame: CurrentGame;
-    addGameResult: (gr: GameResult) => void
+    addGameResult: (gr: GameResult) => void;
+    demoMode: any;
 }
 
 interface PlayerInGame extends Player {
@@ -38,6 +39,7 @@ const santaSpecials = [
 export const PlayGame: React.FC<PlayGameProps> = ({ 
     currentGame
     , addGameResult
+    , demoMode
 }) => {
 
     const nav = useNavigate();
@@ -54,8 +56,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
     const [activePlayers, setActivePlayers] = useState<PlayerInGame[]>([]);
 
     const [lastPlayerResult, setLastPlayerResult] = useState<{points: number, player: PlayerInGame} | undefined>(undefined);
-
-    const [demoMode, setDemoMode] = useState(true);
 
     const undoLastTurn = () => {
         if (lastPlayerResult) {
@@ -720,9 +720,6 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                     variant='large'
                 >
                     Keep taking turns until somebody wins, or <Link onClick={() => nav(-2)}>Quit</Link>
-                    <p>
-                        Change to <Link onClick={() => setDemoMode(!demoMode)}>{!demoMode ? 'Demo Turn' : 'Regular Game'}</Link> mode
-                    </p> 
                 </Text>
             </Stack>
 
