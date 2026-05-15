@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, initializeIcons } from '@fluentui/react';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter } from "react-router-dom";
+
+initializeIcons(`${process.env.PUBLIC_URL}/fonts/`);
 
 // Inject some global styles
 mergeStyles({

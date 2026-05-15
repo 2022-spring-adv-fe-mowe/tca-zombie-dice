@@ -6,7 +6,6 @@ import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './Home';
 import { SetupGame } from './SetupGame';
 import { loadTheme, ThemeProvider } from '@fluentui/react';
-import { initializeIcons } from '@fluentui/react';
 import { PlayGame } from './PlayGame';
 import { DefaultPalette, createTheme } from '@fluentui/theme';
 import localforage from 'localforage';
@@ -255,8 +254,6 @@ export const App: React.FunctionComponent = () => {
     await localforage.setItem<GameResult[]>("gameResults", JSON.parse(json));
     loadGameResults(email);  
   };
-
-  initializeIcons();
 
   const saveNewEmail = async (e: string) => {
     setEmail(e);
