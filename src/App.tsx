@@ -232,7 +232,7 @@ export const App: React.FunctionComponent = () => {
     , start: ""
   });
 
-  const [demoMode, setDemoMode] = useState(true);
+  const [demoMode, setDemoMode] = useState(false);
 
   const addGameResult = async (gr: GameResult) => {
     const newResults = [
