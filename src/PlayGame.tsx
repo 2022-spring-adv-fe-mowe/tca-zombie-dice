@@ -55,6 +55,8 @@ export const PlayGame: React.FC<PlayGameProps> = ({
 
     const [lastPlayerResult, setLastPlayerResult] = useState<{points: number, player: PlayerInGame} | undefined>(undefined);
 
+    const [demoMode, setDemoMode] = useState(false);
+
     const undoLastTurn = () => {
         if (lastPlayerResult) {
 
@@ -648,7 +650,15 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                     padding: 25
                                                 }
                                             }}
-                                            onClick={() => endPlayerTurn(x, true)}
+                                            onClick={
+                                                () => {
+                                                    endPlayerTurn(x, true);
+
+                                                    if (demoMode) {
+                                                        endGame();
+                                                    }
+                                                }
+                                            }
                                         >
                                             <Text
                                                 variant='xxLarge'
@@ -670,7 +680,15 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                                                         , borderColor: DefaultPalette.greenDark
                                                     }
                                                 }}
-                                                onClick={() => endPlayerTurn(x, false)}
+                                                onClick={
+                                                    () => {
+                                                        endPlayerTurn(x, false);
+
+                                                        if (demoMode) {
+                                                            endGame();
+                                                        }
+                                                    }
+                                                }
                                             >
                                                 <Text
                                                     variant='xxLarge'
@@ -702,6 +720,9 @@ export const PlayGame: React.FC<PlayGameProps> = ({
                     variant='large'
                 >
                     Keep taking turns until somebody wins, or <Link onClick={() => nav(-2)}>Quit</Link>
+                    <p>
+                        Change to <Link onClick={() => setDemoMode(!demoMode)}>{!demoMode ? 'Demo Turn' : 'Regular Game'}</Link> mode
+                    </p> 
                 </Text>
             </Stack>
 
